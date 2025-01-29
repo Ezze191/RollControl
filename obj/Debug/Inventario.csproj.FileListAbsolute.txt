@@ -1,0 +1,17 @@
+C:\Users\drek_\source\repos\Inventario\bin\Debug\Inventario.exe.config
+C:\Users\drek_\source\repos\Inventario\bin\Debug\Inventario.exe
+C:\Users\drek_\source\repos\Inventario\bin\Debug\Inventario.pdb
+C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.csproj.AssemblyReference.cache
+C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.Properties.Resources.resources
+C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.csproj.GenerateResource.cache
+C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.csproj.CoreCompileInputs.cache
+C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.exe
+C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.pdb
+C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.screen_login.resources
+C:\Users\drek_\source\repos\Inventario\bin\Debug\MySql.Data.dll
+C:\Users\drek_\source\repos\Inventario\bin\Debug\System.Memory.dll
+C:\Users\drek_\source\repos\Inventario\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\drek_\source\repos\Inventario\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\drek_\source\repos\Inventario\bin\Debug\System.Buffers.dll
+C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.csproj.Up2Date
+C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.screen_home.resources
