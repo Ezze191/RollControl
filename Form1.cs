@@ -16,6 +16,7 @@ namespace Inventario
     public partial class screen_login : Form
     {
         
+        
 
         public screen_login()
         {
@@ -62,7 +63,8 @@ namespace Inventario
                 String username = tb_username.Text;
                 String password = tb_password.Text;
                 login(username, password);
-
+                
+                
             }
             
         }
@@ -86,9 +88,11 @@ namespace Inventario
                             {
                                 if (reader.Read())
                                 {
-                                     screen_home home = new screen_home();
-                                     home.Show();
-                                     this.Hide();
+                                user_info.Username = user;
+                                user_info.Password = pass;
+                                screen_home home = new screen_home();
+                                home.Show();
+                                this.Hide();
                                 }
                                 else
                                 {
@@ -121,6 +125,11 @@ namespace Inventario
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
         {
 
         }

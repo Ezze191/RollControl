@@ -16,5 +16,10 @@ namespace Inventario
         {
             InitializeComponent();
         }
+
+        private void screen_home_Load(object sender, EventArgs e)
+        {
+            lb_username.Text = user_info.Username;
+        }
     }
 }
