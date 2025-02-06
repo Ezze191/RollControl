@@ -98,7 +98,7 @@ namespace Inventario
                 string costo_porkilo = costo_kilo.SelectedItem.ToString();
                 double convert_costokilo = Convert.ToDouble(costo_porkilo);
                 double total = peso * convert_costokilo;
-                string fecha_de_salida = DateTime.Now.ToString("yyyy-MM-dd");
+                string fecha_de_salida = dtpFECHA.Value.ToString("yyyy-MM-dd");
 
 
                 using (MysqlConnector connect = new MysqlConnector())

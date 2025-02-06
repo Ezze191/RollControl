@@ -33,13 +33,15 @@
             this.tb_peso = new MaterialSkin.Controls.MaterialTextBox();
             this.combo_medidas = new MaterialSkin.Controls.MaterialComboBox();
             this.panel_opciones = new System.Windows.Forms.Panel();
+            this.dtpFECHA = new System.Windows.Forms.DateTimePicker();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lb_medidas = new System.Windows.Forms.Label();
+            this.bt_costo_kilo = new MaterialSkin.Controls.MaterialButton();
+            this.costo_kilo = new MaterialSkin.Controls.MaterialComboBox();
             this.materialButton2 = new MaterialSkin.Controls.MaterialButton();
             this.materialButton1 = new MaterialSkin.Controls.MaterialButton();
-            this.costo_kilo = new MaterialSkin.Controls.MaterialComboBox();
-            this.bt_costo_kilo = new MaterialSkin.Controls.MaterialButton();
             this.label1 = new System.Windows.Forms.Label();
-            this.lb_medidas = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel_opciones.SuspendLayout();
             this.SuspendLayout();
@@ -117,6 +119,8 @@
             // 
             // panel_opciones
             // 
+            this.panel_opciones.Controls.Add(this.label3);
+            this.panel_opciones.Controls.Add(this.dtpFECHA);
             this.panel_opciones.Controls.Add(this.label2);
             this.panel_opciones.Controls.Add(this.lb_medidas);
             this.panel_opciones.Controls.Add(this.bt_costo_kilo);
@@ -128,8 +132,77 @@
             this.panel_opciones.Controls.Add(this.tb_peso);
             this.panel_opciones.Location = new System.Drawing.Point(940, 168);
             this.panel_opciones.Name = "panel_opciones";
-            this.panel_opciones.Size = new System.Drawing.Size(318, 462);
+            this.panel_opciones.Size = new System.Drawing.Size(318, 517);
             this.panel_opciones.TabIndex = 5;
+            // 
+            // dtpFECHA
+            // 
+            this.dtpFECHA.Location = new System.Drawing.Point(41, 399);
+            this.dtpFECHA.Name = "dtpFECHA";
+            this.dtpFECHA.Size = new System.Drawing.Size(200, 22);
+            this.dtpFECHA.TabIndex = 7;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(48, 268);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(117, 16);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "COSTO POR KILO";
+            // 
+            // lb_medidas
+            // 
+            this.lb_medidas.AutoSize = true;
+            this.lb_medidas.Location = new System.Drawing.Point(48, 164);
+            this.lb_medidas.Name = "lb_medidas";
+            this.lb_medidas.Size = new System.Drawing.Size(68, 16);
+            this.lb_medidas.TabIndex = 10;
+            this.lb_medidas.Text = "MEDIDAS";
+            // 
+            // bt_costo_kilo
+            // 
+            this.bt_costo_kilo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.bt_costo_kilo.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.bt_costo_kilo.Depth = 0;
+            this.bt_costo_kilo.HighEmphasis = true;
+            this.bt_costo_kilo.Icon = null;
+            this.bt_costo_kilo.Location = new System.Drawing.Point(197, 309);
+            this.bt_costo_kilo.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.bt_costo_kilo.MouseState = MaterialSkin.MouseState.HOVER;
+            this.bt_costo_kilo.Name = "bt_costo_kilo";
+            this.bt_costo_kilo.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.bt_costo_kilo.Size = new System.Drawing.Size(88, 36);
+            this.bt_costo_kilo.TabIndex = 9;
+            this.bt_costo_kilo.Text = "AGREGAR";
+            this.bt_costo_kilo.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.bt_costo_kilo.UseAccentColor = false;
+            this.bt_costo_kilo.UseVisualStyleBackColor = true;
+            this.bt_costo_kilo.Click += new System.EventHandler(this.bt_costo_kilo_Click);
+            // 
+            // costo_kilo
+            // 
+            this.costo_kilo.AutoResize = false;
+            this.costo_kilo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.costo_kilo.Depth = 0;
+            this.costo_kilo.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.costo_kilo.DropDownHeight = 174;
+            this.costo_kilo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.costo_kilo.DropDownWidth = 121;
+            this.costo_kilo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.costo_kilo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.costo_kilo.FormattingEnabled = true;
+            this.costo_kilo.IntegralHeight = false;
+            this.costo_kilo.ItemHeight = 43;
+            this.costo_kilo.Items.AddRange(new object[] {
+            "17.4"});
+            this.costo_kilo.Location = new System.Drawing.Point(41, 296);
+            this.costo_kilo.MaxDropDownItems = 4;
+            this.costo_kilo.MouseState = MaterialSkin.MouseState.OUT;
+            this.costo_kilo.Name = "costo_kilo";
+            this.costo_kilo.Size = new System.Drawing.Size(138, 49);
+            this.costo_kilo.StartIndex = 0;
+            this.costo_kilo.TabIndex = 8;
             // 
             // materialButton2
             // 
@@ -138,7 +211,7 @@
             this.materialButton2.Depth = 0;
             this.materialButton2.HighEmphasis = true;
             this.materialButton2.Icon = null;
-            this.materialButton2.Location = new System.Drawing.Point(113, 399);
+            this.materialButton2.Location = new System.Drawing.Point(99, 457);
             this.materialButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton2.Name = "materialButton2";
@@ -171,50 +244,6 @@
             this.materialButton1.UseVisualStyleBackColor = true;
             this.materialButton1.Click += new System.EventHandler(this.materialButton1_Click);
             // 
-            // costo_kilo
-            // 
-            this.costo_kilo.AutoResize = false;
-            this.costo_kilo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.costo_kilo.Depth = 0;
-            this.costo_kilo.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.costo_kilo.DropDownHeight = 174;
-            this.costo_kilo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.costo_kilo.DropDownWidth = 121;
-            this.costo_kilo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.costo_kilo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.costo_kilo.FormattingEnabled = true;
-            this.costo_kilo.IntegralHeight = false;
-            this.costo_kilo.ItemHeight = 43;
-            this.costo_kilo.Items.AddRange(new object[] {
-            "17.4"});
-            this.costo_kilo.Location = new System.Drawing.Point(41, 296);
-            this.costo_kilo.MaxDropDownItems = 4;
-            this.costo_kilo.MouseState = MaterialSkin.MouseState.OUT;
-            this.costo_kilo.Name = "costo_kilo";
-            this.costo_kilo.Size = new System.Drawing.Size(138, 49);
-            this.costo_kilo.StartIndex = 0;
-            this.costo_kilo.TabIndex = 8;
-            // 
-            // bt_costo_kilo
-            // 
-            this.bt_costo_kilo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.bt_costo_kilo.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.bt_costo_kilo.Depth = 0;
-            this.bt_costo_kilo.HighEmphasis = true;
-            this.bt_costo_kilo.Icon = null;
-            this.bt_costo_kilo.Location = new System.Drawing.Point(197, 309);
-            this.bt_costo_kilo.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.bt_costo_kilo.MouseState = MaterialSkin.MouseState.HOVER;
-            this.bt_costo_kilo.Name = "bt_costo_kilo";
-            this.bt_costo_kilo.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.bt_costo_kilo.Size = new System.Drawing.Size(88, 36);
-            this.bt_costo_kilo.TabIndex = 9;
-            this.bt_costo_kilo.Text = "AGREGAR";
-            this.bt_costo_kilo.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.bt_costo_kilo.UseAccentColor = false;
-            this.bt_costo_kilo.UseVisualStyleBackColor = true;
-            this.bt_costo_kilo.Click += new System.EventHandler(this.bt_costo_kilo_Click);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -226,23 +255,14 @@
             this.label1.Text = "SALIDAS";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // lb_medidas
+            // label3
             // 
-            this.lb_medidas.AutoSize = true;
-            this.lb_medidas.Location = new System.Drawing.Point(48, 164);
-            this.lb_medidas.Name = "lb_medidas";
-            this.lb_medidas.Size = new System.Drawing.Size(68, 16);
-            this.lb_medidas.TabIndex = 10;
-            this.lb_medidas.Text = "MEDIDAS";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(48, 268);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(117, 16);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "COSTO POR KILO";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(41, 368);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(124, 16);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "FECHA DE SALIDA";
             // 
             // UserControl1
             // 
@@ -276,5 +296,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lb_medidas;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DateTimePicker dtpFECHA;
+        private System.Windows.Forms.Label label3;
     }
 }
