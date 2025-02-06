@@ -10,29 +10,37 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
+using MaterialSkin;
+using MaterialSkin.Controls;
 
 namespace Inventario
 {
-    public partial class screen_login : Form
+    public partial class screen_login : MaterialForm
     {
-        
-        
 
+       
         public screen_login()
         {
             InitializeComponent();
+            // Create MaterialSkin manager
+            var materialSkinManager = MaterialSkinManager.Instance;
+            materialSkinManager.AddFormToManage(this);
+            materialSkinManager.Theme = MaterialSkinManager.Themes.DARK; // or DARK
+
+            // Color scheme
+            materialSkinManager.ColorScheme = new ColorScheme(
+                Primary.Blue500, Primary.Blue700,
+                Primary.Blue200, Accent.LightBlue200,
+                TextShade.WHITE
+                );
 
         }
 
         private void screen_login_Load(object sender, EventArgs e)
         {
+            
             try
             {
-                /*
-                connect.EstablecerConexion();
-                txt_oline.ForeColor = Color.Green;
-                connect.CerrarConexion();
-                */
                 using(MysqlConnector connect = new MysqlConnector())
                 {
                     connect.EstablecerConexion();
@@ -54,18 +62,7 @@ namespace Inventario
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(tb_username.Text == string.Empty || tb_password.Text == string.Empty)
-            {
-                MessageBox.Show("Tienes que llenar los datos requeridos");
-            }
-            else
-            {
-                String username = tb_username.Text;
-                String password = tb_password.Text;
-                login(username, password);
-                
-                
-            }
+            
             
         }
 
@@ -130,6 +127,27 @@ namespace Inventario
         }
 
         private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bt_login_Click(object sender, EventArgs e)
+        {
+            if (tb_username.Text == string.Empty || tb_password.Text == string.Empty)
+            {
+                MessageBox.Show("Tienes que llenar los datos requeridos");
+            }
+            else
+            {
+                String username = tb_username.Text;
+                String password = tb_password.Text;
+                login(username, password);
+
+
+            }
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
         {
 
         }
