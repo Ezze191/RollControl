@@ -47,6 +47,33 @@ namespace Inventario
                             DataTable dt = new DataTable();
                             adapter.Fill(dt);
                             dataGridView1.DataSource = dt;
+
+                            //suma
+                            double sumaPESO = 0;
+                            double sumaTOTAL = 0;
+
+                            foreach(DataRow row in dt.Rows)
+                            {
+                                if (row["PESO"] != DBNull.Value)
+                                {
+                                    double valorPESO;
+                                    if (double.TryParse(row["PESO"].ToString(), out valorPESO))
+                                    {
+                                        sumaPESO += valorPESO;
+                                    }
+                                }
+                                if (row["TOTAL"] != DBNull.Value)
+                                {
+                                    double valorTOTAL;
+                                    if (double.TryParse(row["TOTAL"].ToString(), out valorTOTAL))
+                                    {
+                                        sumaTOTAL += valorTOTAL;
+                                    }
+                                }
+                            }
+                            //asiganos los valores a los labels
+                            tx_peso.Text = sumaPESO.ToString("N2");
+                            tx_dinero.Text = sumaTOTAL.ToString("N2");
                         }
 
                     }
@@ -148,6 +175,11 @@ namespace Inventario
             {
                 MessageBox.Show("No se ingreso ningun costo");
             }
+        }
+
+        private void tx_dinero_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

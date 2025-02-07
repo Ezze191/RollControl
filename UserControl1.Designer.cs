@@ -33,6 +33,7 @@
             this.tb_peso = new MaterialSkin.Controls.MaterialTextBox();
             this.combo_medidas = new MaterialSkin.Controls.MaterialComboBox();
             this.panel_opciones = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
             this.dtpFECHA = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
             this.lb_medidas = new System.Windows.Forms.Label();
@@ -41,7 +42,10 @@
             this.materialButton2 = new MaterialSkin.Controls.MaterialButton();
             this.materialButton1 = new MaterialSkin.Controls.MaterialButton();
             this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tx_peso = new System.Windows.Forms.Label();
+            this.tx_dinero = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel_opciones.SuspendLayout();
             this.SuspendLayout();
@@ -53,7 +57,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(854, 735);
+            this.dataGridView1.Size = new System.Drawing.Size(854, 661);
             this.dataGridView1.TabIndex = 0;
             // 
             // tb_numero
@@ -130,10 +134,19 @@
             this.panel_opciones.Controls.Add(this.tb_numero);
             this.panel_opciones.Controls.Add(this.combo_medidas);
             this.panel_opciones.Controls.Add(this.tb_peso);
-            this.panel_opciones.Location = new System.Drawing.Point(940, 168);
+            this.panel_opciones.Location = new System.Drawing.Point(940, 119);
             this.panel_opciones.Name = "panel_opciones";
             this.panel_opciones.Size = new System.Drawing.Size(318, 517);
             this.panel_opciones.TabIndex = 5;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(41, 368);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(124, 16);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "FECHA DE SALIDA";
             // 
             // dtpFECHA
             // 
@@ -207,11 +220,12 @@
             // materialButton2
             // 
             this.materialButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton2.BackColor = System.Drawing.Color.Lime;
             this.materialButton2.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.materialButton2.Depth = 0;
             this.materialButton2.HighEmphasis = true;
             this.materialButton2.Icon = null;
-            this.materialButton2.Location = new System.Drawing.Point(99, 457);
+            this.materialButton2.Location = new System.Drawing.Point(80, 457);
             this.materialButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton2.Name = "materialButton2";
@@ -221,7 +235,7 @@
             this.materialButton2.Text = "Agregar SALIDA";
             this.materialButton2.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton2.UseAccentColor = false;
-            this.materialButton2.UseVisualStyleBackColor = true;
+            this.materialButton2.UseVisualStyleBackColor = false;
             this.materialButton2.Click += new System.EventHandler(this.materialButton2_Click);
             // 
             // materialButton1
@@ -248,26 +262,58 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(979, 30);
+            this.label1.Location = new System.Drawing.Point(982, 30);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(283, 69);
             this.label1.TabIndex = 6;
             this.label1.Text = "SALIDAS";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // label3
+            // label4
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(41, 368);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(124, 16);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "FECHA DE SALIDA";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(67, 686);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(97, 16);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "TOTAL PESO :";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(412, 686);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(109, 16);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "TOTAL DINERO:";
+            // 
+            // tx_peso
+            // 
+            this.tx_peso.AutoSize = true;
+            this.tx_peso.Location = new System.Drawing.Point(167, 685);
+            this.tx_peso.Name = "tx_peso";
+            this.tx_peso.Size = new System.Drawing.Size(14, 16);
+            this.tx_peso.TabIndex = 9;
+            this.tx_peso.Text = "0";
+            // 
+            // tx_dinero
+            // 
+            this.tx_dinero.AutoSize = true;
+            this.tx_dinero.Location = new System.Drawing.Point(525, 685);
+            this.tx_dinero.Name = "tx_dinero";
+            this.tx_dinero.Size = new System.Drawing.Size(14, 16);
+            this.tx_dinero.TabIndex = 10;
+            this.tx_dinero.Text = "0";
+            this.tx_dinero.Click += new System.EventHandler(this.tx_dinero_Click);
             // 
             // UserControl1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.tx_dinero);
+            this.Controls.Add(this.tx_peso);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel_opciones);
             this.Controls.Add(this.dataGridView1);
@@ -298,5 +344,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dtpFECHA;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label tx_peso;
+        private System.Windows.Forms.Label tx_dinero;
     }
 }

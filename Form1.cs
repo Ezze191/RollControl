@@ -38,7 +38,10 @@ namespace Inventario
 
         private void screen_login_Load(object sender, EventArgs e)
         {
+            //forzar colores
+            pictureBox2.BackColor = System.Drawing.ColorTranslator.FromHtml("#666666");
             
+
             try
             {
                 using(MysqlConnector connect = new MysqlConnector())

@@ -32,9 +32,9 @@
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.panelContainer = new System.Windows.Forms.Panel();
-            this.pb_user = new System.Windows.Forms.PictureBox();
             this.lb_name = new System.Windows.Forms.Label();
+            this.pb_user = new System.Windows.Forms.PictureBox();
+            this.panelContainer = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_user)).BeginInit();
@@ -51,9 +51,9 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.lb_name);
             this.panel1.Controls.Add(this.pb_user);
-            this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.ForeColor = System.Drawing.Color.Transparent;
             this.panel1.Location = new System.Drawing.Point(6, 64);
@@ -65,13 +65,38 @@
             // 
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(26, 271);
+            this.pictureBox1.Location = new System.Drawing.Point(-4, 267);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(88, 76);
+            this.pictureBox1.Size = new System.Drawing.Size(159, 147);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click_1);
+            this.pictureBox1.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
+            this.pictureBox1.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
+            // 
+            // lb_name
+            // 
+            this.lb_name.AutoSize = true;
+            this.lb_name.Location = new System.Drawing.Point(33, 133);
+            this.lb_name.Name = "lb_name";
+            this.lb_name.Size = new System.Drawing.Size(84, 16);
+            this.lb_name.TabIndex = 0;
+            this.lb_name.Text = "USERNAME";
+            // 
+            // pb_user
+            // 
+            this.pb_user.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pb_user.Image = ((System.Drawing.Image)(resources.GetObject("pb_user.Image")));
+            this.pb_user.Location = new System.Drawing.Point(1, 3);
+            this.pb_user.Name = "pb_user";
+            this.pb_user.Size = new System.Drawing.Size(143, 132);
+            this.pb_user.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_user.TabIndex = 0;
+            this.pb_user.TabStop = false;
+            this.pb_user.Click += new System.EventHandler(this.pb_user_Click);
+            this.pb_user.MouseEnter += new System.EventHandler(this.pb_user_MouseEnter);
+            this.pb_user.MouseLeave += new System.EventHandler(this.pb_user_MouseLeave);
             // 
             // panelContainer
             // 
@@ -80,25 +105,6 @@
             this.panelContainer.Name = "panelContainer";
             this.panelContainer.Size = new System.Drawing.Size(1769, 960);
             this.panelContainer.TabIndex = 2;
-            // 
-            // pb_user
-            // 
-            this.pb_user.Image = ((System.Drawing.Image)(resources.GetObject("pb_user.Image")));
-            this.pb_user.Location = new System.Drawing.Point(0, 3);
-            this.pb_user.Name = "pb_user";
-            this.pb_user.Size = new System.Drawing.Size(143, 132);
-            this.pb_user.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pb_user.TabIndex = 0;
-            this.pb_user.TabStop = false;
-            // 
-            // lb_name
-            // 
-            this.lb_name.AutoSize = true;
-            this.lb_name.Location = new System.Drawing.Point(27, 149);
-            this.lb_name.Name = "lb_name";
-            this.lb_name.Size = new System.Drawing.Size(84, 16);
-            this.lb_name.TabIndex = 0;
-            this.lb_name.Text = "USERNAME";
             // 
             // screen_home
             // 
@@ -126,9 +132,9 @@
 
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel panelContainer;
         private System.Windows.Forms.PictureBox pb_user;
         private System.Windows.Forms.Label lb_name;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

@@ -15,7 +15,8 @@ namespace Inventario
 {
     public partial class screen_home : MaterialForm
     {
-        private Panel sidebar;
+        private bool sidebarExpanded;
+        private Timer timer;
 
         private void BtnHome_Click(object sender, EventArgs e)
         {
@@ -37,6 +38,7 @@ namespace Inventario
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.DARK; // or DARK
 
+
             // Color scheme
             materialSkinManager.ColorScheme = new ColorScheme(
                 Primary.Blue500, Primary.Blue700,
@@ -46,17 +48,18 @@ namespace Inventario
 
             //colores forzados
             //barra lateral
-            panel1.BackColor = System.Drawing.ColorTranslator.FromHtml("#3f51b5");
+            panel1.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
             //pb salidas
-            pictureBox1.BackColor = System.Drawing.ColorTranslator.FromHtml("#3f51b5");
+            pictureBox1.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
             //pbuser
-            pb_user.BackColor = System.Drawing.ColorTranslator.FromHtml("#5C6ED0");
-
+            pb_user.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
+            //lbuser
+            lb_name.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
 
         }
 
         private void LoadUserControl(UserControl uc)
-        { 
+        {
             panelContainer.Controls.Clear();
             uc.Dock = DockStyle.Fill;
             panelContainer.Controls.Add(uc);
@@ -65,13 +68,47 @@ namespace Inventario
 
         private void screen_home_Load(object sender, EventArgs e)
         {
+
             lb_name.Text = user_info.Username;
         }
 
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+
+
+        private void pictureBox1_Click_1(object sender, EventArgs e)
         {
-           LoadUserControl(new UserControl1());
+            //cambiar color para saber que esta seleccioando
+            pictureBox1.BackColor = System.Drawing.ColorTranslator.FromHtml("#8999F3");
+            LoadUserControl(new UserControl1());
+        }
+
+        private void pb_user_Click(object sender, EventArgs e)
+        {
+            screen_home home = new screen_home();
+            home.Show();
+            this.Hide();
+        }
+
+        private void pictureBox1_MouseEnter(object sender, EventArgs e)
+        {
+            //cambia de color
+            pictureBox1.BackColor = System.Drawing.ColorTranslator.FromHtml("#374491");
+        }
+
+        private void pictureBox1_MouseLeave(object sender, EventArgs e)
+        {
+            //cambia al color original
+            pictureBox1.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
+        }
+
+        private void pb_user_MouseEnter(object sender, EventArgs e)
+        {
+            pb_user.BackColor = System.Drawing.ColorTranslator.FromHtml("#374491");
+        }
+
+        private void pb_user_MouseLeave(object sender, EventArgs e)
+        {
+            pb_user.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
         }
     }
 }

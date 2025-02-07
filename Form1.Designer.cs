@@ -45,7 +45,7 @@
             this.txt_oline.Font = new System.Drawing.Font("Microsoft Sans Serif", 28.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_oline.ForeColor = System.Drawing.Color.Red;
             this.txt_oline.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.txt_oline.Location = new System.Drawing.Point(6, 890);
+            this.txt_oline.Location = new System.Drawing.Point(748, 761);
             this.txt_oline.Name = "txt_oline";
             this.txt_oline.Size = new System.Drawing.Size(132, 54);
             this.txt_oline.TabIndex = 6;
@@ -123,9 +123,9 @@
             this.pictureBox2.BackColor = System.Drawing.Color.Gray;
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(864, 196);
+            this.pictureBox2.Location = new System.Drawing.Point(834, 196);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(221, 207);
+            this.pictureBox2.Size = new System.Drawing.Size(250, 235);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 13;
             this.pictureBox2.TabStop = false;
