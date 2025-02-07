@@ -16,6 +16,7 @@ namespace Inventario
 {
     public partial class UserControl1 : UserControl
     {
+        private DataTable dt;
         public UserControl1()
         {
             InitializeComponent();
@@ -29,6 +30,9 @@ namespace Inventario
 
             //forzar colores
             panel_opciones.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
+            panel_filtrar.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
+            panel_pornumeros.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
+            dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
         }
 
         private void llenartabla()
@@ -39,7 +43,7 @@ namespace Inventario
                 using (MysqlConnector connect = new MysqlConnector())
                 {
                     connect.EstablecerConexion();
-                    string query = "select * from  t_salidas";
+                    string query = "select * from  t_entradas";
                     using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
                     {
                        using(MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
@@ -85,6 +89,120 @@ namespace Inventario
             }
         }
 
+        private void tablafiltrada_fehca(string fi , string fn)
+        {
+            try
+            {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+                    string query = "SELECT * FROM t_entradas WHERE FECHA >= '" + fi + "' AND FECHA <= '" + fn + "'";
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                        {
+                            DataTable dt = new DataTable();
+                            adapter.Fill(dt);
+                            dataGridView1.DataSource = dt;
+
+                            //suma
+                            double sumaPESO = 0;
+                            double sumaTOTAL = 0;
+
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                if (row["PESO"] != DBNull.Value)
+                                {
+                                    double valorPESO;
+                                    if (double.TryParse(row["PESO"].ToString(), out valorPESO))
+                                    {
+                                        sumaPESO += valorPESO;
+                                    }
+                                }
+                                if (row["TOTAL"] != DBNull.Value)
+                                {
+                                    double valorTOTAL;
+                                    if (double.TryParse(row["TOTAL"].ToString(), out valorTOTAL))
+                                    {
+                                        sumaTOTAL += valorTOTAL;
+                                    }
+                                }
+                            }
+                            //asiganos los valores a los labels
+                            tx_peso.Text = sumaPESO.ToString("N2");
+                            tx_dinero.Text = sumaTOTAL.ToString("N2");
+                        }
+
+                    }
+                }
+
+            }
+
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+        private void tablafiltrada_numero(string nu)
+        {
+            try
+            {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+                    string query = "SELECT * FROM t_entradas WHERE NUMERO = '" + nu + "'";
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                        {
+                            DataTable dt = new DataTable();
+                            adapter.Fill(dt);
+                            dataGridView1.DataSource = dt;
+
+                            //suma
+                            double sumaPESO = 0;
+                            double sumaTOTAL = 0;
+
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                if (row["PESO"] != DBNull.Value)
+                                {
+                                    double valorPESO;
+                                    if (double.TryParse(row["PESO"].ToString(), out valorPESO))
+                                    {
+                                        sumaPESO += valorPESO;
+                                    }
+                                }
+                                if (row["TOTAL"] != DBNull.Value)
+                                {
+                                    double valorTOTAL;
+                                    if (double.TryParse(row["TOTAL"].ToString(), out valorTOTAL))
+                                    {
+                                        sumaTOTAL += valorTOTAL;
+                                    }
+                                }
+                            }
+                            //asiganos los valores a los labels
+                            tx_peso.Text = sumaPESO.ToString("N2");
+                            tx_dinero.Text = sumaTOTAL.ToString("N2");
+                        }
+
+                    }
+                }
+
+            }
+
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+
+
         private void tb_peso_KeyPress(object sender, KeyPressEventArgs e)
         {
             if(!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
@@ -118,14 +236,14 @@ namespace Inventario
             {
                 //guardas los datos para enviarloa a la base de datos
                 string user = user_info.Username;
-                string fecha = DateTime.Now.ToString("yyyy-MM-dd");
+                string fecha = dtpFECHA.Value.ToString("yyyy-MM-dd");
                 string numero = tb_numero.Text;
                 double peso = Convert.ToDouble(tb_peso.Text);
                 string tipo = combo_medidas.SelectedItem.ToString();
                 string costo_porkilo = costo_kilo.SelectedItem.ToString();
                 double convert_costokilo = Convert.ToDouble(costo_porkilo);
                 double total = peso * convert_costokilo;
-                string fecha_de_salida = dtpFECHA.Value.ToString("yyyy-MM-dd");
+                
 
 
                 using (MysqlConnector connect = new MysqlConnector())
@@ -133,7 +251,7 @@ namespace Inventario
                     try
                     {
                         connect.EstablecerConexion();
-                        string query = "INSERT INTO t_salidas (USUARIO , FECHA, NUMERO, PESO , TIPO , COSTOKILO, TOTAL, FECHA_DE_SALIDA) VALUES (@user, @fecha, @numero, @peso , @tipo ,@convert_costokilo, @total , @fecha_de_salida)";
+                        string query = "INSERT INTO t_entradas (USUARIO , FECHA, NUMERO, PESO , TIPO , COSTOKILO, TOTAL) VALUES (@user, @fecha, @numero, @peso , @tipo ,@convert_costokilo, @total )";
                         using(MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
                         {
                             cmd.Parameters.AddWithValue("@user", user);
@@ -143,9 +261,8 @@ namespace Inventario
                             cmd.Parameters.AddWithValue("@tipo", tipo);
                             cmd.Parameters.AddWithValue("@convert_costokilo", convert_costokilo);
                             cmd.Parameters.AddWithValue("@total", total);
-                            cmd.Parameters.AddWithValue("@fecha_de_salida", fecha_de_salida);
                             cmd.ExecuteNonQuery();
-                            MessageBox.Show("Salida registrada correctamente");
+                            MessageBox.Show("Entrada registrada correctamente");
                             llenartabla();
                         }
                     }
@@ -180,6 +297,51 @@ namespace Inventario
         private void tx_dinero_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void bt_cancel_Click(object sender, EventArgs e)
+        {
+            llenartabla();
+        }
+
+        private void bt_aply_Click(object sender, EventArgs e)
+        {
+            string fechaINICIO = dp_fecha_inicio.Value.ToString("yyyy-MM-dd");
+            string fechaFIN = dp_fecha_fin.Value.ToString("yyyy-MM-dd");
+
+            tablafiltrada_fehca(fechaINICIO,fechaFIN);
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            llenartabla();
+        }
+
+        private void dtpFECHA_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void materialTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox2_Click_1(object sender, EventArgs e)
+        {
+            if(tb_buscarNumero.Text !=string.Empty)
+            {
+                string numero = tb_buscarNumero.Text;
+                tablafiltrada_numero(numero);
+            }
+            else
+            {
+                MessageBox.Show("Ingrese un numero para buscar");
+            }
         }
     }
 }

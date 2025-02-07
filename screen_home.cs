@@ -51,6 +51,7 @@ namespace Inventario
             panel1.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
             //pb salidas
             pictureBox1.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
+            pictureBox2.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
             //pbuser
             pb_user.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
             //lbuser
@@ -109,6 +110,16 @@ namespace Inventario
         private void pb_user_MouseLeave(object sender, EventArgs e)
         {
             pb_user.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
+        }
+
+        private void pictureBox2_MouseEnter(object sender, EventArgs e)
+        {
+            pictureBox2.BackColor = System.Drawing.ColorTranslator.FromHtml("#374491");
+        }
+
+        private void pictureBox2_MouseLeave(object sender, EventArgs e)
+        {
+            pictureBox2.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
         }
     }
 }

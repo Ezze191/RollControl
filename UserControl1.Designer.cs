@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserControl1));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tb_numero = new MaterialSkin.Controls.MaterialTextBox();
             this.tb_peso = new MaterialSkin.Controls.MaterialTextBox();
@@ -46,8 +47,27 @@
             this.label5 = new System.Windows.Forms.Label();
             this.tx_peso = new System.Windows.Forms.Label();
             this.tx_dinero = new System.Windows.Forms.Label();
+            this.panel_filtrar = new System.Windows.Forms.Panel();
+            this.dp_fecha_fin = new System.Windows.Forms.DateTimePicker();
+            this.label7 = new System.Windows.Forms.Label();
+            this.bt_cancel = new System.Windows.Forms.PictureBox();
+            this.dp_fecha_inicio = new System.Windows.Forms.DateTimePicker();
+            this.label6 = new System.Windows.Forms.Label();
+            this.bt_aply = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.panel_pornumeros = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.tb_buscarNumero = new MaterialSkin.Controls.MaterialTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel_opciones.SuspendLayout();
+            this.panel_filtrar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bt_cancel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bt_aply)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.panel_pornumeros.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -57,7 +77,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(854, 661);
+            this.dataGridView1.Size = new System.Drawing.Size(752, 661);
             this.dataGridView1.TabIndex = 0;
             // 
             // tb_numero
@@ -134,9 +154,9 @@
             this.panel_opciones.Controls.Add(this.tb_numero);
             this.panel_opciones.Controls.Add(this.combo_medidas);
             this.panel_opciones.Controls.Add(this.tb_peso);
-            this.panel_opciones.Location = new System.Drawing.Point(940, 119);
+            this.panel_opciones.Location = new System.Drawing.Point(775, 77);
             this.panel_opciones.Name = "panel_opciones";
-            this.panel_opciones.Size = new System.Drawing.Size(318, 517);
+            this.panel_opciones.Size = new System.Drawing.Size(318, 585);
             this.panel_opciones.TabIndex = 5;
             // 
             // label3
@@ -144,16 +164,17 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(41, 368);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(124, 16);
+            this.label3.Size = new System.Drawing.Size(143, 16);
             this.label3.TabIndex = 12;
-            this.label3.Text = "FECHA DE SALIDA";
+            this.label3.Text = "FECHA DE ENTRADA";
             // 
             // dtpFECHA
             // 
-            this.dtpFECHA.Location = new System.Drawing.Point(41, 399);
+            this.dtpFECHA.Location = new System.Drawing.Point(41, 412);
             this.dtpFECHA.Name = "dtpFECHA";
             this.dtpFECHA.Size = new System.Drawing.Size(200, 22);
             this.dtpFECHA.TabIndex = 7;
+            this.dtpFECHA.ValueChanged += new System.EventHandler(this.dtpFECHA_ValueChanged);
             // 
             // label2
             // 
@@ -225,14 +246,14 @@
             this.materialButton2.Depth = 0;
             this.materialButton2.HighEmphasis = true;
             this.materialButton2.Icon = null;
-            this.materialButton2.Location = new System.Drawing.Point(80, 457);
+            this.materialButton2.Location = new System.Drawing.Point(80, 471);
             this.materialButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton2.Name = "materialButton2";
             this.materialButton2.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.materialButton2.Size = new System.Drawing.Size(141, 36);
+            this.materialButton2.Size = new System.Drawing.Size(157, 36);
             this.materialButton2.TabIndex = 7;
-            this.materialButton2.Text = "Agregar SALIDA";
+            this.materialButton2.Text = "Agregar ENTRADA";
             this.materialButton2.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.materialButton2.UseAccentColor = false;
             this.materialButton2.UseVisualStyleBackColor = false;
@@ -262,11 +283,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(982, 30);
+            this.label1.Location = new System.Drawing.Point(1036, -4);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(283, 69);
+            this.label1.Size = new System.Drawing.Size(356, 69);
             this.label1.TabIndex = 6;
-            this.label1.Text = "SALIDAS";
+            this.label1.Text = "ENTRADAS";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label4
@@ -306,10 +327,152 @@
             this.tx_dinero.Text = "0";
             this.tx_dinero.Click += new System.EventHandler(this.tx_dinero_Click);
             // 
+            // panel_filtrar
+            // 
+            this.panel_filtrar.Controls.Add(this.dp_fecha_fin);
+            this.panel_filtrar.Controls.Add(this.label7);
+            this.panel_filtrar.Controls.Add(this.dp_fecha_inicio);
+            this.panel_filtrar.Controls.Add(this.label6);
+            this.panel_filtrar.Controls.Add(this.bt_aply);
+            this.panel_filtrar.Location = new System.Drawing.Point(1117, 294);
+            this.panel_filtrar.Name = "panel_filtrar";
+            this.panel_filtrar.Size = new System.Drawing.Size(254, 128);
+            this.panel_filtrar.TabIndex = 11;
+            // 
+            // dp_fecha_fin
+            // 
+            this.dp_fecha_fin.Location = new System.Drawing.Point(57, 86);
+            this.dp_fecha_fin.Name = "dp_fecha_fin";
+            this.dp_fecha_fin.Size = new System.Drawing.Size(155, 22);
+            this.dp_fecha_fin.TabIndex = 15;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(114, 66);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(18, 16);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "a:";
+            // 
+            // bt_cancel
+            // 
+            this.bt_cancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.bt_cancel.Image = ((System.Drawing.Image)(resources.GetObject("bt_cancel.Image")));
+            this.bt_cancel.Location = new System.Drawing.Point(1143, 232);
+            this.bt_cancel.Name = "bt_cancel";
+            this.bt_cancel.Size = new System.Drawing.Size(34, 31);
+            this.bt_cancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.bt_cancel.TabIndex = 21;
+            this.bt_cancel.TabStop = false;
+            this.bt_cancel.Click += new System.EventHandler(this.bt_cancel_Click);
+            // 
+            // dp_fecha_inicio
+            // 
+            this.dp_fecha_inicio.Location = new System.Drawing.Point(57, 37);
+            this.dp_fecha_inicio.Name = "dp_fecha_inicio";
+            this.dp_fecha_inicio.Size = new System.Drawing.Size(155, 22);
+            this.dp_fecha_inicio.TabIndex = 13;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(99, 4);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(52, 16);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "FECHA";
+            // 
+            // bt_aply
+            // 
+            this.bt_aply.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.bt_aply.Image = ((System.Drawing.Image)(resources.GetObject("bt_aply.Image")));
+            this.bt_aply.Location = new System.Drawing.Point(212, -2);
+            this.bt_aply.Name = "bt_aply";
+            this.bt_aply.Size = new System.Drawing.Size(37, 33);
+            this.bt_aply.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.bt_aply.TabIndex = 20;
+            this.bt_aply.TabStop = false;
+            this.bt_aply.Click += new System.EventHandler(this.bt_aply_Click);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(1192, 222);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(56, 54);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.TabIndex = 21;
+            this.pictureBox3.TabStop = false;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(1257, 243);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(63, 16);
+            this.label10.TabIndex = 22;
+            this.label10.Text = "FILTRAR";
+            // 
+            // panel_pornumeros
+            // 
+            this.panel_pornumeros.Controls.Add(this.tb_buscarNumero);
+            this.panel_pornumeros.Controls.Add(this.label9);
+            this.panel_pornumeros.Controls.Add(this.pictureBox2);
+            this.panel_pornumeros.Location = new System.Drawing.Point(1117, 456);
+            this.panel_pornumeros.Name = "panel_pornumeros";
+            this.panel_pornumeros.Size = new System.Drawing.Size(254, 128);
+            this.panel_pornumeros.TabIndex = 22;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(49, 8);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(158, 16);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "BUSCAR POR NUMERO";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(212, -2);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(37, 33);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 20;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click_1);
+            // 
+            // tb_buscarNumero
+            // 
+            this.tb_buscarNumero.AnimateReadOnly = false;
+            this.tb_buscarNumero.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tb_buscarNumero.Depth = 0;
+            this.tb_buscarNumero.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tb_buscarNumero.Hint = "Numero";
+            this.tb_buscarNumero.LeadingIcon = null;
+            this.tb_buscarNumero.Location = new System.Drawing.Point(64, 52);
+            this.tb_buscarNumero.MaxLength = 50;
+            this.tb_buscarNumero.MouseState = MaterialSkin.MouseState.OUT;
+            this.tb_buscarNumero.Multiline = false;
+            this.tb_buscarNumero.Name = "tb_buscarNumero";
+            this.tb_buscarNumero.Size = new System.Drawing.Size(174, 50);
+            this.tb_buscarNumero.TabIndex = 13;
+            this.tb_buscarNumero.Text = "";
+            this.tb_buscarNumero.TrailingIcon = null;
+            this.tb_buscarNumero.TextChanged += new System.EventHandler(this.materialTextBox1_TextChanged);
+            // 
             // UserControl1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.panel_pornumeros);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.bt_cancel);
+            this.Controls.Add(this.pictureBox3);
+            this.Controls.Add(this.panel_filtrar);
             this.Controls.Add(this.tx_dinero);
             this.Controls.Add(this.tx_peso);
             this.Controls.Add(this.label5);
@@ -318,11 +481,19 @@
             this.Controls.Add(this.panel_opciones);
             this.Controls.Add(this.dataGridView1);
             this.Name = "UserControl1";
-            this.Size = new System.Drawing.Size(1305, 735);
+            this.Size = new System.Drawing.Size(1437, 735);
             this.Load += new System.EventHandler(this.UserControl1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel_opciones.ResumeLayout(false);
             this.panel_opciones.PerformLayout();
+            this.panel_filtrar.ResumeLayout(false);
+            this.panel_filtrar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bt_cancel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bt_aply)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            this.panel_pornumeros.ResumeLayout(false);
+            this.panel_pornumeros.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -348,5 +519,18 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label tx_peso;
         private System.Windows.Forms.Label tx_dinero;
+        private System.Windows.Forms.Panel panel_filtrar;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.DateTimePicker dp_fecha_inicio;
+        private System.Windows.Forms.DateTimePicker dp_fecha_fin;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.PictureBox bt_aply;
+        private System.Windows.Forms.PictureBox bt_cancel;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Panel panel_pornumeros;
+        private MaterialSkin.Controls.MaterialTextBox tb_buscarNumero;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
