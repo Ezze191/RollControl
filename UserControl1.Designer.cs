@@ -325,7 +325,7 @@
             this.tx_dinero.Size = new System.Drawing.Size(14, 16);
             this.tx_dinero.TabIndex = 10;
             this.tx_dinero.Text = "0";
-            this.tx_dinero.Click += new System.EventHandler(this.tx_dinero_Click);
+            
             // 
             // panel_filtrar
             // 

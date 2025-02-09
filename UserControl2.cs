@@ -16,7 +16,8 @@ namespace Inventario
     public partial class UserControl2 : UserControl
     {
         table_salidas salidas = new table_salidas();
-       
+        double restar = 0;
+
         public UserControl2()
         {
             InitializeComponent();
@@ -112,7 +113,7 @@ namespace Inventario
                 {
                     connect.EstablecerConexion();
 
-                    string query = "SELECT * FROM t_entradas WHERE NUMERO = @numero";
+                    string query = "SELECT * FROM inventario_final WHERE NUMERO = @numero";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
                     {
@@ -127,8 +128,9 @@ namespace Inventario
                                 salidas.PESO = Double.Parse(tb_peso.Text);
                                 salidas.TIPO = reader.GetString("TIPO");
                                 salidas.COSTOKILO = reader.GetDouble("COSTOKILO");
-                                salidas.TOTAL = reader.GetDouble("TOTAL");
+                                salidas.TOTAL = salidas.PESO * salidas.COSTOKILO;
                                 salidas.FECHA_DE_SALIDA = dtpFECHA.Value.ToString("yyyy-MM-dd");
+                                restar = salidas.COSTOKILO * salidas.PESO;
 
                                 double pesoanterior = reader.GetDouble("PESO");
 
@@ -138,6 +140,7 @@ namespace Inventario
                                 else
                                 {
                                     llenartabla_salidas();
+                                    restarAlInventario();
                                 }
 
                             }
@@ -182,6 +185,31 @@ namespace Inventario
                     MessageBox.Show("Error: " + ex.Message);
                 }
 
+            }
+
+        }
+
+        private void restarAlInventario()
+        {
+            try {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+                    string query = "UPDATE inventario_final SET PESO = PESO - @peso, TOTAL = TOTAL - @resta WHERE NUMERO = @numero";
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        cmd.Parameters.AddWithValue("@peso", salidas.PESO);
+                        cmd.Parameters.AddWithValue("@resta", restar);
+                        cmd.Parameters.AddWithValue("@numero", salidas.NUMERO);
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Inventario actualizado correctamente");
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
             }
 
         }

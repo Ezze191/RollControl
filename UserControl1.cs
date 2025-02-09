@@ -17,6 +17,16 @@ namespace Inventario
     public partial class UserControl1 : UserControl
     {
         private DataTable dt;
+
+        string user = "";
+        string fecha = "";
+        string numero = "";
+        double peso = 0;
+        string tipo = "";
+        string costo_porkilo = "";
+        double convert_costokilo = 0;
+        double total = 0;
+
         public UserControl1()
         {
             InitializeComponent();
@@ -138,7 +148,6 @@ namespace Inventario
 
             }
 
-
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
@@ -235,16 +244,17 @@ namespace Inventario
             else
             {
                 //guardas los datos para enviarloa a la base de datos
-                string user = user_info.Username;
-                string fecha = dtpFECHA.Value.ToString("yyyy-MM-dd");
-                string numero = tb_numero.Text;
-                double peso = Convert.ToDouble(tb_peso.Text);
-                string tipo = combo_medidas.SelectedItem.ToString();
-                string costo_porkilo = costo_kilo.SelectedItem.ToString();
-                double convert_costokilo = Convert.ToDouble(costo_porkilo);
-                double total = peso * convert_costokilo;
+                user = user_info.Username;
+                fecha = dtpFECHA.Value.ToString("yyyy-MM-dd");
+                numero = tb_numero.Text;
+                peso = Convert.ToDouble(tb_peso.Text);
+                tipo = combo_medidas.SelectedItem.ToString();
+                costo_porkilo = costo_kilo.SelectedItem.ToString();
+                convert_costokilo = Convert.ToDouble(costo_porkilo);
+                total = peso * convert_costokilo;
                 
                 //chechar si ya existe en el invetario
+                checarSiexisteEnInventario();
 
                 using (MysqlConnector connect = new MysqlConnector())
                 {
@@ -279,6 +289,98 @@ namespace Inventario
             
         }
 
+        private void checarSiexisteEnInventario()
+        {
+            try {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+
+                    string query = "SELECT NUMERO FROM inventario_final WHERE NUMERO = @number";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        cmd.Parameters.AddWithValue("@number", numero);
+                        
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                //actualizar
+                                actualizarinventario();
+                            }
+                            else
+                            {
+                                //agregarlo al inventario
+                                agregaralinventario();
+                            }
+                            
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+        private void actualizarinventario()
+        {
+            try
+            {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+
+                    string query = "UPDATE inventario_final SET PESO = PESO + @peso, TOTAL = TOTAL + @total WHERE NUMERO = @numero";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        cmd.Parameters.AddWithValue("@peso", peso);
+                        cmd.Parameters.AddWithValue("@total", total);
+                        cmd.Parameters.AddWithValue("@numero", numero);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+        private void agregaralinventario()
+        {
+            try
+            {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+
+                    string query = "INSERT INTO inventario_final (FECHA, NUMERO, PESO , TIPO , COSTOKILO, TOTAL) VALUES (@fecha, @numero, @peso , @tipo ,@convert_costokilo, @total )";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        cmd.Parameters.AddWithValue("@fecha", fecha);
+                        cmd.Parameters.AddWithValue("@numero", numero);
+                        cmd.Parameters.AddWithValue("@peso", peso);
+                        cmd.Parameters.AddWithValue("@tipo", tipo);
+                        cmd.Parameters.AddWithValue("@convert_costokilo", convert_costokilo);
+                        cmd.Parameters.AddWithValue("@total", total);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
         private void bt_costo_kilo_Click(object sender, EventArgs e)
         {
             string nuevo_costo = Microsoft.VisualBasic.Interaction.InputBox("Ingrese el nuevo costo por kilo", "Nuevo costo", "0");
@@ -294,11 +396,7 @@ namespace Inventario
             }
         }
 
-        private void tx_dinero_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void bt_cancel_Click(object sender, EventArgs e)
         {
             llenartabla();
