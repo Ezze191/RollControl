@@ -17,3 +17,4 @@ C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.csproj.Up2Date
 C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.screen_home.resources
 C:\Users\drek_\source\repos\Inventario\bin\Debug\MaterialSkin.dll
 C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.UserControl1.resources
+C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.UserControl2.resources

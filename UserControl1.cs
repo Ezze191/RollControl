@@ -244,7 +244,7 @@ namespace Inventario
                 double convert_costokilo = Convert.ToDouble(costo_porkilo);
                 double total = peso * convert_costokilo;
                 
-
+                //chechar si ya existe en el invetario
 
                 using (MysqlConnector connect = new MysqlConnector())
                 {

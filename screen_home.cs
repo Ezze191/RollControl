@@ -121,5 +121,10 @@ namespace Inventario
         {
             pictureBox2.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
         }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            LoadUserControl(new UserControl2());
+        }
     }
 }
