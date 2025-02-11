@@ -296,12 +296,13 @@ namespace Inventario
                 {
                     connect.EstablecerConexion();
 
-                    string query = "SELECT NUMERO FROM inventario_final WHERE NUMERO = @number";
+                    string query = "SELECT NUMERO FROM inventario_final WHERE NUMERO = @number AND TIPO = @tipo";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
                     {
                         cmd.Parameters.AddWithValue("@number", numero);
-                        
+                        cmd.Parameters.AddWithValue("@tipo", tipo);
+
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())

@@ -142,6 +142,7 @@
             this.Controls.Add(this.bt_login);
             this.Controls.Add(this.txt_oline);
             this.Controls.Add(this.pictureBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "screen_login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

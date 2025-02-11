@@ -18,3 +18,4 @@ C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.screen_home.resource
 C:\Users\drek_\source\repos\Inventario\bin\Debug\MaterialSkin.dll
 C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.UserControl1.resources
 C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.UserControl2.resources
+C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.UserControl3.resources

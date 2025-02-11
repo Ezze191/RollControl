@@ -56,6 +56,8 @@ namespace Inventario
             pb_user.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
             //lbuser
             lb_name.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
+            pictureBox3.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
+            pictureBox4.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
 
         }
 
@@ -125,6 +127,49 @@ namespace Inventario
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             LoadUserControl(new UserControl2());
+        }
+
+        private void panelContainer_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pictureBox3_MouseEnter(object sender, EventArgs e)
+        {
+            pictureBox3.BackColor = System.Drawing.ColorTranslator.FromHtml("#374491");
+        }
+
+        private void pictureBox3_MouseLeave(object sender, EventArgs e)
+        {
+            pictureBox3.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
+        }
+
+        private void pictureBox4_MouseEnter(object sender, EventArgs e)
+        {
+            pictureBox4.BackColor = System.Drawing.ColorTranslator.FromHtml("#374491");
+        }
+
+        private void pictureBox4_MouseLeave(object sender, EventArgs e)
+        {
+            pictureBox4.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("ESTAS SEGURO DE CERRAR SESION?", "LOG OUT", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                screen_login login = new screen_login();
+                login.Show();
+                this.Hide();
+            }
+            
+
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            LoadUserControl(new UserControl3());
         }
     }
 }
