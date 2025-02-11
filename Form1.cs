@@ -47,7 +47,16 @@ namespace Inventario
                 using(MysqlConnector connect = new MysqlConnector())
                 {
                     connect.EstablecerConexion();
-                    txt_oline.ForeColor = Color.Green;
+                    if (connect.ObtenerConexion().State == ConnectionState.Open)
+                    {
+                        txt_oline.ForeColor = Color.Green;
+                    }
+                    else
+                    {
+                        txt_oline.ForeColor = Color.Red;
+                    }
+
+                    
                 }
 
             }
