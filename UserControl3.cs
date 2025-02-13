@@ -251,6 +251,7 @@ namespace Inventario
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             string medida = combo_medidas.SelectedItem.ToString();
+            filtrarpormedida(medida);
         }
 
         private void filtrarpormedida(string medida)
@@ -313,6 +314,7 @@ namespace Inventario
         private void pictureBox4_Click(object sender, EventArgs e)
         {
             string  costokilo = costo_kilo.SelectedItem.ToString();
+            filtrarporkilo(costokilo);
         }
 
         private void filtrarporkilo(string kilo)
