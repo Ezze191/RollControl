@@ -59,6 +59,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.materialButton2 = new MaterialSkin.Controls.MaterialButton();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.EliminarFin = new System.Windows.Forms.DateTimePicker();
+            this.label8 = new System.Windows.Forms.Label();
+            this.EliminarInicio = new System.Windows.Forms.DateTimePicker();
+            this.label11 = new System.Windows.Forms.Label();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bt_cancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -70,6 +76,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -443,10 +451,67 @@
             this.materialButton2.UseVisualStyleBackColor = true;
             this.materialButton2.Click += new System.EventHandler(this.materialButton2_Click);
             // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.EliminarFin);
+            this.panel3.Controls.Add(this.label8);
+            this.panel3.Controls.Add(this.EliminarInicio);
+            this.panel3.Controls.Add(this.label11);
+            this.panel3.Controls.Add(this.pictureBox5);
+            this.panel3.Location = new System.Drawing.Point(924, 580);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(254, 128);
+            this.panel3.TabIndex = 32;
+            // 
+            // EliminarFin
+            // 
+            this.EliminarFin.Location = new System.Drawing.Point(57, 86);
+            this.EliminarFin.Name = "EliminarFin";
+            this.EliminarFin.Size = new System.Drawing.Size(155, 22);
+            this.EliminarFin.TabIndex = 15;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(114, 66);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(18, 16);
+            this.label8.TabIndex = 14;
+            this.label8.Text = "a:";
+            // 
+            // EliminarInicio
+            // 
+            this.EliminarInicio.Location = new System.Drawing.Point(57, 37);
+            this.EliminarInicio.Name = "EliminarInicio";
+            this.EliminarInicio.Size = new System.Drawing.Size(155, 22);
+            this.EliminarInicio.TabIndex = 13;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(67, 3);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(119, 16);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "ELIMINAR DATOS";
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
+            this.pictureBox5.Location = new System.Drawing.Point(212, -2);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(37, 40);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox5.TabIndex = 20;
+            this.pictureBox5.TabStop = false;
+            this.pictureBox5.Click += new System.EventHandler(this.pictureBox5_Click);
+            // 
             // UserControl3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.panel3);
             this.Controls.Add(this.materialButton2);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -479,6 +544,9 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -516,5 +584,11 @@
         private MaterialSkin.Controls.MaterialButton bt_costo_kilo;
         private MaterialSkin.Controls.MaterialComboBox costo_kilo;
         private MaterialSkin.Controls.MaterialButton materialButton2;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.DateTimePicker EliminarFin;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.DateTimePicker EliminarInicio;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.PictureBox pictureBox5;
     }
 }

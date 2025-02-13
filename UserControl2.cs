@@ -205,7 +205,7 @@ namespace Inventario
                         cmd.Parameters.AddWithValue("@resta", restar);
                         cmd.Parameters.AddWithValue("@numero", salidas.NUMERO);
                         cmd.ExecuteNonQuery();
-                        MessageBox.Show("Inventario actualizado correctamente");
+                        
                     }
                 }
 

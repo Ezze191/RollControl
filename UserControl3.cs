@@ -25,7 +25,8 @@ namespace Inventario
             panel_pornumeros.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
             panel1.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
             panel2.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
-           
+            panel3.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
+
         }
 
         private void UserControl3_Load(object sender, EventArgs e)
@@ -437,6 +438,27 @@ namespace Inventario
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+            }
+
+        }
+
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("LOS DATOS DE LA FECHA SELECCIONADA SE VAN A ELIMINAR EN LAS 3 TABLAS , ¿ESTAS SEGURO?", "ELIMINAR DATOS", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                EliminarDatos delete = new EliminarDatos();
+
+                string fINICIO = EliminarInicio.Value.ToString("yyyy-MM-dd");
+                string fFIN = EliminarFin.Value.ToString("yyyy-MM-dd");
+
+                delete.FechaInicio = fINICIO;
+                delete.FechaFin = fFIN;
+
+                //elimnar datos de todas las tablas
+                delete.EliminarEnEntradas();
+                delete.EliminarEnSalidas();
+                delete.EliminarEnInventario();
             }
 
         }
