@@ -58,6 +58,7 @@
             this.costo_kilo = new MaterialSkin.Controls.MaterialComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.materialButton2 = new MaterialSkin.Controls.MaterialButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bt_cancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -84,7 +85,7 @@
             // tx_dinero
             // 
             this.tx_dinero.AutoSize = true;
-            this.tx_dinero.Location = new System.Drawing.Point(527, 691);
+            this.tx_dinero.Location = new System.Drawing.Point(482, 691);
             this.tx_dinero.Name = "tx_dinero";
             this.tx_dinero.Size = new System.Drawing.Size(14, 16);
             this.tx_dinero.TabIndex = 18;
@@ -102,7 +103,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(414, 692);
+            this.label5.Location = new System.Drawing.Point(369, 692);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(109, 16);
             this.label5.TabIndex = 16;
@@ -422,10 +423,31 @@
             this.pictureBox4.TabStop = false;
             this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
             // 
+            // materialButton2
+            // 
+            this.materialButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton2.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.materialButton2.Depth = 0;
+            this.materialButton2.HighEmphasis = true;
+            this.materialButton2.Icon = null;
+            this.materialButton2.Location = new System.Drawing.Point(586, 681);
+            this.materialButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialButton2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialButton2.Name = "materialButton2";
+            this.materialButton2.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.materialButton2.Size = new System.Drawing.Size(64, 36);
+            this.materialButton2.TabIndex = 34;
+            this.materialButton2.Text = "PDF";
+            this.materialButton2.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.materialButton2.UseAccentColor = false;
+            this.materialButton2.UseVisualStyleBackColor = true;
+            this.materialButton2.Click += new System.EventHandler(this.materialButton2_Click);
+            // 
             // UserControl3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.materialButton2);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel_pornumeros);
@@ -493,5 +515,6 @@
         private System.Windows.Forms.PictureBox pictureBox4;
         private MaterialSkin.Controls.MaterialButton bt_costo_kilo;
         private MaterialSkin.Controls.MaterialComboBox costo_kilo;
+        private MaterialSkin.Controls.MaterialButton materialButton2;
     }
 }

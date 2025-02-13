@@ -9,6 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.VisualBasic;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using System.IO;
 
 
 
@@ -296,12 +299,13 @@ namespace Inventario
                 {
                     connect.EstablecerConexion();
 
-                    string query = "SELECT NUMERO FROM inventario_final WHERE NUMERO = @number AND TIPO = @tipo";
+                    string query = "SELECT NUMERO FROM inventario_final WHERE NUMERO = @number AND TIPO = @tipo AND COSTOKILO = @costokilo";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
                     {
                         cmd.Parameters.AddWithValue("@number", numero);
                         cmd.Parameters.AddWithValue("@tipo", tipo);
+                        cmd.Parameters.AddWithValue("@costokilo", convert_costokilo);
 
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
@@ -440,6 +444,58 @@ namespace Inventario
             else
             {
                 MessageBox.Show("Ingrese un numero para buscar");
+            }
+        }
+
+        private void materialButton3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter = "PDF files (*.pdf)|*.pdf";
+                    saveFileDialog.Title = "Guardar archivo PDF";
+                    saveFileDialog.FileName = "Entradas.pdf";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        // Crear un documento PDF
+                        Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
+                        PdfWriter.GetInstance(pdfDoc, new FileStream(saveFileDialog.FileName, FileMode.Create));
+                        pdfDoc.Open();
+
+
+
+                        // Añadir contenido al documento
+                        PdfPTable pdfTable = new PdfPTable(dataGridView1.Columns.Count);
+                        foreach (DataGridViewColumn column in dataGridView1.Columns)
+                        {
+                            PdfPCell cell = new PdfPCell(new Phrase(column.HeaderText));
+                            pdfTable.AddCell(cell);
+                        }
+
+                        foreach (DataGridViewRow row in dataGridView1.Rows)
+                        {
+                            foreach (DataGridViewCell cell in row.Cells)
+                            {
+                                pdfTable.AddCell(cell.Value?.ToString());
+                            }
+                        }
+
+                        pdfDoc.Add(pdfTable);
+
+                        //Agregar labels de total peso y total dinero al pdf
+                        pdfDoc.Add(new Paragraph("Total Peso: " + tx_peso.Text));
+                        pdfDoc.Add(new Paragraph("Total Dinero: " + tx_dinero.Text));
+
+                        pdfDoc.Close();
+                        MessageBox.Show("PDF Guardado Correctamente");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
             }
         }
     }
