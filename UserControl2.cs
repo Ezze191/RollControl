@@ -396,6 +396,15 @@ namespace Inventario
                         pdfDoc.Add(new Paragraph("Total Peso: " + tx_peso.Text));
                         pdfDoc.Add(new Paragraph("Total Dinero: " + tx_dinero.Text));
 
+                        //ruta de la imagen
+                        string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "RollControlLogo.png");
+
+                        // Agregar imagen
+                        iTextSharp.text.Image img = iTextSharp.text.Image.GetInstance(imagePath);
+                        img.ScaleToFit(70f, 60f); // Ajusta el tamaño de la imagen
+                        img.Alignment = Element.ALIGN_CENTER; // Centra la imagen
+                        pdfDoc.Add(img);
+
                         pdfDoc.Close();
                         MessageBox.Show("PDF Guardado Correctamente");
                     }

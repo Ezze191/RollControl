@@ -23,3 +23,4 @@ C:\Users\drek_\source\repos\Inventario\bin\Debug\BouncyCastle.Cryptography.dll
 C:\Users\drek_\source\repos\Inventario\bin\Debug\itextsharp.dll
 C:\Users\drek_\source\repos\Inventario\bin\Debug\BouncyCastle.Cryptography.xml
 C:\Users\drek_\source\repos\Inventario\bin\Debug\itextsharp.xml
+C:\Users\drek_\source\repos\Inventario\bin\Debug\Resources\RollControlLogo.png
