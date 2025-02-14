@@ -86,7 +86,7 @@ namespace Inventario
                     {
                         connect.EstablecerConexion();
 
-                        string query = "SELECT username FROM users WHERE username = @user AND pass = @pass";
+                        string query = "SELECT username, tipo FROM users WHERE username = @user AND pass = @pass";
 
                         using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
                         {
@@ -97,8 +97,14 @@ namespace Inventario
                             {
                                 if (reader.Read())
                                 {
+                                int numero = reader.GetInt32("tipo");
+
                                 user_info.Username = user;
                                 user_info.Password = pass;
+                                user_info.tipo = numero;
+
+
+
                                 screen_home home = new screen_home();
                                 home.Show();
                                 this.Hide();

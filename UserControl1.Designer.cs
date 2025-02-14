@@ -54,21 +54,33 @@
             this.label6 = new System.Windows.Forms.Label();
             this.bt_aply = new System.Windows.Forms.PictureBox();
             this.bt_cancel = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.label10 = new System.Windows.Forms.Label();
             this.panel_pornumeros = new System.Windows.Forms.Panel();
             this.tb_buscarNumero = new MaterialSkin.Controls.MaterialTextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.materialButton3 = new MaterialSkin.Controls.MaterialButton();
+            this.lb_total_rollos = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label8 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.materialComboBox1 = new MaterialSkin.Controls.MaterialComboBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label12 = new System.Windows.Forms.Label();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.materialComboBox2 = new MaterialSkin.Controls.MaterialComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel_opciones.SuspendLayout();
             this.panel_filtrar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bt_aply)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bt_cancel)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.panel_pornumeros.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -78,7 +90,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(752, 661);
+            this.dataGridView1.Size = new System.Drawing.Size(824, 661);
             this.dataGridView1.TabIndex = 0;
             // 
             // tb_numero
@@ -156,7 +168,7 @@
             this.panel_opciones.Controls.Add(this.tb_numero);
             this.panel_opciones.Controls.Add(this.combo_medidas);
             this.panel_opciones.Controls.Add(this.tb_peso);
-            this.panel_opciones.Location = new System.Drawing.Point(775, 77);
+            this.panel_opciones.Location = new System.Drawing.Point(830, 76);
             this.panel_opciones.Name = "panel_opciones";
             this.panel_opciones.Size = new System.Drawing.Size(318, 585);
             this.panel_opciones.TabIndex = 5;
@@ -300,38 +312,42 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(67, 686);
+            this.label4.Location = new System.Drawing.Point(5, 686);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(97, 16);
             this.label4.TabIndex = 7;
             this.label4.Text = "TOTAL PESO :";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(412, 686);
+            this.label5.Location = new System.Drawing.Point(259, 686);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(109, 16);
             this.label5.TabIndex = 8;
             this.label5.Text = "TOTAL DINERO:";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // tx_peso
             // 
             this.tx_peso.AutoSize = true;
-            this.tx_peso.Location = new System.Drawing.Point(167, 685);
+            this.tx_peso.Location = new System.Drawing.Point(105, 685);
             this.tx_peso.Name = "tx_peso";
             this.tx_peso.Size = new System.Drawing.Size(14, 16);
             this.tx_peso.TabIndex = 9;
             this.tx_peso.Text = "0";
+            this.tx_peso.Click += new System.EventHandler(this.tx_peso_Click);
             // 
             // tx_dinero
             // 
             this.tx_dinero.AutoSize = true;
-            this.tx_dinero.Location = new System.Drawing.Point(525, 685);
+            this.tx_dinero.Location = new System.Drawing.Point(372, 685);
             this.tx_dinero.Name = "tx_dinero";
             this.tx_dinero.Size = new System.Drawing.Size(14, 16);
             this.tx_dinero.TabIndex = 10;
             this.tx_dinero.Text = "0";
+            this.tx_dinero.Click += new System.EventHandler(this.tx_dinero_Click);
             // 
             // panel_filtrar
             // 
@@ -340,7 +356,7 @@
             this.panel_filtrar.Controls.Add(this.dp_fecha_inicio);
             this.panel_filtrar.Controls.Add(this.label6);
             this.panel_filtrar.Controls.Add(this.bt_aply);
-            this.panel_filtrar.Location = new System.Drawing.Point(1117, 294);
+            this.panel_filtrar.Location = new System.Drawing.Point(1172, 139);
             this.panel_filtrar.Name = "panel_filtrar";
             this.panel_filtrar.Size = new System.Drawing.Size(254, 128);
             this.panel_filtrar.TabIndex = 11;
@@ -367,15 +383,16 @@
             this.dp_fecha_inicio.Name = "dp_fecha_inicio";
             this.dp_fecha_inicio.Size = new System.Drawing.Size(155, 22);
             this.dp_fecha_inicio.TabIndex = 13;
+            this.dp_fecha_inicio.ValueChanged += new System.EventHandler(this.dp_fecha_inicio_ValueChanged);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(99, 4);
+            this.label6.Location = new System.Drawing.Point(49, 5);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(52, 16);
+            this.label6.Size = new System.Drawing.Size(148, 16);
             this.label6.TabIndex = 0;
-            this.label6.Text = "FECHA";
+            this.label6.Text = "Seguimiento por fechas";
             // 
             // bt_aply
             // 
@@ -393,7 +410,7 @@
             // 
             this.bt_cancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.bt_cancel.Image = ((System.Drawing.Image)(resources.GetObject("bt_cancel.Image")));
-            this.bt_cancel.Location = new System.Drawing.Point(1143, 232);
+            this.bt_cancel.Location = new System.Drawing.Point(1198, 72);
             this.bt_cancel.Name = "bt_cancel";
             this.bt_cancel.Size = new System.Drawing.Size(34, 31);
             this.bt_cancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -401,31 +418,21 @@
             this.bt_cancel.TabStop = false;
             this.bt_cancel.Click += new System.EventHandler(this.bt_cancel_Click);
             // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(1192, 222);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(56, 54);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 21;
-            this.pictureBox3.TabStop = false;
-            // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(1257, 243);
+            this.label10.Location = new System.Drawing.Point(1241, 76);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(63, 16);
+            this.label10.Size = new System.Drawing.Size(100, 16);
             this.label10.TabIndex = 22;
-            this.label10.Text = "FILTRAR";
+            this.label10.Text = "SEGUIMIENTO";
             // 
             // panel_pornumeros
             // 
             this.panel_pornumeros.Controls.Add(this.tb_buscarNumero);
             this.panel_pornumeros.Controls.Add(this.label9);
             this.panel_pornumeros.Controls.Add(this.pictureBox2);
-            this.panel_pornumeros.Location = new System.Drawing.Point(1117, 456);
+            this.panel_pornumeros.Location = new System.Drawing.Point(1172, 280);
             this.panel_pornumeros.Name = "panel_pornumeros";
             this.panel_pornumeros.Size = new System.Drawing.Size(254, 128);
             this.panel_pornumeros.TabIndex = 22;
@@ -454,9 +461,9 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(49, 8);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(158, 16);
+            this.label9.Size = new System.Drawing.Size(156, 16);
             this.label9.TabIndex = 0;
-            this.label9.Text = "BUSCAR POR NUMERO";
+            this.label9.Text = "Seguimiento por Numero";
             // 
             // pictureBox2
             // 
@@ -490,15 +497,152 @@
             this.materialButton3.UseVisualStyleBackColor = true;
             this.materialButton3.Click += new System.EventHandler(this.materialButton3_Click);
             // 
+            // lb_total_rollos
+            // 
+            this.lb_total_rollos.AutoSize = true;
+            this.lb_total_rollos.Location = new System.Drawing.Point(619, 685);
+            this.lb_total_rollos.Name = "lb_total_rollos";
+            this.lb_total_rollos.Size = new System.Drawing.Size(14, 16);
+            this.lb_total_rollos.TabIndex = 38;
+            this.lb_total_rollos.Text = "0";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(479, 685);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(132, 16);
+            this.label11.TabIndex = 37;
+            this.label11.Text = "TOTAL DE ROLLOS:";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.materialComboBox1);
+            this.panel1.Controls.Add(this.label8);
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Location = new System.Drawing.Point(1172, 425);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(254, 128);
+            this.panel1.TabIndex = 23;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(49, 15);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(136, 16);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Seguimiento por Tipo";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(212, -2);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(37, 33);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 20;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click_1);
+            // 
+            // materialComboBox1
+            // 
+            this.materialComboBox1.AutoResize = false;
+            this.materialComboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialComboBox1.Depth = 0;
+            this.materialComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.materialComboBox1.DropDownHeight = 174;
+            this.materialComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.materialComboBox1.DropDownWidth = 121;
+            this.materialComboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialComboBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialComboBox1.FormattingEnabled = true;
+            this.materialComboBox1.IntegralHeight = false;
+            this.materialComboBox1.ItemHeight = 43;
+            this.materialComboBox1.Items.AddRange(new object[] {
+            "71.0 CMs",
+            "76.0 CMs"});
+            this.materialComboBox1.Location = new System.Drawing.Point(72, 36);
+            this.materialComboBox1.MaxDropDownItems = 4;
+            this.materialComboBox1.MouseState = MaterialSkin.MouseState.OUT;
+            this.materialComboBox1.Name = "materialComboBox1";
+            this.materialComboBox1.Size = new System.Drawing.Size(138, 49);
+            this.materialComboBox1.StartIndex = 0;
+            this.materialComboBox1.TabIndex = 13;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.materialComboBox2);
+            this.panel2.Controls.Add(this.label12);
+            this.panel2.Controls.Add(this.pictureBox4);
+            this.panel2.Location = new System.Drawing.Point(1172, 573);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(254, 128);
+            this.panel2.TabIndex = 24;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(38, 6);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(168, 16);
+            this.label12.TabIndex = 0;
+            this.label12.Text = "Seguimiento por Costo Kilo";
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
+            this.pictureBox4.Location = new System.Drawing.Point(212, -2);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(37, 33);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox4.TabIndex = 20;
+            this.pictureBox4.TabStop = false;
+            this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
+            // 
+            // materialComboBox2
+            // 
+            this.materialComboBox2.AutoResize = false;
+            this.materialComboBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialComboBox2.Depth = 0;
+            this.materialComboBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.materialComboBox2.DropDownHeight = 174;
+            this.materialComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.materialComboBox2.DropDownWidth = 121;
+            this.materialComboBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialComboBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialComboBox2.FormattingEnabled = true;
+            this.materialComboBox2.IntegralHeight = false;
+            this.materialComboBox2.ItemHeight = 43;
+            this.materialComboBox2.Items.AddRange(new object[] {
+            "17.4",
+            "13.87",
+            "16.2",
+            "18.79",
+            "15.5",
+            "14.9"});
+            this.materialComboBox2.Location = new System.Drawing.Point(72, 39);
+            this.materialComboBox2.MaxDropDownItems = 4;
+            this.materialComboBox2.MouseState = MaterialSkin.MouseState.OUT;
+            this.materialComboBox2.Name = "materialComboBox2";
+            this.materialComboBox2.Size = new System.Drawing.Size(138, 49);
+            this.materialComboBox2.StartIndex = 0;
+            this.materialComboBox2.TabIndex = 13;
+            // 
             // UserControl1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.lb_total_rollos);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.materialButton3);
             this.Controls.Add(this.panel_pornumeros);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.bt_cancel);
-            this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.panel_filtrar);
             this.Controls.Add(this.tx_dinero);
             this.Controls.Add(this.tx_peso);
@@ -517,10 +661,15 @@
             this.panel_filtrar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bt_aply)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bt_cancel)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.panel_pornumeros.ResumeLayout(false);
             this.panel_pornumeros.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -553,12 +702,21 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.PictureBox bt_aply;
         private System.Windows.Forms.PictureBox bt_cancel;
-        private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Panel panel_pornumeros;
         private MaterialSkin.Controls.MaterialTextBox tb_buscarNumero;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.PictureBox pictureBox2;
         private MaterialSkin.Controls.MaterialButton materialButton3;
+        private System.Windows.Forms.Label lb_total_rollos;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private MaterialSkin.Controls.MaterialComboBox materialComboBox1;
+        private System.Windows.Forms.Panel panel2;
+        private MaterialSkin.Controls.MaterialComboBox materialComboBox2;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.PictureBox pictureBox4;
     }
 }

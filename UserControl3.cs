@@ -22,15 +22,23 @@ namespace Inventario
             InitializeComponent();
             //forzar colores
             panel_filtrar.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
-            panel_pornumeros.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
-            panel1.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
-            panel2.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
-            panel3.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
+           
+            
 
         }
 
         private void UserControl3_Load(object sender, EventArgs e)
         {
+            // Establece el rango de fechas permitidas al año actual
+            DateTimePicker dateTimePicker = new DateTimePicker();
+            DateTime today = DateTime.Today;
+            DateTime firstDayOfYear = new DateTime(today.Year, 1, 1);
+            DateTime lastDayOfYear = new DateTime(today.Year, 12, 31);
+
+            dp_fecha_inicio.MinDate = firstDayOfYear;
+            dp_fecha_inicio.MaxDate = lastDayOfYear;
+
+
             llenartabla();
         }
         private void llenartabla()
@@ -93,7 +101,7 @@ namespace Inventario
 
             if (!string.IsNullOrWhiteSpace(nuevamedida))
             {
-                combo_medidas.Items.Add(nuevamedida);
+                
                 MessageBox.Show("Medida agregada correctamente");
             }
             else
@@ -108,7 +116,7 @@ namespace Inventario
 
             if (!string.IsNullOrWhiteSpace(nuevo_costo))
             {
-                costo_kilo.Items.Add(nuevo_costo);
+                
                 MessageBox.Show("Costo agregado correctamente");
             }
             else
@@ -235,28 +243,20 @@ namespace Inventario
         private void bt_aply_Click(object sender, EventArgs e)
         {
             string fechaINICIO = dp_fecha_inicio.Value.ToString("yyyy-MM-dd");
-            string fechaFIN = dp_fecha_fin.Value.ToString("yyyy-MM-dd");
+            
 
-            tablafiltrada_fehca(fechaINICIO, fechaFIN);
+            
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            if (tb_buscarNumero.Text != string.Empty)
-            {
-                string numero = tb_buscarNumero.Text;
-                tablafiltrada_numero(numero);
-            }
-            else
-            {
-                MessageBox.Show("Ingrese un numero para buscar");
-            }
+           
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            string medida = combo_medidas.SelectedItem.ToString();
-            filtrarpormedida(medida);
+            
+            
         }
 
         private void filtrarpormedida(string medida)
@@ -318,8 +318,8 @@ namespace Inventario
 
         private void pictureBox4_Click(object sender, EventArgs e)
         {
-            string  costokilo = costo_kilo.SelectedItem.ToString();
-            filtrarporkilo(costokilo);
+           
+           
         }
 
         private void filtrarporkilo(string kilo)
@@ -449,11 +449,11 @@ namespace Inventario
             {
                 EliminarDatos delete = new EliminarDatos();
 
-                string fINICIO = EliminarInicio.Value.ToString("yyyy-MM-dd");
-                string fFIN = EliminarFin.Value.ToString("yyyy-MM-dd");
+                
+                
 
-                delete.FechaInicio = fINICIO;
-                delete.FechaFin = fFIN;
+                
+                
 
                 //elimnar datos de todas las tablas
                 delete.EliminarEnEntradas();

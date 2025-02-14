@@ -39,6 +39,9 @@
             this.pb_user = new System.Windows.Forms.PictureBox();
             this.panelContainer = new System.Windows.Forms.Panel();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.materialButton1 = new MaterialSkin.Controls.MaterialButton();
+            this.materialButton2 = new MaterialSkin.Controls.MaterialButton();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -47,6 +50,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pb_user)).BeginInit();
             this.panelContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitter1
@@ -154,6 +158,7 @@
             // 
             // panelContainer
             // 
+            this.panelContainer.Controls.Add(this.panel2);
             this.panelContainer.Controls.Add(this.pictureBox5);
             this.panelContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelContainer.Location = new System.Drawing.Point(152, 64);
@@ -171,6 +176,55 @@
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox5.TabIndex = 0;
             this.pictureBox5.TabStop = false;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.materialButton2);
+            this.panel2.Controls.Add(this.materialButton1);
+            this.panel2.Location = new System.Drawing.Point(1090, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(488, 60);
+            this.panel2.TabIndex = 1;
+            // 
+            // materialButton1
+            // 
+            this.materialButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton1.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.materialButton1.Depth = 0;
+            this.materialButton1.HighEmphasis = true;
+            this.materialButton1.Icon = null;
+            this.materialButton1.Location = new System.Drawing.Point(4, 6);
+            this.materialButton1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialButton1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialButton1.Name = "materialButton1";
+            this.materialButton1.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.materialButton1.Size = new System.Drawing.Size(166, 36);
+            this.materialButton1.TabIndex = 0;
+            this.materialButton1.Text = "Cerrar Inventario";
+            this.materialButton1.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.materialButton1.UseAccentColor = false;
+            this.materialButton1.UseVisualStyleBackColor = true;
+            this.materialButton1.Click += new System.EventHandler(this.materialButton1_Click);
+            // 
+            // materialButton2
+            // 
+            this.materialButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton2.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.materialButton2.Depth = 0;
+            this.materialButton2.HighEmphasis = true;
+            this.materialButton2.Icon = null;
+            this.materialButton2.Location = new System.Drawing.Point(269, 6);
+            this.materialButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialButton2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialButton2.Name = "materialButton2";
+            this.materialButton2.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.materialButton2.Size = new System.Drawing.Size(152, 36);
+            this.materialButton2.TabIndex = 1;
+            this.materialButton2.Text = "Abrir Inventario";
+            this.materialButton2.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.materialButton2.UseAccentColor = false;
+            this.materialButton2.UseVisualStyleBackColor = true;
+            this.materialButton2.Click += new System.EventHandler(this.materialButton2_Click);
             // 
             // screen_home
             // 
@@ -196,6 +250,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pb_user)).EndInit();
             this.panelContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -212,5 +268,8 @@
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.Panel panel2;
+        private MaterialSkin.Controls.MaterialButton materialButton1;
+        private MaterialSkin.Controls.MaterialButton materialButton2;
     }
 }

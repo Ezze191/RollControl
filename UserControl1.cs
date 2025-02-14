@@ -12,6 +12,8 @@ using Microsoft.VisualBasic;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
 using System.IO;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using MaterialSkin.Controls;
 
 
 
@@ -19,6 +21,8 @@ namespace Inventario
 {
     public partial class UserControl1 : UserControl
     {
+        
+
         private DataTable dt;
 
         string user = "";
@@ -35,17 +39,37 @@ namespace Inventario
             InitializeComponent();
         }
 
+        
+
         private void UserControl1_Load(object sender, EventArgs e)
         {
-            
+            //establecer la fecha actual
+            DateTime today = DateTime.Today;
+            DateTime firstDayOfMonth = new DateTime(today.Year, today.Month, 1);
+            DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+
+            dtpFECHA.MinDate = firstDayOfMonth;
+            dtpFECHA.MaxDate = lastDayOfMonth;
+
             llenartabla();
+            user_info.checarstatus();
 
-
+            if (user_info.tipo == 0)
+            {
+                if (user_info.status == "close")
+                {
+                    panel_opciones.Visible = false;
+                }
+                
+            }
+            
             //forzar colores
             panel_opciones.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
             panel_filtrar.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
             panel_pornumeros.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
             dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
+            panel1.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
+            panel2.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
         }
 
         private void llenartabla()
@@ -91,6 +115,7 @@ namespace Inventario
                             //asiganos los valores a los labels
                             tx_peso.Text = sumaPESO.ToString("N2");
                             tx_dinero.Text = sumaTOTAL.ToString("N2");
+                            lb_total_rollos.Text = dt.Rows.Count.ToString();
                         }
 
                     }
@@ -144,6 +169,7 @@ namespace Inventario
                             //asiganos los valores a los labels
                             tx_peso.Text = sumaPESO.ToString("N2");
                             tx_dinero.Text = sumaTOTAL.ToString("N2");
+                            lb_total_rollos.Text = dt.Rows.Count.ToString();
                         }
 
                     }
@@ -199,13 +225,13 @@ namespace Inventario
                             //asiganos los valores a los labels
                             tx_peso.Text = sumaPESO.ToString("N2");
                             tx_dinero.Text = sumaTOTAL.ToString("N2");
+                            lb_total_rollos.Text = dt.Rows.Count.ToString();
                         }
 
                     }
                 }
 
             }
-
 
             catch (Exception ex)
             {
@@ -229,6 +255,7 @@ namespace Inventario
 
             if (!string.IsNullOrWhiteSpace(nuevamedida)) {
                 combo_medidas.Items.Add(nuevamedida);
+                materialComboBox1.Items.Add(nuevamedida);
                 MessageBox.Show("Medida agregada correctamente");
             }
             else
@@ -246,145 +273,90 @@ namespace Inventario
             }
             else
             {
-                //guardas los datos para enviarloa a la base de datos
-                user = user_info.Username;
-                fecha = dtpFECHA.Value.ToString("yyyy-MM-dd");
-                numero = tb_numero.Text;
-                peso = Convert.ToDouble(tb_peso.Text);
-                tipo = combo_medidas.SelectedItem.ToString();
-                costo_porkilo = costo_kilo.SelectedItem.ToString();
-                convert_costokilo = Convert.ToDouble(costo_porkilo);
-                total = peso * convert_costokilo;
-                
-                //chechar si ya existe en el invetario
-                checarSiexisteEnInventario();
-
-                using (MysqlConnector connect = new MysqlConnector())
-                {
-                    try
-                    {
-                        connect.EstablecerConexion();
-                        string query = "INSERT INTO t_entradas (USUARIO , FECHA, NUMERO, PESO , TIPO , COSTOKILO, TOTAL) VALUES (@user, @fecha, @numero, @peso , @tipo ,@convert_costokilo, @total )";
-                        using(MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
-                        {
-                            cmd.Parameters.AddWithValue("@user", user);
-                            cmd.Parameters.AddWithValue("@fecha", fecha);
-                            cmd.Parameters.AddWithValue("@numero", numero);
-                            cmd.Parameters.AddWithValue("@peso", peso);
-                            cmd.Parameters.AddWithValue("@tipo", tipo);
-                            cmd.Parameters.AddWithValue("@convert_costokilo", convert_costokilo);
-                            cmd.Parameters.AddWithValue("@total", total);
-                            cmd.ExecuteNonQuery();
-                            MessageBox.Show("Entrada registrada correctamente");
-                            llenartabla();
-                        }
-                    }
-                    catch(Exception ex)
-                    {
-                        MessageBox.Show("Error: " + ex.Message);
-                    }
-                    
-                }
-
-                   
+                //chear si el numero existe en la tabla de entradas
+                checarSiexiste(tb_numero.Text);
             }
-
-            
+ 
         }
 
-        private void checarSiexisteEnInventario()
+        private void checarSiexiste(string numero)
         {
-            try {
+            try
+            {
                 using (MysqlConnector connect = new MysqlConnector())
                 {
                     connect.EstablecerConexion();
 
-                    string query = "SELECT NUMERO FROM inventario_final WHERE NUMERO = @number AND TIPO = @tipo AND COSTOKILO = @costokilo";
+                    string query = "SELECT NUMERO FROM t_entradas WHERE NUMERO = @number";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
                     {
                         cmd.Parameters.AddWithValue("@number", numero);
-                        cmd.Parameters.AddWithValue("@tipo", tipo);
-                        cmd.Parameters.AddWithValue("@costokilo", convert_costokilo);
 
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
                             {
-                                //actualizar
-                                actualizarinventario();
+                               MessageBox.Show("Numero ya existe en Entradas");
                             }
                             else
                             {
-                                //agregarlo al inventario
-                                agregaralinventario();
+                                llenartablaEntradas();
                             }
-                            
                         }
                     }
-                }
-
+                } // Aquí se cierra automáticamente la conexión con Dispose()
             }
-            catch (Exception ex)
+            catch (Exception err)
             {
-                MessageBox.Show("Error: " + ex.Message);
+                MessageBox.Show("ERROR: " + err.Message);
             }
+
         }
 
-        private void actualizarinventario()
+        private void llenartablaEntradas()
         {
-            try
+            //guardas los datos para enviarloa a la base de datos
+            user = user_info.Username;
+            fecha = dtpFECHA.Value.ToString("yyyy-MM-dd");
+            numero = tb_numero.Text;
+            peso = Convert.ToDouble(tb_peso.Text);
+            tipo = combo_medidas.SelectedItem.ToString();
+            costo_porkilo = costo_kilo.SelectedItem.ToString();
+            convert_costokilo = Convert.ToDouble(costo_porkilo);
+            total = peso * convert_costokilo;
+
+            using (MysqlConnector connect = new MysqlConnector())
             {
-                using (MysqlConnector connect = new MysqlConnector())
+                try
                 {
                     connect.EstablecerConexion();
-
-                    string query = "UPDATE inventario_final SET PESO = PESO + @peso, TOTAL = TOTAL + @total WHERE NUMERO = @numero";
-
+                    string query = "INSERT INTO t_entradas (USUARIO , FECHA, NUMERO, PESO , TIPO , COSTOKILO, TOTAL, STATUS) VALUES (@user, @fecha, @numero, @peso , @tipo ,@convert_costokilo, @total, @status )";
                     using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
                     {
-                        cmd.Parameters.AddWithValue("@peso", peso);
-                        cmd.Parameters.AddWithValue("@total", total);
-                        cmd.Parameters.AddWithValue("@numero", numero);
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
-        }
-
-        private void agregaralinventario()
-        {
-            try
-            {
-                using (MysqlConnector connect = new MysqlConnector())
-                {
-                    connect.EstablecerConexion();
-
-                    string query = "INSERT INTO inventario_final (FECHA, NUMERO, PESO , TIPO , COSTOKILO, TOTAL) VALUES (@fecha, @numero, @peso , @tipo ,@convert_costokilo, @total )";
-
-                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
-                    {
+                        cmd.Parameters.AddWithValue("@user", user);
                         cmd.Parameters.AddWithValue("@fecha", fecha);
                         cmd.Parameters.AddWithValue("@numero", numero);
                         cmd.Parameters.AddWithValue("@peso", peso);
                         cmd.Parameters.AddWithValue("@tipo", tipo);
                         cmd.Parameters.AddWithValue("@convert_costokilo", convert_costokilo);
                         cmd.Parameters.AddWithValue("@total", total);
+                        cmd.Parameters.AddWithValue("@status", "active");
                         cmd.ExecuteNonQuery();
+                        MessageBox.Show("Entrada registrada correctamente");
+                        llenartabla();
                     }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
                 }
 
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
+
         }
+
+       
 
         private void bt_costo_kilo_Click(object sender, EventArgs e)
         {
@@ -393,6 +365,7 @@ namespace Inventario
             if (!string.IsNullOrWhiteSpace(nuevo_costo))
             {
                 costo_kilo.Items.Add(nuevo_costo);
+                materialComboBox2.Items.Add(nuevo_costo);
                 MessageBox.Show("Costo agregado correctamente");
             }
             else
@@ -506,6 +479,158 @@ namespace Inventario
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
+        }
+
+        private void filtrarpormedida(string medida)
+        {
+            try
+            {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+                    string query = "SELECT * FROM t_entradas WHERE TIPO = '" + medida + "'";
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                        {
+                            DataTable dt = new DataTable();
+                            adapter.Fill(dt);
+                            dataGridView1.DataSource = dt;
+
+                            //suma
+                            double sumaPESO = 0;
+                            double sumaTOTAL = 0;
+
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                if (row["PESO"] != DBNull.Value)
+                                {
+                                    double valorPESO;
+                                    if (double.TryParse(row["PESO"].ToString(), out valorPESO))
+                                    {
+                                        sumaPESO += valorPESO;
+                                    }
+                                }
+                                if (row["TOTAL"] != DBNull.Value)
+                                {
+                                    double valorTOTAL;
+                                    if (double.TryParse(row["TOTAL"].ToString(), out valorTOTAL))
+                                    {
+                                        sumaTOTAL += valorTOTAL;
+                                    }
+                                }
+                            }
+                            //asiganos los valores a los labels
+                            tx_peso.Text = sumaPESO.ToString("N2");
+                            tx_dinero.Text = sumaTOTAL.ToString("N2");
+                            lb_total_rollos.Text = dt.Rows.Count.ToString();
+                        }
+
+                    }
+                }
+
+            }
+
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+
+        }
+        private void filtrarporkilo(string kilo)
+        {
+            try
+            {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+                    string query = "SELECT * FROM t_entradas WHERE COSTOKILO = '" + kilo + "'";
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                        {
+                            DataTable dt = new DataTable();
+                            adapter.Fill(dt);
+                            dataGridView1.DataSource = dt;
+
+                            //suma
+                            double sumaPESO = 0;
+                            double sumaTOTAL = 0;
+
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                if (row["PESO"] != DBNull.Value)
+                                {
+                                    double valorPESO;
+                                    if (double.TryParse(row["PESO"].ToString(), out valorPESO))
+                                    {
+                                        sumaPESO += valorPESO;
+                                    }
+                                }
+                                if (row["TOTAL"] != DBNull.Value)
+                                {
+                                    double valorTOTAL;
+                                    if (double.TryParse(row["TOTAL"].ToString(), out valorTOTAL))
+                                    {
+                                        sumaTOTAL += valorTOTAL;
+                                    }
+                                }
+                            }
+                            //asiganos los valores a los labels
+                            tx_peso.Text = sumaPESO.ToString("N2");
+                            tx_dinero.Text = sumaTOTAL.ToString("N2");
+                            lb_total_rollos.Text = dt.Rows.Count.ToString();
+                        }
+
+                    }
+                }
+
+            }
+
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+
+        }
+
+        private void dp_fecha_inicio_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tx_dinero_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tx_peso_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click_1(object sender, EventArgs e)
+        {
+            string medida = materialComboBox1.SelectedItem.ToString();
+            filtrarpormedida(medida);
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            string kilo = materialComboBox2.SelectedItem.ToString();
+            filtrarporkilo(kilo);
         }
     }
 }

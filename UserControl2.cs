@@ -28,11 +28,33 @@ namespace Inventario
             panel_opciones.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
             panel_filtrar.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
             panel_pornumeros.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
+            panel1.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
+            panel2.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
         }
+
+       
 
         private void UserControl2_Load(object sender, EventArgs e)
         {
+            //establecer la fecha actual
+            DateTime today = DateTime.Today;
+            DateTime firstDayOfMonth = new DateTime(today.Year, today.Month, 1);
+            DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+
+            dtpFECHA.MinDate = firstDayOfMonth;
+            dtpFECHA.MaxDate = lastDayOfMonth;
+
             llenartabla();
+            user_info.checarstatus();
+            if (user_info.tipo == 0)
+            {
+                if (user_info.status == "close")
+                {
+                    panel_opciones.Visible = false;
+
+                }
+
+            }
         }
 
         private void llenartabla()
@@ -78,6 +100,7 @@ namespace Inventario
                             //asiganos los valores a los labels
                             tx_peso.Text = sumaPESO.ToString("N2");
                             tx_dinero.Text = sumaTOTAL.ToString("N2");
+                            lb_total_rollos.Text = dt.Rows.Count.ToString();
                         }
 
                     }
@@ -116,7 +139,7 @@ namespace Inventario
                 {
                     connect.EstablecerConexion();
 
-                    string query = "SELECT * FROM inventario_final WHERE NUMERO = @numero";
+                    string query = "SELECT * FROM t_entradas WHERE NUMERO = @numero";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
                     {
@@ -137,13 +160,14 @@ namespace Inventario
 
                                 double pesoanterior = reader.GetDouble("PESO");
 
-                                if (salidas.PESO > pesoanterior) {
-                                    MessageBox.Show("EL PESO DE SALIDA DEBE SER MENOR AL PESO QUE ESTA INGRESADO");
+                                if (salidas.PESO == pesoanterior) {
+                                    llenartabla_salidas();
+                                    //poner el status en inactive en la tabla de entradas
+                                    cambiarStatus(numero);
                                 }
                                 else
                                 {
-                                    llenartabla_salidas();
-                                    restarAlInventario();
+                                    MessageBox.Show("EL PESO DE SALIDA DEBE SER IGUAL AL PESO QUE ENTRO");
                                 }
 
                             }
@@ -151,6 +175,33 @@ namespace Inventario
                             {
                                 MessageBox.Show("NUMERO NO ENCONTRADO");
                             }
+                        }
+                    }
+                } // Aquí se cierra automáticamente la conexión con Dispose()
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("ERROR: " + err.Message);
+            }
+        }
+
+        private void cambiarStatus(string numero)
+        {
+            try
+            {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+
+                    string query = "UPDATE t_entradas SET STATUS = 'inactive' WHERE NUMERO = @numero";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        cmd.Parameters.AddWithValue("@numero", numero);
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            MessageBox.Show("Status cambiado");
                         }
                     }
                 } // Aquí se cierra automáticamente la conexión con Dispose()
@@ -192,30 +243,6 @@ namespace Inventario
 
         }
 
-        private void restarAlInventario()
-        {
-            try {
-                using (MysqlConnector connect = new MysqlConnector())
-                {
-                    connect.EstablecerConexion();
-                    string query = "UPDATE inventario_final SET PESO = PESO - @peso, TOTAL = TOTAL - @resta WHERE NUMERO = @numero";
-                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
-                    {
-                        cmd.Parameters.AddWithValue("@peso", salidas.PESO);
-                        cmd.Parameters.AddWithValue("@resta", restar);
-                        cmd.Parameters.AddWithValue("@numero", salidas.NUMERO);
-                        cmd.ExecuteNonQuery();
-                        
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
-
-        }
 
         private void bt_aply_Click(object sender, EventArgs e)
         {
@@ -267,6 +294,7 @@ namespace Inventario
                             //asiganos los valores a los labels
                             tx_peso.Text = sumaPESO.ToString("N2");
                             tx_dinero.Text = sumaTOTAL.ToString("N2");
+                            lb_total_rollos.Text = dt.Rows.Count.ToString();
                         }
 
                     }
@@ -323,6 +351,7 @@ namespace Inventario
                             //asiganos los valores a los labels
                             tx_peso.Text = sumaPESO.ToString("N2");
                             tx_dinero.Text = sumaTOTAL.ToString("N2");
+                            lb_total_rollos.Text = dt.Rows.Count.ToString();
                         }
 
                     }
@@ -335,6 +364,120 @@ namespace Inventario
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
+        }
+        private void filtrarpormedida(string medida)
+        {
+            try
+            {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+                    string query = "SELECT * FROM t_salidas WHERE TIPO = '" + medida + "'";
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                        {
+                            DataTable dt = new DataTable();
+                            adapter.Fill(dt);
+                            dataGridView1.DataSource = dt;
+
+                            //suma
+                            double sumaPESO = 0;
+                            double sumaTOTAL = 0;
+
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                if (row["PESO_DE_SALIDA"] != DBNull.Value)
+                                {
+                                    double valorPESO;
+                                    if (double.TryParse(row["PESO_DE_SALIDA"].ToString(), out valorPESO))
+                                    {
+                                        sumaPESO += valorPESO;
+                                    }
+                                }
+                                if (row["TOTAL"] != DBNull.Value)
+                                {
+                                    double valorTOTAL;
+                                    if (double.TryParse(row["TOTAL"].ToString(), out valorTOTAL))
+                                    {
+                                        sumaTOTAL += valorTOTAL;
+                                    }
+                                }
+                            }
+                            //asiganos los valores a los labels
+                            tx_peso.Text = sumaPESO.ToString("N2");
+                            tx_dinero.Text = sumaTOTAL.ToString("N2");
+                            lb_total_rollos.Text = dt.Rows.Count.ToString();
+                        }
+
+                    }
+                }
+
+            }
+
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+
+        }
+        private void filtrarporkilo(string kilo)
+        {
+            try
+            {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+                    string query = "SELECT * FROM t_salidas WHERE COSTOKILO = '" + kilo + "'";
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                        {
+                            DataTable dt = new DataTable();
+                            adapter.Fill(dt);
+                            dataGridView1.DataSource = dt;
+
+                            //suma
+                            double sumaPESO = 0;
+                            double sumaTOTAL = 0;
+
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                if (row["PESO_DE_SALIDA"] != DBNull.Value)
+                                {
+                                    double valorPESO;
+                                    if (double.TryParse(row["PESO_DE_SALIDA"].ToString(), out valorPESO))
+                                    {
+                                        sumaPESO += valorPESO;
+                                    }
+                                }
+                                if (row["TOTAL"] != DBNull.Value)
+                                {
+                                    double valorTOTAL;
+                                    if (double.TryParse(row["TOTAL"].ToString(), out valorTOTAL))
+                                    {
+                                        sumaTOTAL += valorTOTAL;
+                                    }
+                                }
+                            }
+                            //asiganos los valores a los labels
+                            tx_peso.Text = sumaPESO.ToString("N2");
+                            tx_dinero.Text = sumaTOTAL.ToString("N2");
+                            lb_total_rollos.Text = dt.Rows.Count.ToString();
+                        }
+
+                    }
+                }
+
+            }
+
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
@@ -414,6 +557,58 @@ namespace Inventario
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void materialButton4_Click(object sender, EventArgs e)
+        {
+            string nuevamedida = Microsoft.VisualBasic.Interaction.InputBox("Ingrese la nueva medida", "Nueva medida", "0");
+
+            if (!string.IsNullOrWhiteSpace(nuevamedida))
+            {
+                materialComboBox1.Items.Add(nuevamedida);
+                MessageBox.Show("Medida agregada correctamente");
+            }
+            else
+            {
+                MessageBox.Show("No se ingreso ninguna medida");
+            }
+        }
+
+        private void materialButton3_Click(object sender, EventArgs e)
+        {
+            string nuevo_costo = Microsoft.VisualBasic.Interaction.InputBox("Ingrese el nuevo costo por kilo", "Nuevo costo", "0");
+
+            if (!string.IsNullOrWhiteSpace(nuevo_costo))
+            {
+                materialComboBox2.Items.Add(nuevo_costo);
+                MessageBox.Show("Costo agregado correctamente");
+            }
+            else
+            {
+                MessageBox.Show("No se ingreso ningun costo");
+            }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            string medida = materialComboBox1.Text;
+            filtrarpormedida(medida);
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            string costokilo = materialComboBox2.Text;
+            filtrarporkilo(costokilo);
         }
     }
 }

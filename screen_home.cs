@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin.Controls;
+using Microsoft.VisualBasic.ApplicationServices;
+using MySql.Data.MySqlClient;
 
 
 namespace Inventario
@@ -58,6 +60,7 @@ namespace Inventario
             lb_name.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
             pictureBox3.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
             pictureBox4.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
+            panel2.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
 
         }
 
@@ -71,6 +74,11 @@ namespace Inventario
 
         private void screen_home_Load(object sender, EventArgs e)
         {
+            if(user_info.tipo == 0)
+            {
+                panel2.Visible = false;
+            }
+            
 
             lb_name.Text = user_info.Username;
         }
@@ -170,6 +178,82 @@ namespace Inventario
         private void pictureBox3_Click(object sender, EventArgs e)
         {
             LoadUserControl(new UserControl3());
+        }
+
+        private void materialButton2_Click(object sender, EventArgs e)
+        {
+            user_info.checarstatus();
+            if(user_info.status == "open")
+            {
+                MessageBox.Show("El inventario ya esta abierto");
+            }
+            else
+            {
+                abrirInventario();
+            }
+        }
+        private void abrirInventario()
+        {
+            try
+            {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+
+                    string query = "update cerrarAbrir_inventario set status = 'open'";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            MessageBox.Show("Inventario Abierto");
+                        }
+                    }
+                } // Aquí se cierra automáticamente la conexión con Dispose()
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("ERROR: " + err.Message);
+            }
+        }
+        private void cerrarInventario()
+        {
+            try
+            {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+
+                    string query = "update cerrarAbrir_inventario set status = 'close'";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            MessageBox.Show("Inventario Cerrado");
+                        }
+                    }
+                } 
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("ERROR: " + err.Message);
+            }
+        }
+
+        private void materialButton1_Click(object sender, EventArgs e)
+        {
+            user_info.checarstatus();
+            if (user_info.status == "close")
+            {
+                MessageBox.Show("El inventario ya esta cerrado");
+            }
+            else
+            {
+                cerrarInventario();
+            }
         }
     }
 }
