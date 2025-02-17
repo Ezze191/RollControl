@@ -36,10 +36,12 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel_filtrar = new System.Windows.Forms.Panel();
-            this.dp_fecha_inicio = new System.Windows.Forms.DateTimePicker();
+            this.dtpMesSeleccionado = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
             this.bt_aply = new System.Windows.Forms.PictureBox();
             this.materialButton2 = new MaterialSkin.Controls.MaterialButton();
+            this.lb_total_rollos = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel_filtrar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bt_aply)).BeginInit();
@@ -52,13 +54,13 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(650, 661);
+            this.dataGridView1.Size = new System.Drawing.Size(650, 672);
             this.dataGridView1.TabIndex = 2;
             // 
             // tx_dinero
             // 
             this.tx_dinero.AutoSize = true;
-            this.tx_dinero.Location = new System.Drawing.Point(482, 691);
+            this.tx_dinero.Location = new System.Drawing.Point(286, 691);
             this.tx_dinero.Name = "tx_dinero";
             this.tx_dinero.Size = new System.Drawing.Size(14, 16);
             this.tx_dinero.TabIndex = 18;
@@ -67,7 +69,7 @@
             // tx_peso
             // 
             this.tx_peso.AutoSize = true;
-            this.tx_peso.Location = new System.Drawing.Point(169, 691);
+            this.tx_peso.Location = new System.Drawing.Point(102, 691);
             this.tx_peso.Name = "tx_peso";
             this.tx_peso.Size = new System.Drawing.Size(14, 16);
             this.tx_peso.TabIndex = 17;
@@ -76,7 +78,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(369, 692);
+            this.label5.Location = new System.Drawing.Point(173, 692);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(109, 16);
             this.label5.TabIndex = 16;
@@ -85,7 +87,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(69, 692);
+            this.label4.Location = new System.Drawing.Point(2, 692);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(97, 16);
             this.label4.TabIndex = 15;
@@ -95,29 +97,31 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(880, 23);
+            this.label1.Location = new System.Drawing.Point(825, 21);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(397, 69);
+            this.label1.Size = new System.Drawing.Size(583, 69);
             this.label1.TabIndex = 19;
-            this.label1.Text = "INVENTARIO";
+            this.label1.Text = "INVENTARIO FINAL";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // panel_filtrar
             // 
-            this.panel_filtrar.Controls.Add(this.dp_fecha_inicio);
+            this.panel_filtrar.Controls.Add(this.dtpMesSeleccionado);
             this.panel_filtrar.Controls.Add(this.label6);
             this.panel_filtrar.Controls.Add(this.bt_aply);
-            this.panel_filtrar.Location = new System.Drawing.Point(915, 203);
+            this.panel_filtrar.Location = new System.Drawing.Point(917, 142);
             this.panel_filtrar.Name = "panel_filtrar";
             this.panel_filtrar.Size = new System.Drawing.Size(350, 102);
             this.panel_filtrar.TabIndex = 31;
             // 
-            // dp_fecha_inicio
+            // dtpMesSeleccionado
             // 
-            this.dp_fecha_inicio.Location = new System.Drawing.Point(98, 53);
-            this.dp_fecha_inicio.Name = "dp_fecha_inicio";
-            this.dp_fecha_inicio.Size = new System.Drawing.Size(155, 22);
-            this.dp_fecha_inicio.TabIndex = 13;
+            this.dtpMesSeleccionado.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpMesSeleccionado.Location = new System.Drawing.Point(98, 53);
+            this.dtpMesSeleccionado.Name = "dtpMesSeleccionado";
+            this.dtpMesSeleccionado.Size = new System.Drawing.Size(155, 22);
+            this.dtpMesSeleccionado.TabIndex = 13;
+            this.dtpMesSeleccionado.ValueChanged += new System.EventHandler(this.dtpMesSeleccionado_ValueChanged);
             // 
             // label6
             // 
@@ -160,10 +164,30 @@
             this.materialButton2.UseVisualStyleBackColor = true;
             this.materialButton2.Click += new System.EventHandler(this.materialButton2_Click);
             // 
+            // lb_total_rollos
+            // 
+            this.lb_total_rollos.AutoSize = true;
+            this.lb_total_rollos.Location = new System.Drawing.Point(508, 691);
+            this.lb_total_rollos.Name = "lb_total_rollos";
+            this.lb_total_rollos.Size = new System.Drawing.Size(14, 16);
+            this.lb_total_rollos.TabIndex = 40;
+            this.lb_total_rollos.Text = "0";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(368, 691);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(132, 16);
+            this.label11.TabIndex = 39;
+            this.label11.Text = "TOTAL DE ROLLOS:";
+            // 
             // UserControl3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lb_total_rollos);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.materialButton2);
             this.Controls.Add(this.panel_filtrar);
             this.Controls.Add(this.label1);
@@ -193,9 +217,11 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel_filtrar;
-        private System.Windows.Forms.DateTimePicker dp_fecha_inicio;
+        private System.Windows.Forms.DateTimePicker dtpMesSeleccionado;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.PictureBox bt_aply;
         private MaterialSkin.Controls.MaterialButton materialButton2;
+        private System.Windows.Forms.Label lb_total_rollos;
+        private System.Windows.Forms.Label label11;
     }
 }

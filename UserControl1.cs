@@ -14,6 +14,7 @@ using iTextSharp.text;
 using System.IO;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using MaterialSkin.Controls;
+using System.Runtime.Remoting.Contexts;
 
 
 
@@ -80,7 +81,7 @@ namespace Inventario
                 using (MysqlConnector connect = new MysqlConnector())
                 {
                     connect.EstablecerConexion();
-                    string query = "select * from  t_entradas";
+                    string query = "select * from  t_entradas WHERE MONTH(FECHA) = MONTH(curdate())";
                     using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
                     {
                        using(MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
@@ -88,6 +89,9 @@ namespace Inventario
                             DataTable dt = new DataTable();
                             adapter.Fill(dt);
                             dataGridView1.DataSource = dt;
+
+                            dataGridView1.Columns["COSTOKILO"].DefaultCellStyle.Format = "C2"; // "C" es Currency (moneda)
+                            dataGridView1.Columns["TOTAL"].DefaultCellStyle.Format = "C2";
 
                             //suma
                             double sumaPESO = 0;
@@ -114,7 +118,7 @@ namespace Inventario
                             }
                             //asiganos los valores a los labels
                             tx_peso.Text = sumaPESO.ToString("N2");
-                            tx_dinero.Text = sumaTOTAL.ToString("N2");
+                            tx_dinero.Text = "$ " + sumaTOTAL.ToString("N2");
                             lb_total_rollos.Text = dt.Rows.Count.ToString();
                         }
 
@@ -143,6 +147,9 @@ namespace Inventario
                             adapter.Fill(dt);
                             dataGridView1.DataSource = dt;
 
+                            dataGridView1.Columns["COSTOKILO"].DefaultCellStyle.Format = "C2"; // "C" es Currency (moneda)
+                            dataGridView1.Columns["TOTAL"].DefaultCellStyle.Format = "C2";
+
                             //suma
                             double sumaPESO = 0;
                             double sumaTOTAL = 0;
@@ -168,7 +175,7 @@ namespace Inventario
                             }
                             //asiganos los valores a los labels
                             tx_peso.Text = sumaPESO.ToString("N2");
-                            tx_dinero.Text = sumaTOTAL.ToString("N2");
+                            tx_dinero.Text = "$ " + sumaTOTAL.ToString("N2");
                             lb_total_rollos.Text = dt.Rows.Count.ToString();
                         }
 
@@ -199,6 +206,10 @@ namespace Inventario
                             adapter.Fill(dt);
                             dataGridView1.DataSource = dt;
 
+                            dataGridView1.Columns["COSTOKILO"].DefaultCellStyle.Format = "C2"; // "C" es Currency (moneda)
+                            dataGridView1.Columns["TOTAL"].DefaultCellStyle.Format = "C2";
+
+
                             //suma
                             double sumaPESO = 0;
                             double sumaTOTAL = 0;
@@ -224,7 +235,7 @@ namespace Inventario
                             }
                             //asiganos los valores a los labels
                             tx_peso.Text = sumaPESO.ToString("N2");
-                            tx_dinero.Text = sumaTOTAL.ToString("N2");
+                            tx_dinero.Text = "$ " + sumaTOTAL.ToString("N2");
                             lb_total_rollos.Text = dt.Rows.Count.ToString();
                         }
 
@@ -301,7 +312,7 @@ namespace Inventario
                             }
                             else
                             {
-                                llenartablaEntradas();
+                                ChecarSiExisteEnInventarioInicial(numero);
                             }
                         }
                     }
@@ -355,6 +366,81 @@ namespace Inventario
             }
 
         }
+        private void llenartablaIventarioInicial()
+        {
+            //guardas los datos para enviarloa a la base de datos
+            fecha = dtpFECHA.Value.ToString("yyyy-MM-dd");
+            numero = tb_numero.Text;
+            peso = Convert.ToDouble(tb_peso.Text);
+            tipo = combo_medidas.SelectedItem.ToString();
+            costo_porkilo = costo_kilo.SelectedItem.ToString();
+            convert_costokilo = Convert.ToDouble(costo_porkilo);
+            total = peso * convert_costokilo;
+
+            using (MysqlConnector connect = new MysqlConnector())
+            {
+                try
+                {
+                    connect.EstablecerConexion();
+                    string query = "INSERT INTO inventario_inicial (FECHA, NUMERO, PESO , TIPO , COSTOKILO, TOTAL) VALUES (@fecha, @numero, @peso , @tipo ,@convert_costokilo, @total )";
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        cmd.Parameters.AddWithValue("@fecha", fecha);
+                        cmd.Parameters.AddWithValue("@numero", numero);
+                        cmd.Parameters.AddWithValue("@peso", peso);
+                        cmd.Parameters.AddWithValue("@tipo", tipo);
+                        cmd.Parameters.AddWithValue("@convert_costokilo", convert_costokilo);
+                        cmd.Parameters.AddWithValue("@total", total);
+                        cmd.ExecuteNonQuery();
+                        
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+
+            }
+
+        }
+
+
+        private void ChecarSiExisteEnInventarioInicial(string numero)
+        {
+            try
+            {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+
+                    string query = "SELECT NUMERO FROM inventario_inicial WHERE NUMERO = @number";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        cmd.Parameters.AddWithValue("@number", numero);
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                MessageBox.Show("Numero ya existe en el Inventario Inicial");
+                            }
+                            else
+                            {
+                                llenartablaEntradas();
+                                llenartablaIventarioInicial();
+                            }
+                        }
+                    }
+                } // Aquí se cierra automáticamente la conexión con Dispose()
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("ERROR: " + err.Message);
+            }
+        }
+
+        
 
        
 
@@ -497,6 +583,9 @@ namespace Inventario
                             adapter.Fill(dt);
                             dataGridView1.DataSource = dt;
 
+                            dataGridView1.Columns["COSTOKILO"].DefaultCellStyle.Format = "C2"; // "C" es Currency (moneda)
+                            dataGridView1.Columns["TOTAL"].DefaultCellStyle.Format = "C2";
+
                             //suma
                             double sumaPESO = 0;
                             double sumaTOTAL = 0;
@@ -522,7 +611,7 @@ namespace Inventario
                             }
                             //asiganos los valores a los labels
                             tx_peso.Text = sumaPESO.ToString("N2");
-                            tx_dinero.Text = sumaTOTAL.ToString("N2");
+                            tx_dinero.Text = "$ " +  sumaTOTAL.ToString("N2");
                             lb_total_rollos.Text = dt.Rows.Count.ToString();
                         }
 
@@ -554,6 +643,9 @@ namespace Inventario
                             adapter.Fill(dt);
                             dataGridView1.DataSource = dt;
 
+                            dataGridView1.Columns["COSTOKILO"].DefaultCellStyle.Format = "C2"; // "C" es Currency (moneda)
+                            dataGridView1.Columns["TOTAL"].DefaultCellStyle.Format = "C2";
+
                             //suma
                             double sumaPESO = 0;
                             double sumaTOTAL = 0;
@@ -579,7 +671,7 @@ namespace Inventario
                             }
                             //asiganos los valores a los labels
                             tx_peso.Text = sumaPESO.ToString("N2");
-                            tx_dinero.Text = sumaTOTAL.ToString("N2");
+                            tx_dinero.Text = "$ " +  sumaTOTAL.ToString("N2");
                             lb_total_rollos.Text = dt.Rows.Count.ToString();
                         }
 
