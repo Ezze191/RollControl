@@ -56,7 +56,7 @@ namespace Inventario
                 using (MysqlConnector connect = new MysqlConnector())
                 {
                     connect.EstablecerConexion();
-                    string query = "SELECT * \r\nFROM inventario_inicial\r\nWHERE (MONTH(FECHA) = MONTH(CURDATE()) AND YEAR(FECHA) = YEAR(CURDATE()))\r\n   OR (MONTH(FECHA) = MONTH(DATE_SUB(CURDATE(), INTERVAL 1 MONTH)) \r\n       AND YEAR(FECHA) = YEAR(DATE_SUB(CURDATE(), INTERVAL 1 MONTH)))";
+                    string query = "SELECT * FROM inventario_inicial";
                     using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
                     {
                         using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
@@ -68,7 +68,7 @@ namespace Inventario
                             dataGridView1.Columns["COSTOKILO"].DefaultCellStyle.Format = "C2"; // "C" es Currency (moneda)
                             dataGridView1.Columns["TOTAL"].DefaultCellStyle.Format = "C2";
 
-                            //suma
+                            // suma
                             double sumaPESO = 0;
                             double sumaTOTAL = 0;
 
@@ -91,16 +91,15 @@ namespace Inventario
                                     }
                                 }
                             }
-                            //asiganos los valores a los labels
+                            // asignar los valores a los labels
                             tx_peso.Text = sumaPESO.ToString("N2");
-                            tx_dinero.Text = "$ " +  sumaTOTAL.ToString("N2");
+                            tx_dinero.Text = "$ " + sumaTOTAL.ToString("N2");
                             lb_total_rollos.Text = dt.Rows.Count.ToString();
 
                             DatosCount.T_INVENTARIO_PESO = sumaPESO.ToString("N2");
                             DatosCount.T_INVENTARIO_DINERO = sumaTOTAL.ToString("N2");
                             DatosCount.T_INVENTARIO_ROLLOS = dt.Rows.Count.ToString();
                         }
-
                     }
                 }
             }
@@ -591,8 +590,8 @@ namespace Inventario
                     connect.EstablecerConexion();
 
                     // Obtener datos de las tablas t_entradas y t_salidas con parámetros
-                    DataTable dtEntradas = ObtenerDatos("SELECT * FROM t_entradas WHERE MONTH(FECHA) = @mes AND YEAR(FECHA) = @anio", connect, mesSeleccionado, añoSeleccionado);
-                    DataTable dtSalidas = ObtenerDatos("SELECT * FROM t_salidas WHERE MONTH(FECHA_DE_SALIDA) = @mes AND YEAR(FECHA_DE_SALIDA) = @anio", connect, mesSeleccionado, añoSeleccionado);
+                    DataTable dtEntradas = ObtenerDatos("SELECT * FROM t_entradas", connect);
+                    DataTable dtSalidas = ObtenerDatos("SELECT * FROM t_salidas", connect);
 
                     // Obtener datos desde dataGridView1
                     DataTable dtDesdeDataGrid = ObtenerDesdeDataGridView(dataGridView1);
@@ -607,15 +606,14 @@ namespace Inventario
             }
         }
 
-        private DataTable ObtenerDatos(string query, MysqlConnector connect, int mes, int anio)
+        private DataTable ObtenerDatos(string query, MysqlConnector connect)
         {
             DataTable dt = new DataTable();
             try
             {
                 using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
                 {
-                    cmd.Parameters.AddWithValue("@mes", mes);
-                    cmd.Parameters.AddWithValue("@anio", anio);
+                    
 
                     using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
                     {
@@ -669,6 +667,13 @@ namespace Inventario
                             var wsEntradas = wb.Worksheets.Add(dtEntradas, "Entradas");
                             FormatearMoneda(wsEntradas, dtEntradas);
                             wsEntradas.Columns().AdjustToContents(); // 🔹 Ajustar ancho de columnas
+
+                            // Agregar contenido de labels debajo de la tabla
+                            var lastRowEntradas = dtEntradas.Rows.Count + 2; // Dos filas debajo de la tabla
+                            wsEntradas.Cell(lastRowEntradas, 1).Value = "TOTAL DINERO : $ " + DatosCount.T_ENTRADAS_DINERO;
+                            wsEntradas.Cell(lastRowEntradas + 1, 1).Value = "TOTAL PESO: " + DatosCount.T_ENTRADAS_PESO;
+                            wsEntradas.Cell(lastRowEntradas + 2, 1).Value = "TOTAL ROLLOS :" + DatosCount.T_ENTRADAS_ROLLOS;
+
                         }
 
                         if (dtSalidas.Rows.Count > 0)
@@ -689,6 +694,12 @@ namespace Inventario
                             var wsDataGrid = wb.Worksheets.Add(dtDesdeDataGrid, "Inventario Final");
                             FormatearMoneda(wsDataGrid, dtDesdeDataGrid);
                             wsDataGrid.Columns().AdjustToContents(); // 🔹 Ajustar ancho de columnas
+
+                            // Agregar contenido de labels debajo de la tabla
+                            var lastRowDataGrid = dtDesdeDataGrid.Rows.Count + 2; // Dos filas debajo de la tabla
+                            wsDataGrid.Cell(lastRowDataGrid, 1).Value = "TOTAL DINERO : $ " + DatosCount.T_INVENTARIO_DINERO;
+                            wsDataGrid.Cell(lastRowDataGrid + 1, 1).Value = "TOTAL PESO: " + DatosCount.T_INVENTARIO_PESO;
+                            wsDataGrid.Cell(lastRowDataGrid + 2, 1).Value = "TOTAL ROLLOS :" + DatosCount.T_INVENTARIO_ROLLOS;
                         }
 
                         // Guardar el archivo

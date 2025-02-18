@@ -484,12 +484,12 @@
             this.materialButton3.Depth = 0;
             this.materialButton3.HighEmphasis = true;
             this.materialButton3.Icon = null;
-            this.materialButton3.Location = new System.Drawing.Point(688, 670);
+            this.materialButton3.Location = new System.Drawing.Point(759, 676);
             this.materialButton3.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton3.Name = "materialButton3";
             this.materialButton3.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.materialButton3.Size = new System.Drawing.Size(64, 36);
+            this.materialButton3.Size = new System.Drawing.Size(65, 36);
             this.materialButton3.TabIndex = 36;
             this.materialButton3.Text = "EXCEL";
             this.materialButton3.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;

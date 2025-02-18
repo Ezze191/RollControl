@@ -46,3 +46,4 @@ C:\Users\drek_\source\repos\Inventario\bin\Debug\System.Buffers.xml
 C:\Users\drek_\source\repos\Inventario\bin\Debug\System.Memory.xml
 C:\Users\drek_\source\repos\Inventario\bin\Debug\System.Numerics.Vectors.xml
 C:\Users\drek_\source\repos\Inventario\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.UserControl4.resources

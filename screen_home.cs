@@ -61,6 +61,8 @@ namespace Inventario
             pictureBox3.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
             pictureBox4.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
             panel2.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
+            pb_tool.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
+
 
         }
 
@@ -77,6 +79,7 @@ namespace Inventario
             if(user_info.tipo == 0)
             {
                 panel2.Visible = false;
+                pb_tool.Visible = false;
             }
             
 
@@ -254,6 +257,22 @@ namespace Inventario
             {
                 cerrarInventario();
             }
+        }
+
+        private void pb_tool_Click(object sender, EventArgs e)
+        {
+            LoadUserControl(new UserControl4());
+        }
+
+        private void pb_tool_MouseEnter(object sender, EventArgs e)
+        {
+            pb_tool.BackColor = System.Drawing.ColorTranslator.FromHtml("#374491");
+            
+        }
+
+        private void pb_tool_MouseLeave(object sender, EventArgs e)
+        {
+            pb_tool.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
         }
     }
 }
