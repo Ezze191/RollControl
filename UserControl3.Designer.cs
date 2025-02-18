@@ -39,9 +39,9 @@
             this.dtpMesSeleccionado = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
             this.bt_aply = new System.Windows.Forms.PictureBox();
-            this.materialButton2 = new MaterialSkin.Controls.MaterialButton();
             this.lb_total_rollos = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.excelButtom = new MaterialSkin.Controls.MaterialButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel_filtrar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bt_aply)).BeginInit();
@@ -144,26 +144,6 @@
             this.bt_aply.TabStop = false;
             this.bt_aply.Click += new System.EventHandler(this.bt_aply_Click);
             // 
-            // materialButton2
-            // 
-            this.materialButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialButton2.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.materialButton2.Depth = 0;
-            this.materialButton2.HighEmphasis = true;
-            this.materialButton2.Icon = null;
-            this.materialButton2.Location = new System.Drawing.Point(586, 681);
-            this.materialButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialButton2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialButton2.Name = "materialButton2";
-            this.materialButton2.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.materialButton2.Size = new System.Drawing.Size(64, 36);
-            this.materialButton2.TabIndex = 34;
-            this.materialButton2.Text = "PDF";
-            this.materialButton2.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.materialButton2.UseAccentColor = false;
-            this.materialButton2.UseVisualStyleBackColor = true;
-            this.materialButton2.Click += new System.EventHandler(this.materialButton2_Click);
-            // 
             // lb_total_rollos
             // 
             this.lb_total_rollos.AutoSize = true;
@@ -182,13 +162,33 @@
             this.label11.TabIndex = 39;
             this.label11.Text = "TOTAL DE ROLLOS:";
             // 
+            // excelButtom
+            // 
+            this.excelButtom.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.excelButtom.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.excelButtom.Depth = 0;
+            this.excelButtom.HighEmphasis = true;
+            this.excelButtom.Icon = null;
+            this.excelButtom.Location = new System.Drawing.Point(585, 681);
+            this.excelButtom.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.excelButtom.MouseState = MaterialSkin.MouseState.HOVER;
+            this.excelButtom.Name = "excelButtom";
+            this.excelButtom.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.excelButtom.Size = new System.Drawing.Size(65, 36);
+            this.excelButtom.TabIndex = 41;
+            this.excelButtom.Text = "EXCEL";
+            this.excelButtom.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.excelButtom.UseAccentColor = false;
+            this.excelButtom.UseVisualStyleBackColor = true;
+            this.excelButtom.Click += new System.EventHandler(this.materialButton1_Click_1);
+            // 
             // UserControl3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.excelButtom);
             this.Controls.Add(this.lb_total_rollos);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.materialButton2);
             this.Controls.Add(this.panel_filtrar);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tx_dinero);
@@ -220,8 +220,8 @@
         private System.Windows.Forms.DateTimePicker dtpMesSeleccionado;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.PictureBox bt_aply;
-        private MaterialSkin.Controls.MaterialButton materialButton2;
         private System.Windows.Forms.Label lb_total_rollos;
         private System.Windows.Forms.Label label11;
+        private MaterialSkin.Controls.MaterialButton excelButtom;
     }
 }

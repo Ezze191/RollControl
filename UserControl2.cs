@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClosedXML.Excel;
 
 namespace Inventario
 {
@@ -101,6 +102,10 @@ namespace Inventario
                             tx_peso.Text = sumaPESO.ToString("N2");
                             tx_dinero.Text = sumaTOTAL.ToString("N2");
                             lb_total_rollos.Text = dt.Rows.Count.ToString();
+
+                            DatosCount.T_SALIDAS_PESO = sumaPESO.ToString("N2");
+                            DatosCount.T_SALIDAS_DINERO = sumaTOTAL.ToString("N2");
+                            DatosCount.T_SALIDAS_ROLLOS = dt.Rows.Count.ToString();
                         }
 
                     }
@@ -387,6 +392,10 @@ namespace Inventario
                             tx_peso.Text = sumaPESO.ToString("N2");
                             tx_dinero.Text = "$ " + sumaTOTAL.ToString("N2");
                             lb_total_rollos.Text = dt.Rows.Count.ToString();
+
+                            DatosCount.T_SALIDAS_PESO = sumaPESO.ToString("N2");
+                            DatosCount.T_SALIDAS_DINERO = sumaTOTAL.ToString("N2");
+                            DatosCount.T_SALIDAS_ROLLOS = dt.Rows.Count.ToString();
                         }
 
                     }
@@ -447,6 +456,10 @@ namespace Inventario
                             tx_peso.Text = sumaPESO.ToString("N2");
                             tx_dinero.Text = "$ " +  sumaTOTAL.ToString("N2");
                             lb_total_rollos.Text = dt.Rows.Count.ToString();
+
+                            DatosCount.T_SALIDAS_PESO = sumaPESO.ToString("N2");
+                            DatosCount.T_SALIDAS_DINERO = sumaTOTAL.ToString("N2");
+                            DatosCount.T_SALIDAS_ROLLOS = dt.Rows.Count.ToString();
                         }
 
                     }
@@ -506,6 +519,10 @@ namespace Inventario
                             tx_peso.Text = sumaPESO.ToString("N2");
                             tx_dinero.Text = "$ " +  sumaTOTAL.ToString("N2");
                             lb_total_rollos.Text = dt.Rows.Count.ToString();
+
+                            DatosCount.T_SALIDAS_PESO = sumaPESO.ToString("N2");
+                            DatosCount.T_SALIDAS_DINERO = sumaTOTAL.ToString("N2");
+                            DatosCount.T_SALIDAS_ROLLOS = dt.Rows.Count.ToString();
                         }
 
                     }
@@ -566,6 +583,10 @@ namespace Inventario
                             tx_peso.Text = sumaPESO.ToString("N2");
                             tx_dinero.Text = "$ " +  sumaTOTAL.ToString("N2");
                             lb_total_rollos.Text = dt.Rows.Count.ToString();
+
+                            DatosCount.T_SALIDAS_PESO = sumaPESO.ToString("N2");
+                            DatosCount.T_SALIDAS_DINERO = sumaTOTAL.ToString("N2");
+                            DatosCount.T_SALIDAS_ROLLOS = dt.Rows.Count.ToString();
                         }
 
                     }
@@ -603,60 +624,70 @@ namespace Inventario
         {
             try
             {
-                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
-                {
-                    saveFileDialog.Filter = "PDF files (*.pdf)|*.pdf";
-                    saveFileDialog.Title = "Guardar archivo PDF";
-                    saveFileDialog.FileName = "Salidas.pdf";
-
-                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        // Crear un documento PDF
-                        Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
-                        PdfWriter.GetInstance(pdfDoc, new FileStream(saveFileDialog.FileName, FileMode.Create));
-                        pdfDoc.Open();
-
-
-
-                        // Añadir contenido al documento
-                        PdfPTable pdfTable = new PdfPTable(dataGridView1.Columns.Count);
-                        foreach (DataGridViewColumn column in dataGridView1.Columns)
-                        {
-                            PdfPCell cell = new PdfPCell(new Phrase(column.HeaderText));
-                            pdfTable.AddCell(cell);
-                        }
-
-                        foreach (DataGridViewRow row in dataGridView1.Rows)
-                        {
-                            foreach (DataGridViewCell cell in row.Cells)
-                            {
-                                pdfTable.AddCell(cell.Value?.ToString());
-                            }
-                        }
-
-                        pdfDoc.Add(pdfTable);
-
-                        //Agregar labels de total peso y total dinero al pdf
-                        pdfDoc.Add(new Paragraph("Total Peso: " + tx_peso.Text));
-                        pdfDoc.Add(new Paragraph("Total Dinero: " + tx_dinero.Text));
-
-                        //ruta de la imagen
-                        string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "RollControlLogo.png");
-
-                        // Agregar imagen
-                        iTextSharp.text.Image img = iTextSharp.text.Image.GetInstance(imagePath);
-                        img.ScaleToFit(70f, 60f); // Ajusta el tamaño de la imagen
-                        img.Alignment = Element.ALIGN_CENTER; // Centra la imagen
-                        pdfDoc.Add(img);
-
-                        pdfDoc.Close();
-                        MessageBox.Show("PDF Guardado Correctamente");
-                    }
-                }
+                DataTable dtDesdeDataGrid = ObtenerDesdeDataGridView(dataGridView1);
+                GuardarExcel(dtDesdeDataGrid);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+        private DataTable ObtenerDesdeDataGridView(DataGridView dgv)
+        {
+            DataTable dt = new DataTable();
+
+            // Crear columnas en la DataTable según las columnas del DataGridView
+            foreach (DataGridViewColumn column in dgv.Columns)
+            {
+                dt.Columns.Add(column.HeaderText);
+            }
+
+            // Llenar la DataTable con los datos del DataGridView
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                if (!row.IsNewRow)
+                {
+                    DataRow dr = dt.NewRow();
+                    for (int i = 0; i < dgv.Columns.Count; i++)
+                    {
+                        dr[i] = row.Cells[i].Value ?? DBNull.Value;
+                    }
+                    dt.Rows.Add(dr);
+                }
+            }
+            return dt;
+        }
+
+        private void GuardarExcel(DataTable dt)
+        {
+            using (SaveFileDialog sfd = new SaveFileDialog { Filter = "Excel Files|*.xlsx", Title = "Guardar Excel" })
+            {
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    using (XLWorkbook wb = new XLWorkbook())
+                    {
+                        var ws = wb.Worksheets.Add(dt, "ENTRADAS");
+                        ws.Columns().AdjustToContents(); // Ajustar ancho de columnas
+
+                        // Formatear las columnas COSTOKILO y TOTAL con el signo de pesos
+                        // Asumiendo que las columnas "COSTOKILO" y "TOTAL" son numéricas (tipo de datos double o decimal)
+                        if (dt.Columns.Contains("COSTOKILO"))
+                        {
+                            var columnaCosto = ws.Column(dt.Columns.IndexOf("COSTOKILO") + 1); // El índice en Excel es 1-based
+                            columnaCosto.Style.NumberFormat.Format = "$ #,##0.00"; // Formato de moneda
+                        }
+
+                        if (dt.Columns.Contains("TOTAL"))
+                        {
+                            var columnaTotal = ws.Column(dt.Columns.IndexOf("TOTAL") + 1);
+                            columnaTotal.Style.NumberFormat.Format = "$ #,##0.00"; // Formato de moneda
+                        }
+
+                        wb.SaveAs(sfd.FileName);
+                        MessageBox.Show("Datos exportados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
             }
         }
 

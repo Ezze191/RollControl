@@ -12,6 +12,9 @@ using System.Windows.Forms;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.IO;
+using ClosedXML.Excel;
+using System.Reflection.Emit;
+
 
 namespace Inventario
 {
@@ -92,6 +95,10 @@ namespace Inventario
                             tx_peso.Text = sumaPESO.ToString("N2");
                             tx_dinero.Text = "$ " +  sumaTOTAL.ToString("N2");
                             lb_total_rollos.Text = dt.Rows.Count.ToString();
+
+                            DatosCount.T_INVENTARIO_PESO = sumaPESO.ToString("N2");
+                            DatosCount.T_INVENTARIO_DINERO = sumaTOTAL.ToString("N2");
+                            DatosCount.T_INVENTARIO_ROLLOS = dt.Rows.Count.ToString();
                         }
 
                     }
@@ -183,6 +190,10 @@ namespace Inventario
                             tx_peso.Text = sumaPESO.ToString("N2");
                             tx_dinero.Text = "$ " + sumaTOTAL.ToString("N2");
                             lb_total_rollos.Text = dt.Rows.Count.ToString();
+
+                            DatosCount.T_INVENTARIO_PESO = sumaPESO.ToString("N2");
+                            DatosCount.T_INVENTARIO_DINERO = sumaTOTAL.ToString("N2");
+                            DatosCount.T_INVENTARIO_ROLLOS = dt.Rows.Count.ToString();
                         }
 
                     }
@@ -242,6 +253,10 @@ namespace Inventario
                             tx_peso.Text = sumaPESO.ToString("N2");
                             tx_dinero.Text = "$ " + sumaTOTAL.ToString("N2");
                             lb_total_rollos.Text = dt.Rows.Count.ToString();
+
+                            DatosCount.T_INVENTARIO_PESO = sumaPESO.ToString("N2");
+                            DatosCount.T_INVENTARIO_DINERO = sumaTOTAL.ToString("N2");
+                            DatosCount.T_INVENTARIO_ROLLOS = dt.Rows.Count.ToString();
                         }
 
                     }
@@ -325,6 +340,10 @@ namespace Inventario
                             tx_peso.Text = sumaPESO.ToString("N2");
                             tx_dinero.Text = "$ " + sumaTOTAL.ToString("N2");
                             lb_total_rollos.Text = dt.Rows.Count.ToString();
+
+                            DatosCount.T_INVENTARIO_PESO = sumaPESO.ToString("N2");
+                            DatosCount.T_INVENTARIO_DINERO = sumaTOTAL.ToString("N2");
+                            DatosCount.T_INVENTARIO_ROLLOS = dt.Rows.Count.ToString();
                         }
 
                     }
@@ -396,6 +415,10 @@ namespace Inventario
                             tx_peso.Text = sumaPESO.ToString("N2");
                             tx_dinero.Text = "$ " + sumaTOTAL.ToString("N2");
                             lb_total_rollos.Text = dt.Rows.Count.ToString();
+
+                            DatosCount.T_INVENTARIO_PESO = sumaPESO.ToString("N2");
+                            DatosCount.T_INVENTARIO_DINERO = sumaTOTAL.ToString("N2");
+                            DatosCount.T_INVENTARIO_ROLLOS = dt.Rows.Count.ToString();
                         }
 
                     }
@@ -463,6 +486,10 @@ namespace Inventario
                             tx_peso.Text = sumaPESO.ToString("N2");
                             tx_dinero.Text = "$ " + sumaTOTAL.ToString("N2");
                             lb_total_rollos.Text = dt.Rows.Count.ToString();
+
+                            DatosCount.T_INVENTARIO_PESO = sumaPESO.ToString("N2");
+                            DatosCount.T_INVENTARIO_DINERO = sumaTOTAL.ToString("N2");
+                            DatosCount.T_INVENTARIO_ROLLOS = dt.Rows.Count.ToString();
                         }
 
                     }
@@ -543,82 +570,154 @@ namespace Inventario
 
         private void pictureBox5_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("LOS DATOS DE LA FECHA SELECCIONADA SE VAN A ELIMINAR EN LAS 3 TABLAS , ¿ESTAS SEGURO?", "ELIMINAR DATOS", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                EliminarDatos delete = new EliminarDatos();
-
-                //elimnar datos de todas las tablas
-                delete.EliminarEnEntradas();
-                delete.EliminarEnSalidas();
-                delete.EliminarEnInventario();
-            }
-
+           
         }
-        private void LlenarInventario_final()
-        {
-            DataTable dt = new DataTable();
-            try
-            {
-                using (MysqlConnector connect = new MysqlConnector())
-                {
-                    connect.EstablecerConexion();
-                    string query = "";
-                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
-                    {
-                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
-                        {
-                            adapter.Fill(dt);
-                            dataGridView1.DataSource = dt;
-
-                            dataGridView1.Columns["COSTOKILO"].DefaultCellStyle.Format = "C2"; // "C" es Currency (moneda)
-                            dataGridView1.Columns["TOTAL"].DefaultCellStyle.Format = "C2";
-
-                            //suma
-                            double sumaPESO = 0;
-                            double sumaTOTAL = 0;
-
-                            foreach (DataRow row in dt.Rows)
-                            {
-                                if (row["PESO"] != DBNull.Value)
-                                {
-                                    double valorPESO;
-                                    if (double.TryParse(row["PESO"].ToString(), out valorPESO))
-                                    {
-                                        sumaPESO += valorPESO;
-                                    }
-                                }
-                                if (row["TOTAL"] != DBNull.Value)
-                                {
-                                    double valorTOTAL;
-                                    if (double.TryParse(row["TOTAL"].ToString(), out valorTOTAL))
-                                    {
-                                        sumaTOTAL += valorTOTAL;
-                                    }
-                                }
-                            }
-                            //asiganos los valores a los labels
-                            tx_peso.Text = sumaPESO.ToString("N2");
-                            tx_dinero.Text = "$ " + sumaTOTAL.ToString("N2");
-                            lb_total_rollos.Text = dt.Rows.Count.ToString();
-                        }
-
-                    }
-                }
-
-            }
-
-
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
-
-        }
+        
 
         private void dtpMesSeleccionado_ValueChanged(object sender, EventArgs e)
         {
 
         }
+
+        private void materialButton1_Click_1(object sender, EventArgs e)
+        {
+            int mesSeleccionado = dtpMesSeleccionado.Value.Month;
+            int añoSeleccionado = dtpMesSeleccionado.Value.Year;
+
+            try
+            {
+                using (MysqlConnector connect = new MysqlConnector()) // Tu conexión a MySQL
+                {
+                    connect.EstablecerConexion();
+
+                    // Obtener datos de las tablas t_entradas y t_salidas con parámetros
+                    DataTable dtEntradas = ObtenerDatos("SELECT * FROM t_entradas WHERE MONTH(FECHA) = @mes AND YEAR(FECHA) = @anio", connect, mesSeleccionado, añoSeleccionado);
+                    DataTable dtSalidas = ObtenerDatos("SELECT * FROM t_salidas WHERE MONTH(FECHA_DE_SALIDA) = @mes AND YEAR(FECHA_DE_SALIDA) = @anio", connect, mesSeleccionado, añoSeleccionado);
+
+                    // Obtener datos desde dataGridView1
+                    DataTable dtDesdeDataGrid = ObtenerDesdeDataGridView(dataGridView1);
+
+                    // Guardar en archivo Excel
+                    GuardarExcel(dtEntradas, dtSalidas, dtDesdeDataGrid);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+        private DataTable ObtenerDatos(string query, MysqlConnector connect, int mes, int anio)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                {
+                    cmd.Parameters.AddWithValue("@mes", mes);
+                    cmd.Parameters.AddWithValue("@anio", anio);
+
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al obtener datos: " + ex.Message);
+            }
+            return dt;
+        }
+
+        private DataTable ObtenerDesdeDataGridView(DataGridView dgv)
+        {
+            DataTable dt = new DataTable();
+
+            // Crear columnas en el DataTable según las columnas del DataGridView
+            foreach (DataGridViewColumn column in dgv.Columns)
+            {
+                dt.Columns.Add(column.HeaderText);
+            }
+
+            // Llenar el DataTable con los datos del DataGridView
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                if (!row.IsNewRow)
+                {
+                    DataRow dr = dt.NewRow();
+                    for (int i = 0; i < dgv.Columns.Count; i++)
+                    {
+                        dr[i] = row.Cells[i].Value ?? DBNull.Value;
+                    }
+                    dt.Rows.Add(dr);
+                }
+            }
+            return dt;
+        }
+
+        private void GuardarExcel(DataTable dtEntradas, DataTable dtSalidas, DataTable dtDesdeDataGrid)
+        {
+            using (SaveFileDialog sfd = new SaveFileDialog { Filter = "Excel Files|*.xlsx", Title = "Guardar Excel" })
+            {
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    using (XLWorkbook wb = new XLWorkbook())
+                    {
+                        if (dtEntradas.Rows.Count > 0)
+                        {
+                            var wsEntradas = wb.Worksheets.Add(dtEntradas, "Entradas");
+                            FormatearMoneda(wsEntradas, dtEntradas);
+                            wsEntradas.Columns().AdjustToContents(); // 🔹 Ajustar ancho de columnas
+                        }
+
+                        if (dtSalidas.Rows.Count > 0)
+                        {
+                            var wsSalidas = wb.Worksheets.Add(dtSalidas, "Salidas");
+                            FormatearMoneda(wsSalidas, dtSalidas);
+                            wsSalidas.Columns().AdjustToContents(); // 🔹 Ajustar ancho de columnas
+
+                            // Agregar contenido de labels debajo de la tabla
+                            var lastRowSalidas = dtSalidas.Rows.Count + 2; // Dos filas debajo de la tabla
+                            wsSalidas.Cell(lastRowSalidas, 1).Value = "TOTAL DINERO : $ " + DatosCount.T_SALIDAS_DINERO; 
+                            wsSalidas.Cell(lastRowSalidas + 1, 1).Value = "TOTAL PESO: " + DatosCount.T_SALIDAS_PESO; 
+                            wsSalidas.Cell(lastRowSalidas + 2, 1).Value = "TOTAL ROLLOS :" + DatosCount.T_SALIDAS_ROLLOS; 
+                        }
+
+                        if (dtDesdeDataGrid.Rows.Count > 0)
+                        {
+                            var wsDataGrid = wb.Worksheets.Add(dtDesdeDataGrid, "Inventario Final");
+                            FormatearMoneda(wsDataGrid, dtDesdeDataGrid);
+                            wsDataGrid.Columns().AdjustToContents(); // 🔹 Ajustar ancho de columnas
+                        }
+
+                        // Guardar el archivo
+                        wb.SaveAs(sfd.FileName);
+                        MessageBox.Show("Datos exportados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+        }
+
+        // Método para aplicar formato de moneda a las columnas COSTOKILO y TOTAL
+        private void FormatearMoneda(IXLWorksheet ws, DataTable dt)
+        {
+            int colCostoKilo = dt.Columns.Contains("COSTOKILO") ? dt.Columns["COSTOKILO"].Ordinal + 1 : -1;
+            int colTotal = dt.Columns.Contains("TOTAL") ? dt.Columns["TOTAL"].Ordinal + 1 : -1;
+
+            if (colCostoKilo > 0)
+            {
+                ws.Column(colCostoKilo).Style.NumberFormat.Format = "$#,##0.00";
+            }
+
+            if (colTotal > 0)
+            {
+                ws.Column(colTotal).Style.NumberFormat.Format = "$#,##0.00";
+            }
+
+            ws.Columns().AdjustToContents(); // 🔹 Ajustar ancho de todas las columnas
+        }
+
+
     }
 }
