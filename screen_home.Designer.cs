@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(screen_home));
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pb_tool = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -42,8 +43,9 @@
             this.materialButton2 = new MaterialSkin.Controls.MaterialButton();
             this.materialButton1 = new MaterialSkin.Controls.MaterialButton();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.pb_tool = new System.Windows.Forms.PictureBox();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_tool)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -52,7 +54,7 @@
             this.panelContainer.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_tool)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             this.SuspendLayout();
             // 
             // splitter1
@@ -79,6 +81,20 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(146, 960);
             this.panel1.TabIndex = 1;
+            // 
+            // pb_tool
+            // 
+            this.pb_tool.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pb_tool.Image = ((System.Drawing.Image)(resources.GetObject("pb_tool.Image")));
+            this.pb_tool.Location = new System.Drawing.Point(-2, 645);
+            this.pb_tool.Name = "pb_tool";
+            this.pb_tool.Size = new System.Drawing.Size(159, 147);
+            this.pb_tool.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_tool.TabIndex = 4;
+            this.pb_tool.TabStop = false;
+            this.pb_tool.Click += new System.EventHandler(this.pb_tool_Click);
+            this.pb_tool.MouseEnter += new System.EventHandler(this.pb_tool_MouseEnter);
+            this.pb_tool.MouseLeave += new System.EventHandler(this.pb_tool_MouseLeave);
             // 
             // pictureBox4
             // 
@@ -166,17 +182,18 @@
             this.panelContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelContainer.Location = new System.Drawing.Point(152, 64);
             this.panelContainer.Name = "panelContainer";
-            this.panelContainer.Size = new System.Drawing.Size(1769, 960);
+            this.panelContainer.Size = new System.Drawing.Size(1787, 960);
             this.panelContainer.TabIndex = 2;
             this.panelContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.panelContainer_Paint);
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.pictureBox6);
             this.panel2.Controls.Add(this.materialButton2);
             this.panel2.Controls.Add(this.materialButton1);
-            this.panel2.Location = new System.Drawing.Point(1090, 0);
+            this.panel2.Location = new System.Drawing.Point(1324, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(488, 60);
+            this.panel2.Size = new System.Drawing.Size(572, 60);
             this.panel2.TabIndex = 1;
             // 
             // materialButton2
@@ -222,32 +239,30 @@
             // pictureBox5
             // 
             this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(314, 61);
+            this.pictureBox5.Location = new System.Drawing.Point(280, 38);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(1264, 836);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox5.TabIndex = 0;
             this.pictureBox5.TabStop = false;
             // 
-            // pb_tool
+            // pictureBox6
             // 
-            this.pb_tool.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pb_tool.Image = ((System.Drawing.Image)(resources.GetObject("pb_tool.Image")));
-            this.pb_tool.Location = new System.Drawing.Point(-2, 645);
-            this.pb_tool.Name = "pb_tool";
-            this.pb_tool.Size = new System.Drawing.Size(159, 147);
-            this.pb_tool.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pb_tool.TabIndex = 4;
-            this.pb_tool.TabStop = false;
-            this.pb_tool.Click += new System.EventHandler(this.pb_tool_Click);
-            this.pb_tool.MouseEnter += new System.EventHandler(this.pb_tool_MouseEnter);
-            this.pb_tool.MouseLeave += new System.EventHandler(this.pb_tool_MouseLeave);
+            this.pictureBox6.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
+            this.pictureBox6.Location = new System.Drawing.Point(507, 1);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(62, 54);
+            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox6.TabIndex = 2;
+            this.pictureBox6.TabStop = false;
+            this.pictureBox6.Click += new System.EventHandler(this.pictureBox6_Click);
             // 
             // screen_home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1924, 1027);
+            this.ClientSize = new System.Drawing.Size(1942, 1027);
             this.Controls.Add(this.panelContainer);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.splitter1);
@@ -260,6 +275,7 @@
             this.Load += new System.EventHandler(this.screen_home_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_tool)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -269,7 +285,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_tool)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -290,5 +306,6 @@
         private MaterialSkin.Controls.MaterialButton materialButton1;
         private MaterialSkin.Controls.MaterialButton materialButton2;
         private System.Windows.Forms.PictureBox pb_tool;
+        private System.Windows.Forms.PictureBox pictureBox6;
     }
 }

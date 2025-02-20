@@ -58,6 +58,12 @@ namespace Inventario
             }
         }
 
+        private void clearText()
+        {
+            tb_numero.Text = string.Empty;
+            tb_peso.Text = string.Empty;
+        }
+
         private void llenartabla()
         {
             dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
@@ -212,7 +218,7 @@ namespace Inventario
 
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
-                            llenartabla_salidas();
+                            clearText();
                         }
                     }
                 }
@@ -669,6 +675,15 @@ namespace Inventario
                     {
                         var ws = wb.Worksheets.Add(dt, "ENTRADAS");
                         ws.Columns().AdjustToContents(); // Ajustar ancho de columnas
+
+
+                        int lastRow = dt.Rows.Count + 1;
+
+                        //agregas los labels
+                        ws.Cell(lastRow + 1, 1).Value = "TOTAL PESO: " + DatosCount.T_SALIDAS_PESO;
+                        ws.Cell(lastRow + 2, 1).Value = "TOTAL DINERO: " + DatosCount.T_SALIDAS_DINERO;
+                        ws.Cell(lastRow + 3, 1).Value = "TOTAL ROLLOS: " + DatosCount.T_SALIDAS_ROLLOS;
+
 
                         // Formatear las columnas COSTOKILO y TOTAL con el signo de pesos
                         // Asumiendo que las columnas "COSTOKILO" y "TOTAL" son numéricas (tipo de datos double o decimal)

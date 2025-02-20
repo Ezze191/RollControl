@@ -62,6 +62,7 @@ namespace Inventario
             pictureBox4.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
             panel2.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
             pb_tool.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
+            pictureBox6.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
 
 
         }
@@ -273,6 +274,11 @@ namespace Inventario
         private void pb_tool_MouseLeave(object sender, EventArgs e)
         {
             pb_tool.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
+        }
+
+        private void pictureBox6_Click(object sender, EventArgs e)
+        {
+            LoadUserControl(new UserControl5());
         }
     }
 }
