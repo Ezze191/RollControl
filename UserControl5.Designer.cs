@@ -38,14 +38,15 @@
             this.EntradasEditar = new MaterialSkin.Controls.MaterialButton();
             this.label2 = new System.Windows.Forms.Label();
             this.panel_editarUsuarios = new System.Windows.Forms.Panel();
+            this.opciones = new MaterialSkin.Controls.MaterialComboBox();
+            this.bl_tiporol = new System.Windows.Forms.Label();
+            this.Contra = new MaterialSkin.Controls.MaterialTextBox();
+            this.User = new MaterialSkin.Controls.MaterialTextBox();
             this.BasuraBT = new System.Windows.Forms.PictureBox();
             this.SalidasBuscar = new System.Windows.Forms.PictureBox();
             this.Editarbt = new MaterialSkin.Controls.MaterialButton();
             this.label3 = new System.Windows.Forms.Label();
-            this.User = new MaterialSkin.Controls.MaterialTextBox();
-            this.Contra = new MaterialSkin.Controls.MaterialTextBox();
-            this.bl_tiporol = new System.Windows.Forms.Label();
-            this.opciones = new MaterialSkin.Controls.MaterialComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel_AgregarUsuarios.SuspendLayout();
             this.panel_editarUsuarios.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BasuraBT)).BeginInit();
@@ -201,6 +202,76 @@
             this.panel_editarUsuarios.Size = new System.Drawing.Size(314, 606);
             this.panel_editarUsuarios.TabIndex = 23;
             // 
+            // opciones
+            // 
+            this.opciones.AutoResize = false;
+            this.opciones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.opciones.Depth = 0;
+            this.opciones.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.opciones.DropDownHeight = 174;
+            this.opciones.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.opciones.DropDownWidth = 121;
+            this.opciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.opciones.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.opciones.FormattingEnabled = true;
+            this.opciones.IntegralHeight = false;
+            this.opciones.ItemHeight = 43;
+            this.opciones.Items.AddRange(new object[] {
+            "NORMAL",
+            "ADMINISTRADOR"});
+            this.opciones.Location = new System.Drawing.Point(60, 376);
+            this.opciones.MaxDropDownItems = 4;
+            this.opciones.MouseState = MaterialSkin.MouseState.OUT;
+            this.opciones.Name = "opciones";
+            this.opciones.Size = new System.Drawing.Size(221, 49);
+            this.opciones.StartIndex = 0;
+            this.opciones.TabIndex = 16;
+            // 
+            // bl_tiporol
+            // 
+            this.bl_tiporol.AutoSize = true;
+            this.bl_tiporol.Location = new System.Drawing.Point(57, 338);
+            this.bl_tiporol.Name = "bl_tiporol";
+            this.bl_tiporol.Size = new System.Drawing.Size(78, 16);
+            this.bl_tiporol.TabIndex = 16;
+            this.bl_tiporol.Text = "Tipo de Rol";
+            // 
+            // Contra
+            // 
+            this.Contra.AnimateReadOnly = false;
+            this.Contra.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Contra.Depth = 0;
+            this.Contra.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.Contra.Hint = "Contraseña";
+            this.Contra.LeadingIcon = null;
+            this.Contra.Location = new System.Drawing.Point(60, 163);
+            this.Contra.MaxLength = 50;
+            this.Contra.MouseState = MaterialSkin.MouseState.OUT;
+            this.Contra.Multiline = false;
+            this.Contra.Name = "Contra";
+            this.Contra.Size = new System.Drawing.Size(221, 50);
+            this.Contra.TabIndex = 16;
+            this.Contra.Text = "";
+            this.Contra.TrailingIcon = null;
+            // 
+            // User
+            // 
+            this.User.AnimateReadOnly = false;
+            this.User.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.User.Depth = 0;
+            this.User.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.User.Hint = "Nombre de Usuario";
+            this.User.LeadingIcon = null;
+            this.User.Location = new System.Drawing.Point(60, 68);
+            this.User.MaxLength = 50;
+            this.User.MouseState = MaterialSkin.MouseState.OUT;
+            this.User.Multiline = false;
+            this.User.Name = "User";
+            this.User.Size = new System.Drawing.Size(221, 50);
+            this.User.TabIndex = 16;
+            this.User.Text = "";
+            this.User.TrailingIcon = null;
+            // 
             // BasuraBT
             // 
             this.BasuraBT.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -255,80 +326,22 @@
             this.label3.Text = "Editar Usuarios";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
-            // User
+            // label4
             // 
-            this.User.AnimateReadOnly = false;
-            this.User.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.User.Depth = 0;
-            this.User.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.User.Hint = "Nombre de Usuario";
-            this.User.LeadingIcon = null;
-            this.User.Location = new System.Drawing.Point(60, 68);
-            this.User.MaxLength = 50;
-            this.User.MouseState = MaterialSkin.MouseState.OUT;
-            this.User.Multiline = false;
-            this.User.Name = "User";
-            this.User.Size = new System.Drawing.Size(221, 50);
-            this.User.TabIndex = 16;
-            this.User.Text = "";
-            this.User.TrailingIcon = null;
-            // 
-            // Contra
-            // 
-            this.Contra.AnimateReadOnly = false;
-            this.Contra.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Contra.Depth = 0;
-            this.Contra.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.Contra.Hint = "Contraseña";
-            this.Contra.LeadingIcon = null;
-            this.Contra.Location = new System.Drawing.Point(60, 163);
-            this.Contra.MaxLength = 50;
-            this.Contra.MouseState = MaterialSkin.MouseState.OUT;
-            this.Contra.Multiline = false;
-            this.Contra.Name = "Contra";
-            this.Contra.Size = new System.Drawing.Size(221, 50);
-            this.Contra.TabIndex = 16;
-            this.Contra.Text = "";
-            this.Contra.TrailingIcon = null;
-            // 
-            // bl_tiporol
-            // 
-            this.bl_tiporol.AutoSize = true;
-            this.bl_tiporol.Location = new System.Drawing.Point(57, 338);
-            this.bl_tiporol.Name = "bl_tiporol";
-            this.bl_tiporol.Size = new System.Drawing.Size(78, 16);
-            this.bl_tiporol.TabIndex = 16;
-            this.bl_tiporol.Text = "Tipo de Rol";
-            // 
-            // opciones
-            // 
-            this.opciones.AutoResize = false;
-            this.opciones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.opciones.Depth = 0;
-            this.opciones.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.opciones.DropDownHeight = 174;
-            this.opciones.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.opciones.DropDownWidth = 121;
-            this.opciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.opciones.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.opciones.FormattingEnabled = true;
-            this.opciones.IntegralHeight = false;
-            this.opciones.ItemHeight = 43;
-            this.opciones.Items.AddRange(new object[] {
-            "NORMAL",
-            "ADMINISTRADOR"});
-            this.opciones.Location = new System.Drawing.Point(60, 376);
-            this.opciones.MaxDropDownItems = 4;
-            this.opciones.MouseState = MaterialSkin.MouseState.OUT;
-            this.opciones.Name = "opciones";
-            this.opciones.Size = new System.Drawing.Size(221, 49);
-            this.opciones.StartIndex = 0;
-            this.opciones.TabIndex = 16;
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(552, 10);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(343, 69);
+            this.label4.TabIndex = 24;
+            this.label4.Text = "USUARIOS";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // UserControl5
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.panel_editarUsuarios);
             this.Controls.Add(this.panel_AgregarUsuarios);
             this.Name = "UserControl5";
@@ -341,6 +354,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.BasuraBT)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SalidasBuscar)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -363,5 +377,6 @@
         private MaterialSkin.Controls.MaterialComboBox opciones;
         private System.Windows.Forms.Label bl_tiporol;
         private MaterialSkin.Controls.MaterialTextBox Contra;
+        private System.Windows.Forms.Label label4;
     }
 }

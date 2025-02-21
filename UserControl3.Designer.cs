@@ -147,7 +147,7 @@
             // lb_total_rollos
             // 
             this.lb_total_rollos.AutoSize = true;
-            this.lb_total_rollos.Location = new System.Drawing.Point(508, 691);
+            this.lb_total_rollos.Location = new System.Drawing.Point(538, 691);
             this.lb_total_rollos.Name = "lb_total_rollos";
             this.lb_total_rollos.Size = new System.Drawing.Size(14, 16);
             this.lb_total_rollos.TabIndex = 40;
@@ -156,7 +156,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(368, 691);
+            this.label11.Location = new System.Drawing.Point(406, 691);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(132, 16);
             this.label11.TabIndex = 39;

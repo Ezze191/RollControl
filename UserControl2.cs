@@ -138,9 +138,11 @@ namespace Inventario
             {
                 string nu = tb_numero.Text;
                 //buscar numero en entradas para ponerlo en el status inactive
-                buscarnumero(nu);
-                //y luego checha en el inventario inicial si existe y lo elimina
                 ChecarSiExisteEnInventarioInicial(nu);
+
+                
+                //y luego checha en el inventario inicial si existe y lo elimina
+                
             }
             
         }
@@ -177,6 +179,7 @@ namespace Inventario
 
                                 if (salidas.PESO == pesoanterior)
                                 {
+                                    cambiarStatus(numero);
                                     EliminarDelInvetarioInicial(numero);
                                 }
                                 else
@@ -187,7 +190,7 @@ namespace Inventario
                             }
                             else
                             {
-                                
+                                MessageBox.Show("EL NUMERO NO EXISTE EN EL INVENTARIO");
                             }
                         }
                     }
@@ -218,6 +221,7 @@ namespace Inventario
 
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
+                            llenartabla_salidas();
                             clearText();
                         }
                     }
@@ -273,7 +277,7 @@ namespace Inventario
                             }
                             else
                             {
-                                
+                                ChecarSiExisteEnInventarioInicial(numero);
                             }
                         }
                     }
