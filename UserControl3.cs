@@ -660,40 +660,54 @@ namespace Inventario
                         {
                             var wsEntradas = wb.Worksheets.Add(dtEntradas, "Entradas");
                             FormatearMoneda(wsEntradas, dtEntradas);
-                            wsEntradas.Columns().AdjustToContents(); // 🔹 Ajustar ancho de columnas
+                            wsEntradas.Columns().AdjustToContents();
 
-                            // Agregar contenido de labels debajo de la tabla
-                            var lastRowEntradas = dtEntradas.Rows.Count + 2; // Dos filas debajo de la tabla
-                            wsEntradas.Cell(lastRowEntradas, 1).Value = "TOTAL DINERO : $ " + DatosCount.T_ENTRADAS_DINERO;
-                            wsEntradas.Cell(lastRowEntradas + 1, 1).Value = "TOTAL PESO: " + DatosCount.T_ENTRADAS_PESO;
-                            wsEntradas.Cell(lastRowEntradas + 2, 1).Value = "TOTAL ROLLOS :" + DatosCount.T_ENTRADAS_ROLLOS;
+                            // Calcular totales de t_entradas
+                            decimal totalDinero = dtEntradas.AsEnumerable().Sum(row => row["TOTAL"] != DBNull.Value ? Convert.ToDecimal(row["TOTAL"]) : 0);
+                            decimal totalPeso = dtEntradas.AsEnumerable().Sum(row => row["COSTOKILO"] != DBNull.Value ? Convert.ToDecimal(row["COSTOKILO"]) : 0);
+                            int totalRollos = dtEntradas.Rows.Count; // Cantidad de registros
 
+                            // Escribir los totales en el archivo Excel
+                            var lastRowEntradas = dtEntradas.Rows.Count + 2;
+                            wsEntradas.Cell(lastRowEntradas, 1).Value = "TOTAL DINERO : $ " + totalDinero;
+                            wsEntradas.Cell(lastRowEntradas + 1, 1).Value = "TOTAL PESO: " + totalPeso;
+                            wsEntradas.Cell(lastRowEntradas + 2, 1).Value = "TOTAL ROLLOS :" + totalRollos;
                         }
 
                         if (dtSalidas.Rows.Count > 0)
                         {
                             var wsSalidas = wb.Worksheets.Add(dtSalidas, "Salidas");
                             FormatearMoneda(wsSalidas, dtSalidas);
-                            wsSalidas.Columns().AdjustToContents(); // 🔹 Ajustar ancho de columnas
+                            wsSalidas.Columns().AdjustToContents();
 
-                            // Agregar contenido de labels debajo de la tabla
-                            var lastRowSalidas = dtSalidas.Rows.Count + 2; // Dos filas debajo de la tabla
-                            wsSalidas.Cell(lastRowSalidas, 1).Value = "TOTAL DINERO : $ " + DatosCount.T_SALIDAS_DINERO; 
-                            wsSalidas.Cell(lastRowSalidas + 1, 1).Value = "TOTAL PESO: " + DatosCount.T_SALIDAS_PESO; 
-                            wsSalidas.Cell(lastRowSalidas + 2, 1).Value = "TOTAL ROLLOS :" + DatosCount.T_SALIDAS_ROLLOS; 
+                            // Calcular totales de t_salidas
+                            decimal totalDinero = dtSalidas.AsEnumerable().Sum(row => row["TOTAL"] != DBNull.Value ? Convert.ToDecimal(row["TOTAL"]) : 0);
+                            decimal totalPeso = dtSalidas.AsEnumerable().Sum(row => row["COSTOKILO"] != DBNull.Value ? Convert.ToDecimal(row["COSTOKILO"]) : 0);
+                            int totalRollos = dtSalidas.Rows.Count;
+
+                            // Escribir los totales en el archivo Excel
+                            var lastRowSalidas = dtSalidas.Rows.Count + 2;
+                            wsSalidas.Cell(lastRowSalidas, 1).Value = "TOTAL DINERO : $ " + totalDinero;
+                            wsSalidas.Cell(lastRowSalidas + 1, 1).Value = "TOTAL PESO: " + totalPeso;
+                            wsSalidas.Cell(lastRowSalidas + 2, 1).Value = "TOTAL ROLLOS :" + totalRollos;
                         }
 
                         if (dtDesdeDataGrid.Rows.Count > 0)
                         {
                             var wsDataGrid = wb.Worksheets.Add(dtDesdeDataGrid, "Inventario Final");
                             FormatearMoneda(wsDataGrid, dtDesdeDataGrid);
-                            wsDataGrid.Columns().AdjustToContents(); // 🔹 Ajustar ancho de columnas
+                            wsDataGrid.Columns().AdjustToContents();
 
-                            // Agregar contenido de labels debajo de la tabla
-                            var lastRowDataGrid = dtDesdeDataGrid.Rows.Count + 2; // Dos filas debajo de la tabla
-                            wsDataGrid.Cell(lastRowDataGrid, 1).Value = "TOTAL DINERO : $ " + DatosCount.T_INVENTARIO_DINERO;
-                            wsDataGrid.Cell(lastRowDataGrid + 1, 1).Value = "TOTAL PESO: " + DatosCount.T_INVENTARIO_PESO;
-                            wsDataGrid.Cell(lastRowDataGrid + 2, 1).Value = "TOTAL ROLLOS :" + DatosCount.T_INVENTARIO_ROLLOS;
+                            // Calcular totales del DataGridView
+                            decimal totalDinero = dtDesdeDataGrid.AsEnumerable().Sum(row => row["TOTAL"] != DBNull.Value ? Convert.ToDecimal(row["TOTAL"]) : 0);
+                            decimal totalPeso = dtDesdeDataGrid.AsEnumerable().Sum(row => row["COSTOKILO"] != DBNull.Value ? Convert.ToDecimal(row["COSTOKILO"]) : 0);
+                            int totalRollos = dtDesdeDataGrid.Rows.Count;
+
+                            // Escribir los totales en el archivo Excel
+                            var lastRowDataGrid = dtDesdeDataGrid.Rows.Count + 2;
+                            wsDataGrid.Cell(lastRowDataGrid, 1).Value = "TOTAL DINERO : $ " + totalDinero;
+                            wsDataGrid.Cell(lastRowDataGrid + 1, 1).Value = "TOTAL PESO: " + totalPeso;
+                            wsDataGrid.Cell(lastRowDataGrid + 2, 1).Value = "TOTAL ROLLOS :" + totalRollos;
                         }
 
                         // Guardar el archivo
