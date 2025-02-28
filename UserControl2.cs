@@ -794,31 +794,36 @@ namespace Inventario
                 {
                     using (XLWorkbook wb = new XLWorkbook())
                     {
-                        var ws = wb.Worksheets.Add(dt, "ENTRADAS");
-                        ws.Columns().AdjustToContents(); // Ajustar ancho de columnas
+                        // Concatenar el símbolo de "$" a las columnas "COSTOKILO" y "TOTAL"
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            if (dt.Columns.Contains("COSTOKILO") && row["COSTOKILO"] != DBNull.Value)
+                            {
+                                row["COSTOKILO"] = "$" + Convert.ToDecimal(row["COSTOKILO"]).ToString("N2");
+                            }
 
+                            if (dt.Columns.Contains("TOTAL") && row["TOTAL"] != DBNull.Value)
+                            {
+                                row["TOTAL"] = "$" + Convert.ToDecimal(row["TOTAL"]).ToString("N2");
+                            }
+                        }
+
+                        var ws = wb.Worksheets.Add(dt, "SALIDAS");
+                        ws.Columns().AdjustToContents(); // Ajustar ancho de columnas
 
                         int lastRow = dt.Rows.Count + 1;
 
-                        //agregas los labels
-                        ws.Cell(lastRow + 1, 1).Value = "TOTAL PESO: " + DatosCount.T_SALIDAS_PESO;
-                        ws.Cell(lastRow + 2, 1).Value = "TOTAL DINERO: " + DatosCount.T_SALIDAS_DINERO;
-                        ws.Cell(lastRow + 3, 1).Value = "TOTAL ROLLOS: " + DatosCount.T_SALIDAS_ROLLOS;
+                        // Obtener los índices de las columnas "PESO_DE_SALIDA" y "TOTAL"
+                        int columnaPesoIndex = dt.Columns.IndexOf("PESO_DE_SALIDA") + 1; // El índice en Excel es 1-based
+                        int columnaTotalIndex = dt.Columns.IndexOf("TOTAL") + 1;
 
+                        // Agregar un renglón en blanco
+                        int textoRow = lastRow + 2;
 
-                        // Formatear las columnas COSTOKILO y TOTAL con el signo de pesos
-                        // Asumiendo que las columnas "COSTOKILO" y "TOTAL" son numéricas (tipo de datos double o decimal)
-                        if (dt.Columns.Contains("COSTOKILO"))
-                        {
-                            var columnaCosto = ws.Column(dt.Columns.IndexOf("COSTOKILO") + 1); // El índice en Excel es 1-based
-                            columnaCosto.Style.NumberFormat.Format = "$ #,##0.00"; // Formato de moneda
-                        }
-
-                        if (dt.Columns.Contains("TOTAL"))
-                        {
-                            var columnaTotal = ws.Column(dt.Columns.IndexOf("TOTAL") + 1);
-                            columnaTotal.Style.NumberFormat.Format = "$ #,##0.00"; // Formato de moneda
-                        }
+                        // Agregar los textos en la misma fila debajo de las columnas correspondientes
+                        ws.Cell(textoRow, columnaPesoIndex).Value = "TOTAL PESO: " + DatosCount.T_SALIDAS_PESO;
+                        ws.Cell(textoRow, columnaTotalIndex).Value = "TOTAL DINERO: " + DatosCount.T_SALIDAS_DINERO;
+                        ws.Cell(textoRow, 1).Value = "TOTAL ROLLOS: " + DatosCount.T_SALIDAS_ROLLOS;
 
                         wb.SaveAs(sfd.FileName);
                         MessageBox.Show("Datos exportados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);

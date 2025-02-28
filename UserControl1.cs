@@ -660,7 +660,19 @@ namespace Inventario
                     DataRow dr = dt.NewRow();
                     for (int i = 0; i < dgv.Columns.Count; i++)
                     {
-                        dr[i] = row.Cells[i].Value ?? DBNull.Value;
+                        var columnName = dgv.Columns[i].HeaderText;
+                        var cellValue = row.Cells[i].Value ?? DBNull.Value;
+
+                        // Concatenar el símbolo de "$" a las columnas "COSTOKILO" y "TOTAL"
+                        if (columnName == "COSTOKILO" || columnName == "TOTAL")
+                        {
+                            if (cellValue != DBNull.Value)
+                            {
+                                cellValue = "$" + cellValue.ToString();
+                            }
+                        }
+
+                        dr[i] = cellValue;
                     }
                     dt.Rows.Add(dr);
                 }
@@ -681,20 +693,22 @@ namespace Inventario
 
                         int lastRow = dt.Rows.Count + 1;
 
-                        //agregas los labels
-                        ws.Cell(lastRow + 1, 1).Value = "TOTAL PESO: " + DatosCount.T_ENTRADAS_PESO;
-                        ws.Cell(lastRow + 2, 1).Value = "TOTAL DINERO: " + DatosCount.T_ENTRADAS_DINERO;
-                        ws.Cell(lastRow + 3, 1).Value = "TOTAL ROLLOS: " + DatosCount.T_ENTRADAS_ROLLOS;
+                        // Obtener los índices de las columnas "PESO" y "TOTAL"
+                        int columnaPesoIndex = dt.Columns.IndexOf("PESO") + 1; // El índice en Excel es 1-based
+                        int columnaTotalIndex = dt.Columns.IndexOf("TOTAL") + 1;
 
+                        // Agregar un renglón en blanco
+                        int textoRow = lastRow + 2;
 
-
-
+                        // Agregar los textos en la misma fila debajo de las columnas correspondientes
+                        ws.Cell(textoRow, columnaPesoIndex).Value = "TOTAL PESO: " + DatosCount.T_ENTRADAS_PESO;
+                        ws.Cell(textoRow, columnaTotalIndex).Value = "TOTAL DINERO: " + DatosCount.T_ENTRADAS_DINERO;
+                        ws.Cell(textoRow, 1).Value = "TOTAL ROLLOS: " + DatosCount.T_ENTRADAS_ROLLOS;
 
                         // Formatear las columnas COSTOKILO y TOTAL con el signo de pesos
-                        // Asumiendo que las columnas "COSTOKILO" y "TOTAL" son numéricas (tipo de datos double o decimal)
                         if (dt.Columns.Contains("COSTOKILO"))
                         {
-                            var columnaCosto = ws.Column(dt.Columns.IndexOf("COSTOKILO") + 1); // El índice en Excel es 1-based
+                            var columnaCosto = ws.Column(dt.Columns.IndexOf("COSTOKILO") + 1);
                             columnaCosto.Style.NumberFormat.Format = "$ #,##0.00"; // Formato de moneda
                         }
 
