@@ -573,14 +573,13 @@ namespace Inventario
 
         private void materialButton1_Click_1(object sender, EventArgs e)
         {
-
             try
             {
                 using (MysqlConnector connect = new MysqlConnector()) // Tu conexión a MySQL
                 {
                     connect.EstablecerConexion();
 
-                    // Obtener datos de las tablas t_entradas y t_salidas con parámetros
+                    // Obtener datos de las tablas t_entradas y t_salidas
                     string queryEntradas = $"SELECT * FROM t_entradas WHERE MONTH(FECHA) = {mesSeleccionado} AND YEAR(FECHA) = {anioSeleccionado}";
                     DataTable dtEntradas = ObtenerDatos(queryEntradas, connect);
 
@@ -589,6 +588,9 @@ namespace Inventario
 
                     // Obtener datos desde dataGridView1
                     DataTable dtDesdeDataGrid = ObtenerDesdeDataGridView(dataGridView1);
+
+                    // Aplicar formato de moneda al DataGridView
+                    FormatearMonedaDataGridView(dataGridView1);
 
                     // Guardar en archivo Excel
                     GuardarExcel(dtEntradas, dtSalidas, dtDesdeDataGrid);
@@ -606,13 +608,9 @@ namespace Inventario
             try
             {
                 using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
                 {
-                    
-
-                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
-                    {
-                        da.Fill(dt);
-                    }
+                    da.Fill(dt);
                 }
             }
             catch (Exception ex)
@@ -626,13 +624,11 @@ namespace Inventario
         {
             DataTable dt = new DataTable();
 
-            // Crear columnas en el DataTable según las columnas del DataGridView
             foreach (DataGridViewColumn column in dgv.Columns)
             {
                 dt.Columns.Add(column.HeaderText);
             }
 
-            // Llenar el DataTable con los datos del DataGridView
             foreach (DataGridViewRow row in dgv.Rows)
             {
                 if (!row.IsNewRow)
@@ -656,59 +652,9 @@ namespace Inventario
                 {
                     using (XLWorkbook wb = new XLWorkbook())
                     {
-                        if (dtEntradas.Rows.Count > 0)
-                        {
-                            var wsEntradas = wb.Worksheets.Add(dtEntradas, "Entradas");
-                            FormatearMoneda(wsEntradas, dtEntradas);
-                            wsEntradas.Columns().AdjustToContents();
-
-                            // Calcular totales de t_entradas
-                            decimal totalDinero = dtEntradas.AsEnumerable().Sum(row => row["TOTAL"] != DBNull.Value ? Convert.ToDecimal(row["TOTAL"]) : 0);
-                            decimal totalPeso = dtEntradas.AsEnumerable().Sum(row => row["COSTOKILO"] != DBNull.Value ? Convert.ToDecimal(row["COSTOKILO"]) : 0);
-                            int totalRollos = dtEntradas.Rows.Count; // Cantidad de registros
-
-                            // Escribir los totales en el archivo Excel
-                            var lastRowEntradas = dtEntradas.Rows.Count + 2;
-                            wsEntradas.Cell(lastRowEntradas, 1).Value = "TOTAL DINERO : $ " + totalDinero;
-                            wsEntradas.Cell(lastRowEntradas + 1, 1).Value = "TOTAL PESO: " + totalPeso;
-                            wsEntradas.Cell(lastRowEntradas + 2, 1).Value = "TOTAL ROLLOS :" + totalRollos;
-                        }
-
-                        if (dtSalidas.Rows.Count > 0)
-                        {
-                            var wsSalidas = wb.Worksheets.Add(dtSalidas, "Salidas");
-                            FormatearMoneda(wsSalidas, dtSalidas);
-                            wsSalidas.Columns().AdjustToContents();
-
-                            // Calcular totales de t_salidas
-                            decimal totalDinero = dtSalidas.AsEnumerable().Sum(row => row["TOTAL"] != DBNull.Value ? Convert.ToDecimal(row["TOTAL"]) : 0);
-                            decimal totalPeso = dtSalidas.AsEnumerable().Sum(row => row["COSTOKILO"] != DBNull.Value ? Convert.ToDecimal(row["COSTOKILO"]) : 0);
-                            int totalRollos = dtSalidas.Rows.Count;
-
-                            // Escribir los totales en el archivo Excel
-                            var lastRowSalidas = dtSalidas.Rows.Count + 2;
-                            wsSalidas.Cell(lastRowSalidas, 1).Value = "TOTAL DINERO : $ " + totalDinero;
-                            wsSalidas.Cell(lastRowSalidas + 1, 1).Value = "TOTAL PESO: " + totalPeso;
-                            wsSalidas.Cell(lastRowSalidas + 2, 1).Value = "TOTAL ROLLOS :" + totalRollos;
-                        }
-
-                        if (dtDesdeDataGrid.Rows.Count > 0)
-                        {
-                            var wsDataGrid = wb.Worksheets.Add(dtDesdeDataGrid, "Inventario Final");
-                            FormatearMoneda(wsDataGrid, dtDesdeDataGrid);
-                            wsDataGrid.Columns().AdjustToContents();
-
-                            // Calcular totales del DataGridView
-                            decimal totalDinero = dtDesdeDataGrid.AsEnumerable().Sum(row => row["TOTAL"] != DBNull.Value ? Convert.ToDecimal(row["TOTAL"]) : 0);
-                            decimal totalPeso = dtDesdeDataGrid.AsEnumerable().Sum(row => row["COSTOKILO"] != DBNull.Value ? Convert.ToDecimal(row["COSTOKILO"]) : 0);
-                            int totalRollos = dtDesdeDataGrid.Rows.Count;
-
-                            // Escribir los totales en el archivo Excel
-                            var lastRowDataGrid = dtDesdeDataGrid.Rows.Count + 2;
-                            wsDataGrid.Cell(lastRowDataGrid, 1).Value = "TOTAL DINERO : $ " + totalDinero;
-                            wsDataGrid.Cell(lastRowDataGrid + 1, 1).Value = "TOTAL PESO: " + totalPeso;
-                            wsDataGrid.Cell(lastRowDataGrid + 2, 1).Value = "TOTAL ROLLOS :" + totalRollos;
-                        }
+                        AgregarHojaExcel(wb, dtEntradas, "Entradas");
+                        AgregarHojaExcel(wb, dtSalidas, "Salidas");
+                        AgregarHojaExcel(wb, dtDesdeDataGrid, "Inventario Final");
 
                         // Guardar el archivo
                         wb.SaveAs(sfd.FileName);
@@ -718,23 +664,95 @@ namespace Inventario
             }
         }
 
-        // Método para aplicar formato de moneda a las columnas COSTOKILO y TOTAL
-        private void FormatearMoneda(IXLWorksheet ws, DataTable dt)
+
+        private void AgregarHojaExcel(XLWorkbook wb, DataTable dt, string nombreHoja)
+        {
+            if (dt.Rows.Count > 0)
+            {
+                // Crear hoja
+                var ws = wb.Worksheets.Add(dt, nombreHoja);
+
+                // Concatenar el signo de "$" en las columnas "COSTOKILO" y "TOTAL"
+                ConcatenarSignoPesos(ws, dt);
+
+                // Ajustar columnas automáticamente
+                ws.Columns().AdjustToContents();
+            }
+        }
+
+        private void ConcatenarSignoPesos(IXLWorksheet ws, DataTable dt)
         {
             int colCostoKilo = dt.Columns.Contains("COSTOKILO") ? dt.Columns["COSTOKILO"].Ordinal + 1 : -1;
             int colTotal = dt.Columns.Contains("TOTAL") ? dt.Columns["TOTAL"].Ordinal + 1 : -1;
 
             if (colCostoKilo > 0)
             {
-                ws.Column(colCostoKilo).Style.NumberFormat.Format = "$#,##0.00";
+                foreach (var cell in ws.Column(colCostoKilo).CellsUsed())
+                {
+                    if (decimal.TryParse(cell.Value.ToString(), out decimal valor))
+                    {
+                        cell.Value = $"${valor}";  // 🔹 Concatenamos el "$"
+                    }
+                }
             }
 
             if (colTotal > 0)
             {
-                ws.Column(colTotal).Style.NumberFormat.Format = "$#,##0.00";
+                foreach (var cell in ws.Column(colTotal).CellsUsed())
+                {
+                    if (decimal.TryParse(cell.Value.ToString(), out decimal valor))
+                    {
+                        cell.Value = $"${valor}";  // 🔹 Concatenamos el "$"
+                    }
+                }
+            }
+        }
+
+
+        private void FormatearMonedaExcel(IXLWorksheet ws, DataTable dt)
+        {
+            int colCostoKilo = dt.Columns.Contains("COSTOKILO") ? dt.Columns["COSTOKILO"].Ordinal + 1 : -1;
+            int colTotal = dt.Columns.Contains("TOTAL") ? dt.Columns["TOTAL"].Ordinal + 1 : -1;
+
+            if (colCostoKilo > 0)
+            {
+                ws.Column(colCostoKilo).CellsUsed().Style.NumberFormat.Format = "$#,##0.00"; // 🔹 Asegura el formato de moneda
             }
 
-            ws.Columns().AdjustToContents(); // 🔹 Ajustar ancho de todas las columnas
+            if (colTotal > 0)
+            {
+                ws.Column(colTotal).CellsUsed().Style.NumberFormat.Format = "$#,##0.00";
+            }
+        }
+
+        private void AgregarTotalesExcel(IXLWorksheet ws, DataTable dt)
+        {
+            decimal totalDinero = dt.AsEnumerable().Sum(row => row["TOTAL"] != DBNull.Value ? Convert.ToDecimal(row["TOTAL"]) : 0);
+            decimal totalPeso = dt.AsEnumerable().Sum(row => row["COSTOKILO"] != DBNull.Value ? Convert.ToDecimal(row["COSTOKILO"]) : 0);
+            int totalRollos = dt.Rows.Count;
+
+            var lastRow = dt.Rows.Count + 2;
+            ws.Cell(lastRow, 1).Value = "TOTAL DINERO:";
+            ws.Cell(lastRow, 2).Value = totalDinero;
+            ws.Cell(lastRow, 2).Style.NumberFormat.Format = "$#,##0.00"; // 🔹 Formato correcto
+
+            ws.Cell(lastRow + 1, 1).Value = "TOTAL PESO:";
+            ws.Cell(lastRow + 1, 2).Value = totalPeso;
+            ws.Cell(lastRow + 1, 2).Style.NumberFormat.Format = "#,##0.00"; // 🔹 No necesita $
+
+            ws.Cell(lastRow + 2, 1).Value = "TOTAL ROLLOS:";
+            ws.Cell(lastRow + 2, 2).Value = totalRollos;
+        }
+
+        private void FormatearMonedaDataGridView(DataGridView dgv)
+        {
+            foreach (DataGridViewColumn column in dgv.Columns)
+            {
+                if (column.Name == "COSTOKILO" || column.Name == "TOTAL")
+                {
+                    column.DefaultCellStyle.Format = "C2";
+                }
+            }
         }
 
         private void bt_cancel_Click_1(object sender, EventArgs e)
