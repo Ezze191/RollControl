@@ -37,16 +37,12 @@ namespace Inventario
             // Establece el rango de fechas permitidas al año actual
             DateTimePicker dateTimePicker = new DateTimePicker();
             DateTime today = DateTime.Today;
-            DateTime firstDayOfYear = new DateTime(today.Year, 1, 1);
-            DateTime lastDayOfYear = new DateTime(today.Year, 12, 31);
+            
 
             dtpMesSeleccionado.Format = DateTimePickerFormat.Custom;
             dtpMesSeleccionado.CustomFormat = "MMMM yyyy"; // Muestra solo el mes y el año
             dtpMesSeleccionado.ShowUpDown = true; // Quita el calendario desplegable
-
-            dtpMesSeleccionado.MinDate = firstDayOfYear;
-            dtpMesSeleccionado.MaxDate = lastDayOfYear;
-
+            
 
             llenartabla();
         }
@@ -298,7 +294,7 @@ namespace Inventario
                 using (MysqlConnector connect = new MysqlConnector())
                 {
                     connect.EstablecerConexion();
-                    string query = $"SELECT * FROM inventarios_guardados WHERE MONTH(FECHA) = {mesSeleccionado} AND YEAR(FECHA) = {anioSeleccionado}";
+                    string query = $"SELECT * FROM inventarios_guardados WHERE MONTH(MES_GUARDADO) = {mesSeleccionado} AND YEAR(MES_GUARDADO) = {anioSeleccionado}";
                     using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
                     {
                         using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
@@ -731,6 +727,7 @@ namespace Inventario
         {
              mesSeleccionado = DateTime.Now.Month;
              anioSeleccionado = DateTime.Now.Year;
+             llenartabla();
         }
     }
 }

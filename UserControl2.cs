@@ -40,8 +40,6 @@ namespace Inventario
         {
             
 
-            
-
                  llenartabla();
                  user_info.checarstatus();
             
@@ -157,15 +155,24 @@ namespace Inventario
             else
             {
                 string nu = tb_numero.Text;
-                //buscar numero en entradas para ponerlo en el status inactive
-                ChecarSiExisteEnInventarioInicial(nu);
+                if (dtpFECHA.Value.Month == DateTime.Now.Month && dtpFECHA.Value.Year == DateTime.Now.Year)
+                {
+                    
+                    //buscar numero en entradas para ponerlo en el status inactive
+                    ChecarSiExisteEnInventarioInicial(nu);
+                    //y luego checha en el inventario inicial si existe y lo elimina
+                }
+                else
+                {
+                    //eliminar de los inventarios guardados
+                    ChecarSiExisteEnGuardado(nu);
+                }
 
-                
-                //y luego checha en el inventario inicial si existe y lo elimina
-                
             }
             
         }
+
+        
 
         private void ChecarSiExisteEnInventarioInicial(string numero)
         {
@@ -222,13 +229,69 @@ namespace Inventario
             }
         }
 
+
+
+        private void ChecarSiExisteEnGuardado(string numero)
+        {
+            try
+            {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+
+                    string query = "SELECT *FROM inventarios_guardados WHERE NUMERO = @number";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        cmd.Parameters.AddWithValue("@number", numero);
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                salidas.usuario = user_info.Username;
+                                salidas.NUMERO = reader.GetString("NUMERO");
+                                salidas.FECHA_DE_ENTRADA = reader.GetDateTime("FECHA");
+                                salidas.PESO = Double.Parse(tb_peso.Text);
+                                salidas.TIPO = reader.GetString("TIPO");
+                                salidas.COSTOKILO = reader.GetDouble("COSTOKILO");
+                                salidas.TOTAL = salidas.PESO * salidas.COSTOKILO;
+                                salidas.FECHA_DE_SALIDA = dtpFECHA.Value.ToString("yyyy-MM-dd");
+                                restar = salidas.COSTOKILO * salidas.PESO;
+
+                                double pesoanterior = reader.GetDouble("PESO");
+
+                                if (salidas.PESO == pesoanterior)
+                                {
+                                    EliminarDeGuardados(numero);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("EL PESO DE SALIDA DEBE SER IGUAL AL PESO QUE ENTRO");
+                                }
+
+                            }
+                            else
+                            {
+                                MessageBox.Show("EL NUMERO NO EXISTE EN EL INVENTARIO");
+                            }
+                        }
+                    }
+                } // Aquí se cierra automáticamente la conexión con Dispose()
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("ERROR: " + err.Message);
+            }
+        }
+
+
+
         private void EliminarDelInvetarioInicial(string numero)
         {
             try
             {
-                
-
-
+               
                 using (MysqlConnector connect = new MysqlConnector())
                 {
                     connect.EstablecerConexion();
@@ -253,6 +316,37 @@ namespace Inventario
             }
 
         }
+
+        private void EliminarDeGuardados(string numero)
+        {
+            try
+            {
+
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+
+                    string query = "DELETE FROM inventarios_guardados WHERE NUMERO = @numero";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        cmd.Parameters.AddWithValue("@numero", numero);
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            llenartabla_salidas();
+                            cambiarStatus(numero);
+                        }
+                    }
+                }
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("ERROR: " + err.Message);
+            }
+
+        }
+
 
 
         private void buscarnumero(string numero)

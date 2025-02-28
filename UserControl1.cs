@@ -93,7 +93,6 @@ namespace Inventario
 
 
 
-
         private void clearText()
         {
             tb_numero.Text = string.Empty;
