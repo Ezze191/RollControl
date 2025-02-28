@@ -682,16 +682,26 @@ namespace Inventario
 
                 ws.Columns().AdjustToContents();
 
+                // Ajustar el ancho de la columna "COSTOKILO"
+                if (dt.Columns.Contains("COSTOKILO"))
+                {
+                    ws.Column(dt.Columns.IndexOf("COSTOKILO") + 1).Width = 20; // Ajusta el ancho según sea necesario
+                }
+
                 // Calcular totales
                 decimal totalDinero = dt.AsEnumerable().Sum(row => row["TOTAL"] != DBNull.Value ? Convert.ToDecimal(row["TOTAL"]) : 0);
                 decimal totalPeso = dt.AsEnumerable().Sum(row => row["COSTOKILO"] != DBNull.Value ? Convert.ToDecimal(row["COSTOKILO"]) : 0);
                 int totalRollos = dt.Rows.Count;
 
-                // Escribir los totales en el archivo Excel
-                var lastRow = dt.Rows.Count + 2;
-                ws.Cell(lastRow, 1).Value = "TOTAL DINERO : $" + totalDinero;
-                ws.Cell(lastRow + 1, 1).Value = "TOTAL PESO: $" + totalPeso;
-                ws.Cell(lastRow + 2, 1).Value = "TOTAL ROLLOS :" + totalRollos;
+                // Obtener los índices de las columnas "TOTAL" y "COSTOKILO"
+                int columnaTotalIndex = dt.Columns.IndexOf("TOTAL") + 1; // El índice en Excel es 1-based
+                int columnaPesoIndex = dt.Columns.IndexOf("COSTOKILO") + 1;
+
+                // Escribir los totales en el archivo Excel con un renglón en blanco
+                var lastRow = dt.Rows.Count + 3;
+                ws.Cell(lastRow, columnaTotalIndex).Value = "TOTAL DINERO: $" + totalDinero;
+                ws.Cell(lastRow, columnaPesoIndex).Value = "TOTAL PESO: $" + totalPeso;
+                ws.Cell(lastRow, 1).Value = "TOTAL ROLLOS: " + totalRollos;
             }
         }
 
