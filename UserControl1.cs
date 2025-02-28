@@ -45,26 +45,26 @@ namespace Inventario
 
         private void UserControl1_Load(object sender, EventArgs e)
         {
-            //establecer la fecha actual
-            DateTime today = DateTime.Today;
-            DateTime firstDayOfMonth = new DateTime(today.Year, today.Month, 1);
-            DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
-
-            dtpFECHA.MinDate = firstDayOfMonth;
-            dtpFECHA.MaxDate = lastDayOfMonth;
+            
+            
 
             llenartabla();
             user_info.checarstatus();
 
-            if (user_info.tipo == 0)
+            if (user_info.status == "close")
             {
-                if (user_info.status == "close")
-                {
-                    panel_opciones.Visible = false;
-                }
-                
+                cerrarInvenrario();
+
+
             }
-            
+            else if (user_info.status == "open")
+            {
+                abrirInventario();
+            }
+
+
+
+
             //forzar colores
             panel_opciones.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
             panel_filtrar.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
@@ -73,6 +73,26 @@ namespace Inventario
             panel1.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
             panel2.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
         }
+        private void cerrarInvenrario()
+        {
+            //establecer la fecha actual
+            DateTime today = DateTime.Today;
+            DateTime firstDayOfMonth = new DateTime(today.Year, today.Month, 1);
+            DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+
+            dtpFECHA.MinDate = firstDayOfMonth;
+            dtpFECHA.MaxDate = lastDayOfMonth;
+        }
+
+        private void abrirInventario()
+        {
+            // Restablecer MinDate y MaxDate a sus valores predeterminados
+            dtpFECHA.MinDate = DateTimePicker.MinimumDateTime;
+            dtpFECHA.MaxDate = DateTimePicker.MaximumDateTime;
+        }
+
+
+
 
         private void clearText()
         {
@@ -304,10 +324,93 @@ namespace Inventario
             else
             {
                 //chear si el numero existe en la tabla de entradas
-                checarSiexiste(tb_numero.Text);
+                if(dtpFECHA.Value.Month == DateTime.Now.Month && dtpFECHA.Value.Year == DateTime.Now.Year)
+                {
+                    checarSiexiste(tb_numero.Text);
+                }
+                else {
+                    //si no es el mismo mes lo va poner en meses_guardados pero primero checa si existe
+                    mesesGuardadosSiExiste(tb_numero.Text);
+                }
+                
             }
  
         }
+
+        private void mesesGuardadosSiExiste(string number)
+        {
+             try
+             {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+
+                    string query = "SELECT NUMERO FROM inventarios_guardados WHERE NUMERO = @number";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        cmd.Parameters.AddWithValue("@number", number);
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                MessageBox.Show("EL NUMERO YA EXISTE EN EL MES " + dtpFECHA.Value.Month );
+                            }
+                            else
+                            {
+                                //si no lo agrega a inventario_guardados
+                                GuardarEnInventarioGuardados();
+                            }
+                        }
+                    }
+                } // Aquí se cierra automáticamente la conexión con Dispose()
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("ERROR: " + err.Message);
+            }
+        }
+
+
+        private void GuardarEnInventarioGuardados()
+        {
+            //guardas los datos para enviarloa a la base de datos
+            fecha = dtpFECHA.Value.ToString("yyyy-MM-dd");
+            numero = tb_numero.Text;
+            peso = Convert.ToDouble(tb_peso.Text);
+            tipo = combo_medidas.SelectedItem.ToString();
+            costo_porkilo = costo_kilo.SelectedItem.ToString();
+            convert_costokilo = Convert.ToDouble(costo_porkilo);
+            total = peso * convert_costokilo;
+
+            using (MysqlConnector connect = new MysqlConnector())
+            {
+                try
+                {
+                    connect.EstablecerConexion();
+                    string query = "INSERT INTO inventarios_guardados (FECHA, NUMERO, PESO , TIPO , COSTOKILO, TOTAL, MES_GUARDADO) VALUES (@fecha, @numero, @peso , @tipo ,@convert_costokilo, @total, @MES_GUARDADO)";
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        cmd.Parameters.AddWithValue("@fecha", fecha);
+                        cmd.Parameters.AddWithValue("@numero", numero);
+                        cmd.Parameters.AddWithValue("@peso", peso);
+                        cmd.Parameters.AddWithValue("@tipo", tipo);
+                        cmd.Parameters.AddWithValue("@convert_costokilo", convert_costokilo);
+                        cmd.Parameters.AddWithValue("@total", total);
+                        cmd.Parameters.AddWithValue("@MES_GUARDADO", fecha);
+                        cmd.ExecuteNonQuery();
+                        llenartablaEntradas();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+
+            }
+        }
+
 
         private void checarSiexiste(string numero)
         {

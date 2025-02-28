@@ -24,6 +24,7 @@ namespace Inventario
 
         public UserControl2()
         {
+            
             InitializeComponent();
             //forzar colores
             panel_opciones.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
@@ -37,6 +38,30 @@ namespace Inventario
 
         private void UserControl2_Load(object sender, EventArgs e)
         {
+            
+
+            
+
+                 llenartabla();
+                 user_info.checarstatus();
+            
+                if (user_info.status == "close")
+                {
+                    cerrarInvenrario();
+                    
+
+                }
+                else if(user_info.status == "open")
+                {
+                    abrirInventario();
+                }
+
+            
+        }
+
+
+        private void cerrarInvenrario()
+        {
             //establecer la fecha actual
             DateTime today = DateTime.Today;
             DateTime firstDayOfMonth = new DateTime(today.Year, today.Month, 1);
@@ -44,18 +69,13 @@ namespace Inventario
 
             dtpFECHA.MinDate = firstDayOfMonth;
             dtpFECHA.MaxDate = lastDayOfMonth;
+        }
 
-            llenartabla();
-            user_info.checarstatus();
-            if (user_info.tipo == 0)
-            {
-                if (user_info.status == "close")
-                {
-                    panel_opciones.Visible = false;
-
-                }
-
-            }
+        private void abrirInventario()
+        {
+            // Restablecer MinDate y MaxDate a sus valores predeterminados
+            dtpFECHA.MinDate = DateTimePicker.MinimumDateTime;
+            dtpFECHA.MaxDate = DateTimePicker.MaximumDateTime;
         }
 
         private void clearText()

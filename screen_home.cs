@@ -30,8 +30,6 @@ namespace Inventario
             MessageBox.Show("Settings Clicked!");
         }
 
-
-
         public screen_home()
         {
             InitializeComponent();
@@ -64,7 +62,6 @@ namespace Inventario
             pb_tool.BackColor = System.Drawing.ColorTranslator.FromHtml("#2b377a");
             pictureBox6.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
 
-
         }
 
         private void LoadUserControl(UserControl uc)
@@ -81,14 +78,18 @@ namespace Inventario
             {
                 panel2.Visible = false;
                 pb_tool.Visible = false;
-            }
-            
 
+                //mover los botones para que se vean mejor
+                pictureBox3.Location = new Point(0,500);
+                pictureBox2.Location = new Point(0, 330);
+
+                
+
+            }
+
+            
             lb_name.Text = user_info.Username;
         }
-
-
-
 
         private void pictureBox1_Click_1(object sender, EventArgs e)
         {
@@ -279,6 +280,11 @@ namespace Inventario
         private void pictureBox6_Click(object sender, EventArgs e)
         {
             LoadUserControl(new UserControl5());
+        }
+
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -20,6 +20,8 @@ namespace Inventario
 {
     public partial class UserControl3 : UserControl
     {
+        int mesSeleccionado = DateTime.Now.Month;
+        int anioSeleccionado = DateTime.Now.Year;
         public UserControl3()
         {
             InitializeComponent();
@@ -278,31 +280,27 @@ namespace Inventario
 
         private void seleccioanrInventarioSeleccionado()
         {
+
+            MessageBox.Show("FECHA SELECCIOANDA");
+            llenarTablaConFiltro();
+           
+        }
+
+
+        private void llenarTablaConFiltro()
+        {
+            mesSeleccionado = dtpMesSeleccionado.Value.Month;
+            anioSeleccionado = dtpMesSeleccionado.Value.Year;
+
+            dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
             try
             {
-                
-                int mesSeleccionado = dtpMesSeleccionado.Value.Month;
-                int anioSeleccionado = dtpMesSeleccionado.Value.Year;
-
-                int mesAnterior = mesSeleccionado == 1 ? 12 : mesSeleccionado - 1; // Si es enero, el mes anterior es diciembre
-                int anioAnterior = mesSeleccionado == 1 ? anioSeleccionado - 1 : anioSeleccionado; // Si es enero, restar un año
-
-
                 using (MysqlConnector connect = new MysqlConnector())
                 {
                     connect.EstablecerConexion();
-                    string query = @"
-            SELECT * 
-            FROM inventario_inicial
-            WHERE (MONTH(FECHA) = @mesSeleccionado AND YEAR(FECHA) = @anioSeleccionado)
-               OR (MONTH(FECHA) = @mesAnterior AND YEAR(FECHA) = @anioAnterior);";
+                    string query = $"SELECT * FROM inventarios_guardados WHERE MONTH(FECHA) = {mesSeleccionado} AND YEAR(FECHA) = {anioSeleccionado}";
                     using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
                     {
-                        cmd.Parameters.AddWithValue("@mesSeleccionado", mesSeleccionado);
-                        cmd.Parameters.AddWithValue("@anioSeleccionado", anioSeleccionado);
-                        cmd.Parameters.AddWithValue("@mesAnterior", mesAnterior);
-                        cmd.Parameters.AddWithValue("@anioAnterior", anioAnterior);
-
                         using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
                         {
                             DataTable dt = new DataTable();
@@ -312,7 +310,7 @@ namespace Inventario
                             dataGridView1.Columns["COSTOKILO"].DefaultCellStyle.Format = "C2"; // "C" es Currency (moneda)
                             dataGridView1.Columns["TOTAL"].DefaultCellStyle.Format = "C2";
 
-                            //suma
+                            // suma
                             double sumaPESO = 0;
                             double sumaTOTAL = 0;
 
@@ -335,7 +333,7 @@ namespace Inventario
                                     }
                                 }
                             }
-                            //asiganos los valores a los labels
+                            // asignar los valores a los labels
                             tx_peso.Text = sumaPESO.ToString("N2");
                             tx_dinero.Text = "$ " + sumaTOTAL.ToString("N2");
                             lb_total_rollos.Text = dt.Rows.Count.ToString();
@@ -343,14 +341,13 @@ namespace Inventario
                             DatosCount.T_INVENTARIO_PESO = sumaPESO.ToString("N2");
                             DatosCount.T_INVENTARIO_DINERO = sumaTOTAL.ToString("N2");
                             DatosCount.T_INVENTARIO_ROLLOS = dt.Rows.Count.ToString();
-                        }
 
+
+                            
+                        }
                     }
                 }
-
             }
-
-
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
@@ -580,8 +577,6 @@ namespace Inventario
 
         private void materialButton1_Click_1(object sender, EventArgs e)
         {
-            int mesSeleccionado = dtpMesSeleccionado.Value.Month;
-            int añoSeleccionado = dtpMesSeleccionado.Value.Year;
 
             try
             {
@@ -590,8 +585,11 @@ namespace Inventario
                     connect.EstablecerConexion();
 
                     // Obtener datos de las tablas t_entradas y t_salidas con parámetros
-                    DataTable dtEntradas = ObtenerDatos("SELECT * FROM t_entradas", connect);
-                    DataTable dtSalidas = ObtenerDatos("SELECT * FROM t_salidas", connect);
+                    string queryEntradas = $"SELECT * FROM t_entradas WHERE MONTH(FECHA) = {mesSeleccionado} AND YEAR(FECHA) = {anioSeleccionado}";
+                    DataTable dtEntradas = ObtenerDatos(queryEntradas, connect);
+
+                    string querySalidas = $"SELECT * FROM t_salidas WHERE MONTH(FECHA_DE_SALIDA) = {mesSeleccionado} AND YEAR(FECHA_DE_SALIDA) = {anioSeleccionado}";
+                    DataTable dtSalidas = ObtenerDatos(querySalidas, connect);
 
                     // Obtener datos desde dataGridView1
                     DataTable dtDesdeDataGrid = ObtenerDesdeDataGridView(dataGridView1);
@@ -729,6 +727,10 @@ namespace Inventario
             ws.Columns().AdjustToContents(); // 🔹 Ajustar ancho de todas las columnas
         }
 
-
+        private void bt_cancel_Click_1(object sender, EventArgs e)
+        {
+             mesSeleccionado = DateTime.Now.Month;
+             anioSeleccionado = DateTime.Now.Year;
+        }
     }
 }

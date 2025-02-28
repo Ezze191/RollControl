@@ -42,9 +42,11 @@
             this.lb_total_rollos = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.excelButtom = new MaterialSkin.Controls.MaterialButton();
+            this.bt_cancel = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel_filtrar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bt_aply)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bt_cancel)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -106,6 +108,7 @@
             // 
             // panel_filtrar
             // 
+            this.panel_filtrar.Controls.Add(this.bt_cancel);
             this.panel_filtrar.Controls.Add(this.dtpMesSeleccionado);
             this.panel_filtrar.Controls.Add(this.label6);
             this.panel_filtrar.Controls.Add(this.bt_aply);
@@ -182,6 +185,18 @@
             this.excelButtom.UseVisualStyleBackColor = true;
             this.excelButtom.Click += new System.EventHandler(this.materialButton1_Click_1);
             // 
+            // bt_cancel
+            // 
+            this.bt_cancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.bt_cancel.Image = ((System.Drawing.Image)(resources.GetObject("bt_cancel.Image")));
+            this.bt_cancel.Location = new System.Drawing.Point(3, 5);
+            this.bt_cancel.Name = "bt_cancel";
+            this.bt_cancel.Size = new System.Drawing.Size(34, 31);
+            this.bt_cancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.bt_cancel.TabIndex = 42;
+            this.bt_cancel.TabStop = false;
+            this.bt_cancel.Click += new System.EventHandler(this.bt_cancel_Click_1);
+            // 
             // UserControl3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -203,6 +218,7 @@
             this.panel_filtrar.ResumeLayout(false);
             this.panel_filtrar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bt_aply)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bt_cancel)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -223,5 +239,6 @@
         private System.Windows.Forms.Label lb_total_rollos;
         private System.Windows.Forms.Label label11;
         private MaterialSkin.Controls.MaterialButton excelButtom;
+        private System.Windows.Forms.PictureBox bt_cancel;
     }
 }

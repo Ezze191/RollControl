@@ -18,7 +18,6 @@ namespace Inventario
     public partial class screen_login : MaterialForm
     {
 
-       
         public screen_login()
         {
             InitializeComponent();
@@ -33,9 +32,7 @@ namespace Inventario
                 Primary.Blue200, Accent.LightBlue200,
                 TextShade.WHITE
                 );
-
         }
-
         private void screen_login_Load(object sender, EventArgs e)
         {
             //forzar colores
@@ -54,11 +51,8 @@ namespace Inventario
                     else
                     {
                         txt_oline.ForeColor = Color.Red;
-                    }
-
-                    
+                    }   
                 }
-
             }
             catch(Exception err)
             {
