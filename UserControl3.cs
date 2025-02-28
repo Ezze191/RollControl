@@ -652,9 +652,9 @@ namespace Inventario
                 {
                     using (XLWorkbook wb = new XLWorkbook())
                     {
-                        AgregarHojaExcel(wb, dtEntradas, "Entradas");
-                        AgregarHojaExcel(wb, dtSalidas, "Salidas");
-                        AgregarHojaExcel(wb, dtDesdeDataGrid, "Inventario Final");
+                        ProcesarHoja(wb, dtEntradas, "Entradas");
+                        ProcesarHoja(wb, dtSalidas, "Salidas");
+                        ProcesarHoja(wb, dtDesdeDataGrid, "Inventario Final");
 
                         // Guardar el archivo
                         wb.SaveAs(sfd.FileName);
@@ -664,6 +664,54 @@ namespace Inventario
             }
         }
 
+        // Función para procesar cada hoja de Excel
+        private void ProcesarHoja(XLWorkbook wb, DataTable dt, string sheetName)
+        {
+            if (dt.Rows.Count > 0)
+            {
+                var ws = wb.Worksheets.Add(dt, sheetName);
+
+                // Formatear las columnas específicas con el signo de pesos "$"
+                foreach (var row in ws.RangeUsed().RowsUsed().Skip(1)) // Omitir la fila de encabezados
+                {
+                    if (dt.Columns.Contains("TOTAL"))
+                        row.Cell(dt.Columns["TOTAL"].Ordinal + 1).Value = "$" + row.Cell(dt.Columns["TOTAL"].Ordinal + 1).Value.ToString();
+                    if (dt.Columns.Contains("COSTOKILO"))
+                        row.Cell(dt.Columns["COSTOKILO"].Ordinal + 1).Value = "$" + row.Cell(dt.Columns["COSTOKILO"].Ordinal + 1).Value.ToString();
+                }
+
+                ws.Columns().AdjustToContents();
+
+                // Calcular totales
+                decimal totalDinero = dt.AsEnumerable().Sum(row => row["TOTAL"] != DBNull.Value ? Convert.ToDecimal(row["TOTAL"]) : 0);
+                decimal totalPeso = dt.AsEnumerable().Sum(row => row["COSTOKILO"] != DBNull.Value ? Convert.ToDecimal(row["COSTOKILO"]) : 0);
+                int totalRollos = dt.Rows.Count;
+
+                // Escribir los totales en el archivo Excel
+                var lastRow = dt.Rows.Count + 2;
+                ws.Cell(lastRow, 1).Value = "TOTAL DINERO : $" + totalDinero;
+                ws.Cell(lastRow + 1, 1).Value = "TOTAL PESO: $" + totalPeso;
+                ws.Cell(lastRow + 2, 1).Value = "TOTAL ROLLOS :" + totalRollos;
+            }
+        }
+
+        private void FormatearMoneda(IXLWorksheet ws, DataTable dt)
+        {
+            int colCostoKilo = dt.Columns.Contains("COSTOKILO") ? dt.Columns["COSTOKILO"].Ordinal + 1 : -1;
+            int colTotal = dt.Columns.Contains("TOTAL") ? dt.Columns["TOTAL"].Ordinal + 1 : -1;
+
+            if (colCostoKilo > 0)
+            {
+                ws.Column(colCostoKilo).Style.NumberFormat.Format = "$#,##0.00";
+            }
+
+            if (colTotal > 0)
+            {
+                ws.Column(colTotal).Style.NumberFormat.Format = "$#,##0.00";
+            }
+
+            ws.Columns().AdjustToContents(); // 🔹 Ajustar ancho de todas las columnas
+        }
 
         private void AgregarHojaExcel(XLWorkbook wb, DataTable dt, string nombreHoja)
         {

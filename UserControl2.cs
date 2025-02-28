@@ -99,6 +99,9 @@ namespace Inventario
                             adapter.Fill(dt);
                             dataGridView1.DataSource = dt;
 
+                            dataGridView1.Columns["COSTOKILO"].DefaultCellStyle.Format = "C2"; // "C" es Currency (moneda)
+                            dataGridView1.Columns["TOTAL"].DefaultCellStyle.Format = "C2";
+
                             //suma
                             double sumaPESO = 0;
                             double sumaTOTAL = 0;
@@ -124,11 +127,11 @@ namespace Inventario
                             }
                             //asiganos los valores a los labels
                             tx_peso.Text = sumaPESO.ToString("N2");
-                            tx_dinero.Text = sumaTOTAL.ToString("N2");
+                            tx_dinero.Text = "$ " + sumaTOTAL.ToString("N2");
                             lb_total_rollos.Text = dt.Rows.Count.ToString();
 
                             DatosCount.T_SALIDAS_PESO = sumaPESO.ToString("N2");
-                            DatosCount.T_SALIDAS_DINERO = sumaTOTAL.ToString("N2");
+                            DatosCount.T_SALIDAS_DINERO = "$ " + sumaTOTAL.ToString("N2");
                             DatosCount.T_SALIDAS_ROLLOS = dt.Rows.Count.ToString();
                         }
 
