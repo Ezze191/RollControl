@@ -27,8 +27,12 @@ namespace Inventario
             InitializeComponent();
             //forzar colores
             panel_filtrar.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
-           
-            
+            panel3.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
+            panel_pornumeros.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
+            panel1.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
+            panel2.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
+
+
 
         }
 
@@ -350,17 +354,6 @@ namespace Inventario
             }
         }
 
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            
-            
-        }
-
         private void filtrarpormedida(string medida)
         {
             try
@@ -424,12 +417,6 @@ namespace Inventario
                 MessageBox.Show("Error: " + ex.Message);
             }
 
-        }
-
-        private void pictureBox4_Click(object sender, EventArgs e)
-        {
-           
-           
         }
 
         private void filtrarporkilo(string kilo)
@@ -656,6 +643,13 @@ namespace Inventario
                         ProcesarHoja(wb, dtSalidas, "Salidas");
                         ProcesarHoja(wb, dtDesdeDataGrid, "Inventario Final");
 
+                        // Verificar que al menos una hoja se haya agregado
+                        if (wb.Worksheets.Count == 0)
+                        {
+                            MessageBox.Show("No hay datos para exportar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+
                         // Guardar el archivo
                         wb.SaveAs(sfd.FileName);
                         MessageBox.Show("Datos exportados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -818,6 +812,187 @@ namespace Inventario
              mesSeleccionado = DateTime.Now.Month;
              anioSeleccionado = DateTime.Now.Year;
              llenartabla();
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            if(tb_buscarNumero.Text == string.Empty)
+            {
+                MessageBox.Show("LOS DATOS NO PUEDEN ESTAR VACIOS");
+            }
+            else
+            {
+                try
+                {
+                    string number = tb_buscarNumero.Text;
+                    using (MysqlConnector connect = new MysqlConnector()) // Tu conexión a MySQL
+                    {
+                        connect.EstablecerConexion();
+
+                        // Obtener datos de las tablas t_entradas y t_salidas
+                        string queryEntradas = $"SELECT * FROM t_entradas WHERE NUMERO = {number}";
+                        DataTable dtEntradas = ObtenerDatos(queryEntradas, connect);
+
+                        string querySalidas = $"SELECT * FROM t_salidas WHERE NUMERO = {number}";
+                        DataTable dtSalidas = ObtenerDatos(querySalidas, connect);
+
+                        // Obtener datos desde dataGridView1
+                        string queryInventario = $"SELECT * FROM inventario_inicial WHERE NUMERO = {number}";
+                        DataTable dtInventario = ObtenerDatos(queryInventario, connect);
+
+
+
+                        // Guardar en archivo Excel
+                        GuardarExcel(dtEntradas, dtSalidas, dtInventario);
+
+                        tb_buscarNumero.Text = string.Empty;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
+
+
+           
+
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            string fechaINICIO = dp_fecha_inicio.Value.ToString("yyyy-MM-dd");
+            string fechaFIN = dp_fecha_fin.Value.ToString("yyyy-MM-dd");
+
+            try
+            {
+                
+                using (MysqlConnector connect = new MysqlConnector()) // Tu conexión a MySQL
+                {
+                    connect.EstablecerConexion();
+
+                    // Obtener datos de las tablas t_entradas y t_salidas
+                    string queryEntradas = $"SELECT * FROM t_entradas WHERE FECHA >= '{fechaINICIO}' AND FECHA <= '{fechaFIN}'";
+                    DataTable dtEntradas = ObtenerDatos(queryEntradas, connect);
+
+                    string querySalidas = $"SELECT * FROM t_salidas WHERE FECHA_DE_SALIDA >= '{fechaINICIO}' AND FECHA_DE_SALIDA <= '{fechaFIN}'";
+                    DataTable dtSalidas = ObtenerDatos(querySalidas, connect);
+
+                    // Obtener datos desde dataGridView1
+                    string queryInventario = $"SELECT * FROM inventario_inicial WHERE FECHA >= '{fechaINICIO}' AND FECHA <= '{fechaFIN}'";
+                    DataTable dtInventario = ObtenerDatos(queryInventario, connect);
+
+
+
+                    // Guardar en archivo Excel
+                    GuardarExcel(dtEntradas, dtSalidas, dtInventario);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            string medida = materialComboBox1.Text;
+            try
+            {
+                
+                using (MysqlConnector connect = new MysqlConnector()) // Tu conexión a MySQL
+                {
+                    connect.EstablecerConexion();
+
+                    // Obtener datos de las tablas t_entradas y t_salidas
+                    string queryEntradas = "SELECT * FROM t_entradas WHERE TIPO = '" + medida + "';";
+                    DataTable dtEntradas = ObtenerDatos(queryEntradas, connect);
+
+                    string querySalidas = "SELECT * FROM t_salidas WHERE TIPO = '" + medida + "';";
+                    DataTable dtSalidas = ObtenerDatos(querySalidas, connect);
+
+                    // Obtener datos desde dataGridView1
+                    string queryInventario = "SELECT * FROM inventario_inicial WHERE TIPO = '" + medida + "';";
+                    DataTable dtInventario = ObtenerDatos(queryInventario, connect);
+
+
+
+                    // Guardar en archivo Excel
+                    GuardarExcel(dtEntradas, dtSalidas, dtInventario);
+
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            string costokilo = materialComboBox2.Text;
+            try
+            {
+
+                using (MysqlConnector connect = new MysqlConnector()) // Tu conexión a MySQL
+                {
+                    connect.EstablecerConexion();
+
+                    // Obtener datos de las tablas t_entradas y t_salidas
+                    string queryEntradas = $"SELECT * FROM t_entradas WHERE COSTOKILO = '{costokilo}'";
+                    DataTable dtEntradas = ObtenerDatos(queryEntradas, connect);
+
+                    string querySalidas = $"SELECT * FROM t_salidas WHERE COSTOKILO = '{costokilo}'";
+                    DataTable dtSalidas = ObtenerDatos(querySalidas, connect);
+
+                    // Obtener datos desde dataGridView1
+                    string queryInventario = $"SELECT * FROM inventario_inicial WHERE COSTOKILO = '{costokilo}'";
+                    DataTable dtInventario = ObtenerDatos(queryInventario, connect);
+
+                    // Guardar en archivo Excel
+                    GuardarExcel(dtEntradas, dtSalidas, dtInventario);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+        private void materialButton4_Click(object sender, EventArgs e)
+        {
+            string nuevamedida = Microsoft.VisualBasic.Interaction.InputBox("Ingrese la nueva medida", "Nueva medida", "0");
+
+            if (!string.IsNullOrWhiteSpace(nuevamedida))
+            {
+                materialComboBox1.Items.Add(nuevamedida);
+                MessageBox.Show("Medida agregada correctamente");
+            }
+            else
+            {
+                MessageBox.Show("No se ingreso ninguna medida");
+            }
+        }
+
+        private void materialButton3_Click(object sender, EventArgs e)
+        {
+            string nuevo_costo = Microsoft.VisualBasic.Interaction.InputBox("Ingrese el nuevo costo por kilo", "Nuevo costo", "0");
+
+            if (!string.IsNullOrWhiteSpace(nuevo_costo))
+            {
+                materialComboBox2.Items.Add(nuevo_costo);
+                MessageBox.Show("Costo agregado correctamente");
+            }
+            else
+            {
+                MessageBox.Show("No se ingreso ningun costo");
+            }
         }
     }
 }
