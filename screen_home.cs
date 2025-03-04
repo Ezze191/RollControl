@@ -11,6 +11,8 @@ using System.Windows.Forms;
 using MaterialSkin.Controls;
 using Microsoft.VisualBasic.ApplicationServices;
 using MySql.Data.MySqlClient;
+using DocumentFormat.OpenXml.Spreadsheet;
+using System.Windows.Forms.DataVisualization.Charting;
 
 
 namespace Inventario
@@ -74,7 +76,10 @@ namespace Inventario
 
         private void screen_home_Load(object sender, EventArgs e)
         {
-            if(user_info.tipo == 0)
+            loadFecha();
+            CargarDatosGrafica();
+
+            if (user_info.tipo == 0)
             {
                 panel2.Visible = false;
                 pb_tool.Visible = false;
@@ -83,12 +88,88 @@ namespace Inventario
                 pictureBox3.Location = new Point(0,500);
                 pictureBox2.Location = new Point(0, 330);
 
-                
-
             }
 
-            
             lb_name.Text = user_info.Username;
+        }
+
+        private void loadFecha()
+        {
+            timer = new Timer(); // Asegura que el Timer esté instanciado
+            timer.Interval = 1000; // 1 segundo
+            timer.Tick += Timer_Tick;
+            timer.Start();
+
+            fechalabel.Text = DateTime.Now.ToString("d ' ' MMMM ' ' yyyy        HH:mm:ss");
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            fechalabel.Text = DateTime.Now.ToString("d ' ' MMMM ' ' yyyy        HH:mm:ss");
+        }
+        private void CargarDatosGrafica()
+        {
+            try
+            {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+
+                    if (connect.ObtenerConexion().State != ConnectionState.Open)
+                    {
+                        MessageBox.Show("Error: La conexión a la base de datos no está abierta.");
+                        return;
+                    }
+
+                    string query = @"
+                SELECT 
+                    (SELECT COUNT(*) FROM t_entradas WHERE DATE(FECHA) = CURDATE()) AS total_entradas,
+                    (SELECT COUNT(*) FROM t_salidas WHERE DATE(FECHA_DE_SALIDA) = CURDATE()) AS total_salidas;
+            ";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                int totalEntradas = reader.GetInt32("total_entradas");
+                                int totalSalidas = reader.GetInt32("total_salidas");
+
+                                chart1.Series.Clear();
+                                Series series = new Series("Movimientos")
+                                {
+                                    ChartType = SeriesChartType.Column
+                                };
+
+                                // Agregar datos con colores personalizados
+                                series.Points.AddXY("Entradas", totalEntradas);
+                                series.Points[0].Color = System.Drawing.ColorTranslator.FromHtml("#2196f3");
+
+                                series.Points.AddXY("Salidas", totalSalidas);
+                                series.Points[1].Color = System.Drawing.ColorTranslator.FromHtml("#1976d2");
+
+                                chart1.Series.Add(series);
+
+                                // Hacer fondo transparente
+                                chart1.BackColor = System.Drawing.Color.Transparent;
+                                chart1.ChartAreas[0].BackColor = System.Drawing.Color.Transparent;
+                                chart1.Legends[0].BackColor = System.Drawing.Color.Transparent;
+
+                                chart1.Invalidate();
+                            }
+                            else
+                            {
+                                MessageBox.Show("No se encontraron datos.");
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("ERROR: " + err.Message);
+            }
         }
 
         private void pictureBox1_Click_1(object sender, EventArgs e)
