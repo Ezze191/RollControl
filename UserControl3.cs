@@ -41,12 +41,12 @@ namespace Inventario
             // Establece el rango de fechas permitidas al año actual
             DateTimePicker dateTimePicker = new DateTimePicker();
             DateTime today = DateTime.Today;
-            
+
 
             dtpMesSeleccionado.Format = DateTimePickerFormat.Custom;
             dtpMesSeleccionado.CustomFormat = "MMMM yyyy"; // Muestra solo el mes y el año
             dtpMesSeleccionado.ShowUpDown = true; // Quita el calendario desplegable
-            
+
 
             llenartabla();
         }
@@ -117,7 +117,7 @@ namespace Inventario
 
             if (!string.IsNullOrWhiteSpace(nuevamedida))
             {
-                
+
                 MessageBox.Show("Medida agregada correctamente");
             }
             else
@@ -132,7 +132,7 @@ namespace Inventario
 
             if (!string.IsNullOrWhiteSpace(nuevo_costo))
             {
-                
+
                 MessageBox.Show("Costo agregado correctamente");
             }
             else
@@ -275,7 +275,7 @@ namespace Inventario
         private void bt_aply_Click(object sender, EventArgs e)
         {
             seleccioanrInventarioSeleccionado();
-            
+
         }
 
         private void seleccioanrInventarioSeleccionado()
@@ -283,7 +283,7 @@ namespace Inventario
 
             MessageBox.Show("FECHA SELECCIOANDA");
             llenarTablaConFiltro();
-           
+
         }
 
 
@@ -343,7 +343,7 @@ namespace Inventario
                             DatosCount.T_INVENTARIO_ROLLOS = dt.Rows.Count.ToString();
 
 
-                            
+
                         }
                     }
                 }
@@ -361,7 +361,7 @@ namespace Inventario
                 using (MysqlConnector connect = new MysqlConnector())
                 {
                     connect.EstablecerConexion();
-                    string query = "SELECT * FROM inventario_final WHERE TIPO = '"+ medida + "'";
+                    string query = "SELECT * FROM inventario_final WHERE TIPO = '" + medida + "'";
                     using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
                     {
                         using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
@@ -501,7 +501,7 @@ namespace Inventario
                         PdfWriter.GetInstance(pdfDoc, new FileStream(saveFileDialog.FileName, FileMode.Create));
                         pdfDoc.Open();
 
-                        
+
 
                         // Añadir contenido al documento
                         PdfPTable pdfTable = new PdfPTable(dataGridView1.Columns.Count);
@@ -549,9 +549,9 @@ namespace Inventario
 
         private void pictureBox5_Click(object sender, EventArgs e)
         {
-           
+
         }
-        
+
 
         private void dtpMesSeleccionado_ValueChanged(object sender, EventArgs e)
         {
@@ -639,9 +639,9 @@ namespace Inventario
                 {
                     using (XLWorkbook wb = new XLWorkbook())
                     {
-                        ProcesarHoja(wb, dtEntradas, "Entradas");
-                        ProcesarHoja(wb, dtSalidas, "Salidas");
-                        ProcesarHoja(wb, dtDesdeDataGrid, "Inventario Final");
+                        ProcesarHoja(wb, dtEntradas, "Entradas", "PESO");
+                        ProcesarHoja(wb, dtSalidas, "Salidas", "PESO_DE_SALIDA");
+                        ProcesarHoja(wb, dtDesdeDataGrid, "Inventario Final", "PESO");
 
                         // Verificar que al menos una hoja se haya agregado
                         if (wb.Worksheets.Count == 0)
@@ -659,7 +659,7 @@ namespace Inventario
         }
 
         // Función para procesar cada hoja de Excel
-        private void ProcesarHoja(XLWorkbook wb, DataTable dt, string sheetName)
+        private void ProcesarHoja(XLWorkbook wb, DataTable dt, string sheetName, string pesoColumnName)
         {
             if (dt.Rows.Count > 0)
             {
@@ -684,116 +684,19 @@ namespace Inventario
 
                 // Calcular totales
                 decimal totalDinero = dt.AsEnumerable().Sum(row => row["TOTAL"] != DBNull.Value ? Convert.ToDecimal(row["TOTAL"]) : 0);
-                decimal totalPeso = dt.AsEnumerable().Sum(row => row["COSTOKILO"] != DBNull.Value ? Convert.ToDecimal(row["COSTOKILO"]) : 0);
+                decimal totalPeso = dt.AsEnumerable().Sum(row => row[pesoColumnName] != DBNull.Value ? Convert.ToDecimal(row[pesoColumnName]) : 0);
                 int totalRollos = dt.Rows.Count;
 
-                // Obtener los índices de las columnas "TOTAL" y "COSTOKILO"
+                // Obtener los índices de las columnas "TOTAL" y "PESO"
                 int columnaTotalIndex = dt.Columns.IndexOf("TOTAL") + 1; // El índice en Excel es 1-based
-                int columnaPesoIndex = dt.Columns.IndexOf("COSTOKILO") + 1;
+                int columnaPesoIndex = dt.Columns.IndexOf(pesoColumnName) + 1;
 
                 // Escribir los totales en el archivo Excel con un renglón en blanco
                 var lastRow = dt.Rows.Count + 3;
                 ws.Cell(lastRow, columnaTotalIndex).Value = "TOTAL DINERO: $" + totalDinero;
-                ws.Cell(lastRow, columnaPesoIndex).Value = "TOTAL PESO: $" + totalPeso;
+                ws.Cell(lastRow, columnaPesoIndex).Value = "TOTAL PESO: " + totalPeso;
                 ws.Cell(lastRow, 1).Value = "TOTAL ROLLOS: " + totalRollos;
             }
-        }
-
-        private void FormatearMoneda(IXLWorksheet ws, DataTable dt)
-        {
-            int colCostoKilo = dt.Columns.Contains("COSTOKILO") ? dt.Columns["COSTOKILO"].Ordinal + 1 : -1;
-            int colTotal = dt.Columns.Contains("TOTAL") ? dt.Columns["TOTAL"].Ordinal + 1 : -1;
-
-            if (colCostoKilo > 0)
-            {
-                ws.Column(colCostoKilo).Style.NumberFormat.Format = "$#,##0.00";
-            }
-
-            if (colTotal > 0)
-            {
-                ws.Column(colTotal).Style.NumberFormat.Format = "$#,##0.00";
-            }
-
-            ws.Columns().AdjustToContents(); // 🔹 Ajustar ancho de todas las columnas
-        }
-
-        private void AgregarHojaExcel(XLWorkbook wb, DataTable dt, string nombreHoja)
-        {
-            if (dt.Rows.Count > 0)
-            {
-                // Crear hoja
-                var ws = wb.Worksheets.Add(dt, nombreHoja);
-
-                // Concatenar el signo de "$" en las columnas "COSTOKILO" y "TOTAL"
-                ConcatenarSignoPesos(ws, dt);
-
-                // Ajustar columnas automáticamente
-                ws.Columns().AdjustToContents();
-            }
-        }
-
-        private void ConcatenarSignoPesos(IXLWorksheet ws, DataTable dt)
-        {
-            int colCostoKilo = dt.Columns.Contains("COSTOKILO") ? dt.Columns["COSTOKILO"].Ordinal + 1 : -1;
-            int colTotal = dt.Columns.Contains("TOTAL") ? dt.Columns["TOTAL"].Ordinal + 1 : -1;
-
-            if (colCostoKilo > 0)
-            {
-                foreach (var cell in ws.Column(colCostoKilo).CellsUsed())
-                {
-                    if (decimal.TryParse(cell.Value.ToString(), out decimal valor))
-                    {
-                        cell.Value = $"${valor}";  // 🔹 Concatenamos el "$"
-                    }
-                }
-            }
-
-            if (colTotal > 0)
-            {
-                foreach (var cell in ws.Column(colTotal).CellsUsed())
-                {
-                    if (decimal.TryParse(cell.Value.ToString(), out decimal valor))
-                    {
-                        cell.Value = $"${valor}";  // 🔹 Concatenamos el "$"
-                    }
-                }
-            }
-        }
-
-
-        private void FormatearMonedaExcel(IXLWorksheet ws, DataTable dt)
-        {
-            int colCostoKilo = dt.Columns.Contains("COSTOKILO") ? dt.Columns["COSTOKILO"].Ordinal + 1 : -1;
-            int colTotal = dt.Columns.Contains("TOTAL") ? dt.Columns["TOTAL"].Ordinal + 1 : -1;
-
-            if (colCostoKilo > 0)
-            {
-                ws.Column(colCostoKilo).CellsUsed().Style.NumberFormat.Format = "$#,##0.00"; // 🔹 Asegura el formato de moneda
-            }
-
-            if (colTotal > 0)
-            {
-                ws.Column(colTotal).CellsUsed().Style.NumberFormat.Format = "$#,##0.00";
-            }
-        }
-
-        private void AgregarTotalesExcel(IXLWorksheet ws, DataTable dt)
-        {
-            decimal totalDinero = dt.AsEnumerable().Sum(row => row["TOTAL"] != DBNull.Value ? Convert.ToDecimal(row["TOTAL"]) : 0);
-            decimal totalPeso = dt.AsEnumerable().Sum(row => row["COSTOKILO"] != DBNull.Value ? Convert.ToDecimal(row["COSTOKILO"]) : 0);
-            int totalRollos = dt.Rows.Count;
-
-            var lastRow = dt.Rows.Count + 2;
-            ws.Cell(lastRow, 1).Value = "TOTAL DINERO:";
-            ws.Cell(lastRow, 2).Value = totalDinero;
-            ws.Cell(lastRow, 2).Style.NumberFormat.Format = "$#,##0.00"; // 🔹 Formato correcto
-
-            ws.Cell(lastRow + 1, 1).Value = "TOTAL PESO:";
-            ws.Cell(lastRow + 1, 2).Value = totalPeso;
-            ws.Cell(lastRow + 1, 2).Style.NumberFormat.Format = "#,##0.00"; // 🔹 No necesita $
-
-            ws.Cell(lastRow + 2, 1).Value = "TOTAL ROLLOS:";
-            ws.Cell(lastRow + 2, 2).Value = totalRollos;
         }
 
         private void FormatearMonedaDataGridView(DataGridView dgv)
@@ -809,14 +712,14 @@ namespace Inventario
 
         private void bt_cancel_Click_1(object sender, EventArgs e)
         {
-             mesSeleccionado = DateTime.Now.Month;
-             anioSeleccionado = DateTime.Now.Year;
-             llenartabla();
+            mesSeleccionado = DateTime.Now.Month;
+            anioSeleccionado = DateTime.Now.Year;
+            llenartabla();
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            if(tb_buscarNumero.Text == string.Empty)
+            if (tb_buscarNumero.Text == string.Empty)
             {
                 MessageBox.Show("LOS DATOS NO PUEDEN ESTAR VACIOS");
             }
@@ -855,7 +758,7 @@ namespace Inventario
             }
 
 
-           
+
 
         }
 
@@ -866,7 +769,7 @@ namespace Inventario
 
             try
             {
-                
+
                 using (MysqlConnector connect = new MysqlConnector()) // Tu conexión a MySQL
                 {
                     connect.EstablecerConexion();
@@ -902,7 +805,7 @@ namespace Inventario
             string medida = materialComboBox1.Text;
             try
             {
-                
+
                 using (MysqlConnector connect = new MysqlConnector()) // Tu conexión a MySQL
                 {
                     connect.EstablecerConexion();
@@ -923,7 +826,7 @@ namespace Inventario
                     // Guardar en archivo Excel
                     GuardarExcel(dtEntradas, dtSalidas, dtInventario);
 
-                    
+
                 }
             }
             catch (Exception ex)
