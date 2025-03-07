@@ -335,9 +335,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(56, 152);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(52, 16);
+            this.label5.Size = new System.Drawing.Size(138, 16);
             this.label5.TabIndex = 14;
-            this.label5.Text = "FECHA";
+            this.label5.Text = "FECHA DE INGRESO";
             // 
             // SalidasFecha
             // 

@@ -361,7 +361,7 @@
             this.EXCELBT.MouseState = MaterialSkin.MouseState.HOVER;
             this.EXCELBT.Name = "EXCELBT";
             this.EXCELBT.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.EXCELBT.Size = new System.Drawing.Size(64, 36);
+            this.EXCELBT.Size = new System.Drawing.Size(65, 36);
             this.EXCELBT.TabIndex = 35;
             this.EXCELBT.Text = "EXCEL";
             this.EXCELBT.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -515,7 +515,8 @@
             this.materialComboBox1.ItemHeight = 43;
             this.materialComboBox1.Items.AddRange(new object[] {
             "71.0 CMs",
-            "76.0 CMs"});
+            "76.0 CMs",
+            "38.0 CMs"});
             this.materialComboBox1.Location = new System.Drawing.Point(72, 31);
             this.materialComboBox1.MaxDropDownItems = 4;
             this.materialComboBox1.MouseState = MaterialSkin.MouseState.OUT;

@@ -1,12 +1,7 @@
-C:\Users\drek_\source\repos\Inventario\bin\Debug\Inventario.exe.config
-C:\Users\drek_\source\repos\Inventario\bin\Debug\Inventario.exe
-C:\Users\drek_\source\repos\Inventario\bin\Debug\Inventario.pdb
 C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.csproj.AssemblyReference.cache
 C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.Properties.Resources.resources
 C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.csproj.GenerateResource.cache
 C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.csproj.CoreCompileInputs.cache
-C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.exe
-C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.pdb
 C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.screen_login.resources
 C:\Users\drek_\source\repos\Inventario\bin\Debug\MySql.Data.dll
 C:\Users\drek_\source\repos\Inventario\bin\Debug\System.Memory.dll
@@ -48,3 +43,12 @@ C:\Users\drek_\source\repos\Inventario\bin\Debug\System.Numerics.Vectors.xml
 C:\Users\drek_\source\repos\Inventario\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.UserControl4.resources
 C:\Users\drek_\source\repos\Inventario\obj\Debug\Inventario.UserControl5.resources
+C:\Users\drek_\source\repos\Inventario\bin\Debug\RollControl.exe.config
+C:\Users\drek_\source\repos\Inventario\bin\Debug\RollControl.exe.manifest
+C:\Users\drek_\source\repos\Inventario\bin\Debug\RollControl.application
+C:\Users\drek_\source\repos\Inventario\bin\Debug\RollControl.exe
+C:\Users\drek_\source\repos\Inventario\bin\Debug\RollControl.pdb
+C:\Users\drek_\source\repos\Inventario\obj\Debug\RollControl.exe.manifest
+C:\Users\drek_\source\repos\Inventario\obj\Debug\RollControl.application
+C:\Users\drek_\source\repos\Inventario\obj\Debug\RollControl.exe
+C:\Users\drek_\source\repos\Inventario\obj\Debug\RollControl.pdb

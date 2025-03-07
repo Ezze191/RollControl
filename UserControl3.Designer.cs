@@ -354,7 +354,8 @@
             this.materialComboBox1.ItemHeight = 43;
             this.materialComboBox1.Items.AddRange(new object[] {
             "71.0 CMs",
-            "76.0 CMs"});
+            "76.0 CMs",
+            "38.0 CMs"});
             this.materialComboBox1.Location = new System.Drawing.Point(72, 31);
             this.materialComboBox1.MaxDropDownItems = 4;
             this.materialComboBox1.MouseState = MaterialSkin.MouseState.OUT;

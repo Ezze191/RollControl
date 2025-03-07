@@ -146,7 +146,8 @@
             this.combo_medidas.ItemHeight = 43;
             this.combo_medidas.Items.AddRange(new object[] {
             "71.0 CMs",
-            "76.0 CMs"});
+            "76.0 CMs",
+            "38.0 CMs"});
             this.combo_medidas.Location = new System.Drawing.Point(41, 192);
             this.combo_medidas.MaxDropDownItems = 4;
             this.combo_medidas.MouseState = MaterialSkin.MouseState.OUT;
@@ -541,7 +542,8 @@
             this.materialComboBox1.ItemHeight = 43;
             this.materialComboBox1.Items.AddRange(new object[] {
             "71.0 CMs",
-            "76.0 CMs"});
+            "76.0 CMs",
+            "38.0 CMs"});
             this.materialComboBox1.Location = new System.Drawing.Point(72, 36);
             this.materialComboBox1.MaxDropDownItems = 4;
             this.materialComboBox1.MouseState = MaterialSkin.MouseState.OUT;
