@@ -175,14 +175,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RollControl.exe" size="743832">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RollControl.exe" size="744856">
       <assemblyIdentity name="RollControl" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>V9AOFUDYJJEe3DVi8sTf3dYx4QxuvOAhuGXEjOz0IFE=</dsig:DigestValue>
+        <dsig:DigestValue>N3MkS/OFhANQ4CwUzaA/JIv3gMYu6UNRRJ7XNfGePrE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

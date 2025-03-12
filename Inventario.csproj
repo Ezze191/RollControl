@@ -142,6 +142,7 @@
     <Compile Include="MysqlConnector.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RollosMedidas.cs" />
     <Compile Include="screen_home.cs">
       <SubType>Form</SubType>
     </Compile>

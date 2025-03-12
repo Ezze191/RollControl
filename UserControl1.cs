@@ -41,12 +41,17 @@ namespace Inventario
             InitializeComponent();
         }
 
-        
+        private void CargarComboDeRollos()
+        {
+            string[] tiposRollo = RollosMedidas.ObtenerMedidas();
+            combo_medidas.Items.Clear();
+            combo_medidas.Items.AddRange(tiposRollo);
+        }
 
         private void UserControl1_Load(object sender, EventArgs e)
         {
-            
-            
+
+            CargarComboDeRollos();
 
             llenartabla();
             user_info.checarstatus();
@@ -305,6 +310,7 @@ namespace Inventario
             if (!string.IsNullOrWhiteSpace(nuevamedida)) {
                 combo_medidas.Items.Add(nuevamedida);
                 materialComboBox1.Items.Add(nuevamedida);
+                RollosMedidas.AgregarMedida(nuevamedida);
                 MessageBox.Show("Medida agregada correctamente");
             }
             else

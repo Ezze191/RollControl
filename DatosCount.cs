@@ -19,5 +19,7 @@ namespace Inventario
         public static string T_INVENTARIO_PESO { get; set; }
         public static string T_INVENTARIO_DINERO { get; set; }
         public static string T_INVENTARIO_ROLLOS { get; set; }
+
+        
     }
 }

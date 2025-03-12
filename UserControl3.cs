@@ -34,8 +34,16 @@ namespace Inventario
 
         }
 
+        private void CargarComboDeRollos()
+        {
+            string[] tiposRollo = RollosMedidas.ObtenerMedidas();
+            materialComboBox1.Items.Clear();
+            materialComboBox1.Items.AddRange(tiposRollo);
+        }
+
         private void UserControl3_Load(object sender, EventArgs e)
         {
+            CargarComboDeRollos();
             // Establece el rango de fechas permitidas al año actual
             DateTimePicker dateTimePicker = new DateTimePicker();
             DateTime today = DateTime.Today;
@@ -659,7 +667,7 @@ namespace Inventario
 
         private void ProcesarDatosPorTipoRollo(XLWorkbook wb, DataTable dt, string sheetBaseName, string pesoColumnName)
         {
-            var tiposRollo = new[] { "71.0 CMs", "76.0 CMs", "38.0 CMs" };
+            var tiposRollo = RollosMedidas.ObtenerMedidas();
 
             foreach (var tipoRollo in tiposRollo)
             {

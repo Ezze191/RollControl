@@ -34,11 +34,16 @@ namespace Inventario
             panel2.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
         }
 
-       
+        private void CargarComboDeRollos()
+        {
+            string[] tiposRollo = RollosMedidas.ObtenerMedidas();
+            materialComboBox1.Items.Clear();
+            materialComboBox1.Items.AddRange(tiposRollo);
+        }
 
         private void UserControl2_Load(object sender, EventArgs e)
         {
-            
+            CargarComboDeRollos();
 
                  llenartabla();
                  user_info.checarstatus();
