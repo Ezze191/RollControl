@@ -32,8 +32,6 @@ namespace Inventario
             panel1.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
             panel2.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
 
-
-
         }
 
         private void UserControl3_Load(object sender, EventArgs e)
@@ -639,9 +637,10 @@ namespace Inventario
                 {
                     using (XLWorkbook wb = new XLWorkbook())
                     {
-                        ProcesarHoja(wb, dtEntradas, "Entradas", "PESO");
-                        ProcesarHoja(wb, dtSalidas, "Salidas", "PESO_DE_SALIDA");
-                        ProcesarHoja(wb, dtDesdeDataGrid, "Inventario Final", "PESO");
+                        // Filtrar y procesar datos por tipo de rollo
+                        ProcesarDatosPorTipoRollo(wb, dtEntradas, "Entradas", "PESO");
+                        ProcesarDatosPorTipoRollo(wb, dtSalidas, "Salidas", "PESO_DE_SALIDA");
+                        ProcesarDatosPorTipoRollo(wb, dtDesdeDataGrid, "Inventario Final", "PESO");
 
                         // Verificar que al menos una hoja se haya agregado
                         if (wb.Worksheets.Count == 0)
@@ -654,6 +653,22 @@ namespace Inventario
                         wb.SaveAs(sfd.FileName);
                         MessageBox.Show("Datos exportados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
+                }
+            }
+        }
+
+        private void ProcesarDatosPorTipoRollo(XLWorkbook wb, DataTable dt, string sheetBaseName, string pesoColumnName)
+        {
+            var tiposRollo = new[] { "71.0 CMs", "76.0 CMs", "38.0 CMs" };
+
+            foreach (var tipoRollo in tiposRollo)
+            {
+                var filasFiltradas = dt.AsEnumerable().Where(row => row.Field<string>("TIPO") == tipoRollo);
+                if (filasFiltradas.Any())
+                {
+                    var dtFiltrado = filasFiltradas.CopyToDataTable();
+                    var sheetName = $"{sheetBaseName} - {tipoRollo}";
+                    ProcesarHoja(wb, dtFiltrado, sheetName, pesoColumnName);
                 }
             }
         }
@@ -709,7 +724,6 @@ namespace Inventario
                 }
             }
         }
-
         private void bt_cancel_Click_1(object sender, EventArgs e)
         {
             mesSeleccionado = DateTime.Now.Month;
