@@ -85,7 +85,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(650, 672);
+            this.dataGridView1.Size = new System.Drawing.Size(671, 672);
             this.dataGridView1.TabIndex = 2;
             // 
             // tx_dinero
@@ -141,7 +141,7 @@
             this.panel_filtrar.Controls.Add(this.dtpMesSeleccionado);
             this.panel_filtrar.Controls.Add(this.label6);
             this.panel_filtrar.Controls.Add(this.bt_aply);
-            this.panel_filtrar.Location = new System.Drawing.Point(723, 324);
+            this.panel_filtrar.Location = new System.Drawing.Point(761, 324);
             this.panel_filtrar.Name = "panel_filtrar";
             this.panel_filtrar.Size = new System.Drawing.Size(350, 102);
             this.panel_filtrar.TabIndex = 31;

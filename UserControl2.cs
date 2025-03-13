@@ -41,6 +41,16 @@ namespace Inventario
             materialComboBox1.Items.AddRange(tiposRollo);
         }
 
+        private void AligRight()
+        {
+            foreach (DataGridViewColumn col in dataGridView1.Columns)
+            {
+                dataGridView1.Columns["PESO_DE_SALIDA"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                dataGridView1.Columns["COSTOKILO"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                dataGridView1.Columns["TOTAL"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            }
+        }
+
         private void UserControl2_Load(object sender, EventArgs e)
         {
             CargarComboDeRollos();
@@ -147,6 +157,7 @@ namespace Inventario
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
+            AligRight();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -540,6 +551,7 @@ namespace Inventario
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
+            AligRight();
         }
 
         private void tablafiltrada_numero(string nu)
@@ -604,6 +616,7 @@ namespace Inventario
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
+            AligRight();
         }
         private void filtrarpormedida(string medida)
         {
@@ -667,6 +680,7 @@ namespace Inventario
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
+            AligRight();
 
         }
         private void filtrarporkilo(string kilo)
@@ -731,6 +745,7 @@ namespace Inventario
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
+            AligRight();
 
         }
 
@@ -816,6 +831,17 @@ namespace Inventario
                         var ws = wb.Worksheets.Add(dt, "SALIDAS");
                         ws.Columns().AdjustToContents(); // Ajustar ancho de columnas
 
+                        //alineamiento a la derecha
+                        string[] columnasNumericas = { "PESO_DE_SALIDA", "COSTOKILO", "TOTAL" };
+                        foreach (string colName in columnasNumericas)
+                        {
+                            if (dt.Columns.Contains(colName))
+                            {
+                                int colIndex = dt.Columns.IndexOf(colName) + 1; // Índice en Excel es 1-based
+                                ws.Column(colIndex).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+                            }
+                        }
+
                         int lastRow = dt.Rows.Count + 1;
 
                         // Obtener los índices de las columnas "PESO_DE_SALIDA" y "TOTAL"
@@ -849,7 +875,7 @@ namespace Inventario
 
         private void materialButton4_Click(object sender, EventArgs e)
         {
-            string nuevamedida = Microsoft.VisualBasic.Interaction.InputBox("Ingrese la nueva medida", "Nueva medida", "0");
+            string nuevamedida = Microsoft.VisualBasic.Interaction.InputBox("Ingrese la nueva medida", "Nueva medida", "Ejemplo : 76.0 CMs");
 
             if (!string.IsNullOrWhiteSpace(nuevamedida))
             {

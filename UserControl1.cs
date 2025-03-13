@@ -48,10 +48,18 @@ namespace Inventario
             combo_medidas.Items.AddRange(tiposRollo);
         }
 
+        private void AligRight()
+        {
+            foreach (DataGridViewColumn col in dataGridView1.Columns)
+            {
+                dataGridView1.Columns["PESO"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                dataGridView1.Columns["COSTOKILO"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                dataGridView1.Columns["TOTAL"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            }
+        }
         private void UserControl1_Load(object sender, EventArgs e)
         {
-
-            CargarComboDeRollos();
+            
 
             llenartabla();
             user_info.checarstatus();
@@ -66,9 +74,6 @@ namespace Inventario
             {
                 abrirInventario();
             }
-
-
-
 
             //forzar colores
             panel_opciones.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
@@ -164,6 +169,8 @@ namespace Inventario
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
+
+            AligRight();
         }
 
         private void tablafiltrada_fehca(string fi , string fn)
@@ -227,6 +234,8 @@ namespace Inventario
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
+
+            AligRight();
         }
 
         private void tablafiltrada_numero(string nu)
@@ -291,6 +300,7 @@ namespace Inventario
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
+            AligRight();
         }
 
 
@@ -305,7 +315,7 @@ namespace Inventario
 
         private void materialButton1_Click(object sender, EventArgs e)
         {
-            string nuevamedida = Microsoft.VisualBasic.Interaction.InputBox("Ingrese la nueva medida", "Nueva medida", "0");
+            string nuevamedida = Microsoft.VisualBasic.Interaction.InputBox("Ingrese la nueva medida", "Nueva medida", "Ejemplo : 76.0 CMs");
 
             if (!string.IsNullOrWhiteSpace(nuevamedida)) {
                 combo_medidas.Items.Add(nuevamedida);
@@ -696,6 +706,17 @@ namespace Inventario
                     {
                         var ws = wb.Worksheets.Add(dt, "ENTRADAS");
                         ws.Columns().AdjustToContents(); // Ajustar ancho de columnas
+
+                        //alineamiento a la derecha
+                        string[] columnasNumericas = { "PESO", "COSTOKILO", "TOTAL" };
+                        foreach (string colName in columnasNumericas)
+                        {
+                            if (dt.Columns.Contains(colName))
+                            {
+                                int colIndex = dt.Columns.IndexOf(colName) + 1; // Índice en Excel es 1-based
+                                ws.Column(colIndex).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+                            }
+                        }
 
                         int lastRow = dt.Rows.Count + 1;
 

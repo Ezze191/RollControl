@@ -3,40 +3,40 @@
   "WorkspaceRootPath": "C:\\Users\\drek_\\source\\repos\\Inventario\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|c:\\users\\drek_\\source\\repos\\inventario\\usercontrol5.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|solutionrelative:usercontrol5.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|c:\\users\\drek_\\source\\repos\\inventario\\usercontrol4.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|solutionrelative:usercontrol4.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|c:\\users\\drek_\\source\\repos\\inventario\\usercontrol3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|C:\\Users\\drek_\\source\\repos\\Inventario\\usercontrol3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|solutionrelative:usercontrol3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|C:\\Users\\drek_\\source\\repos\\Inventario\\usercontrol1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|solutionrelative:usercontrol1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|C:\\Users\\drek_\\source\\repos\\Inventario\\usercontrol1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|solutionrelative:usercontrol1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|C:\\Users\\drek_\\source\\repos\\Inventario\\usercontrol2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|solutionrelative:usercontrol2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|C:\\Users\\drek_\\source\\repos\\Inventario\\usercontrol2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|solutionrelative:usercontrol2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|c:\\users\\drek_\\source\\repos\\inventario\\usercontrol3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|c:\\users\\drek_\\source\\repos\\inventario\\usercontrol1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|solutionrelative:usercontrol1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|C:\\Users\\drek_\\source\\repos\\Inventario\\usercontrol3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|solutionrelative:usercontrol3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|c:\\users\\drek_\\source\\repos\\inventario\\usercontrol2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|solutionrelative:usercontrol2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|C:\\Users\\drek_\\source\\repos\\Inventario\\usercontrol5.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|solutionrelative:usercontrol5.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|c:\\users\\drek_\\source\\repos\\inventario\\datoscount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|C:\\Users\\drek_\\source\\repos\\Inventario\\usercontrol4.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|solutionrelative:usercontrol4.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|C:\\Users\\drek_\\source\\repos\\Inventario\\datoscount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|solutionrelative:datoscount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|c:\\users\\drek_\\source\\repos\\inventario\\usercontrol1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|solutionrelative:usercontrol1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DB8AC2B0-F03C-40B8-A562-58FCB3B74FA5}|Inventario.csproj|C:\\Users\\drek_\\source\\repos\\Inventario\\screen_home.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
@@ -54,7 +54,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -66,7 +66,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "UserControl5.cs [Design]",
               "DocumentMoniker": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl5.cs",
               "RelativeDocumentMoniker": "UserControl5.cs",
@@ -78,19 +78,45 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UserControl4.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl4.cs",
-              "RelativeDocumentMoniker": "UserControl4.cs",
-              "ToolTip": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl4.cs [Design]",
-              "RelativeToolTip": "UserControl4.cs [Design]",
+              "DocumentIndex": 4,
+              "Title": "UserControl1.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl1.cs",
+              "RelativeDocumentMoniker": "UserControl1.cs",
+              "ToolTip": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl1.cs [Design]",
+              "RelativeToolTip": "UserControl1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-12T20:00:30.231Z",
+              "WhenOpened": "2025-03-07T18:01:48.034Z",
               "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "UserControl2.cs",
+              "DocumentMoniker": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl2.cs",
+              "RelativeDocumentMoniker": "UserControl2.cs",
+              "ToolTip": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl2.cs",
+              "RelativeToolTip": "UserControl2.cs",
+              "ViewState": "AgIAADIDAAAAAAAAAAApwD4DAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-12T19:55:05.028Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserControl1.cs",
+              "DocumentMoniker": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl1.cs",
+              "RelativeDocumentMoniker": "UserControl1.cs",
+              "ToolTip": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl1.cs",
+              "RelativeToolTip": "UserControl1.cs",
+              "ViewState": "AgIAAL4CAAAAAAAAAAApwMUCAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-12T19:48:18.16Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "UserControl3.cs [Design]",
               "DocumentMoniker": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl3.cs",
               "RelativeDocumentMoniker": "UserControl3.cs",
@@ -102,59 +128,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "UserControl2.cs",
-              "DocumentMoniker": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl2.cs",
-              "RelativeDocumentMoniker": "UserControl2.cs",
-              "ToolTip": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl2.cs",
-              "RelativeToolTip": "UserControl2.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAvwCQAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-12T19:55:05.028Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "UserControl1.cs",
-              "DocumentMoniker": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl1.cs",
-              "RelativeDocumentMoniker": "UserControl1.cs",
-              "ToolTip": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl1.cs",
-              "RelativeToolTip": "UserControl1.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAArwDAAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-12T19:48:18.16Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "DatosCount.cs",
-              "DocumentMoniker": "C:\\Users\\drek_\\source\\repos\\Inventario\\DatosCount.cs",
-              "RelativeDocumentMoniker": "DatosCount.cs",
-              "ToolTip": "C:\\Users\\drek_\\source\\repos\\Inventario\\DatosCount.cs",
-              "RelativeToolTip": "DatosCount.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-12T19:37:21.932Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 5,
               "Title": "UserControl3.cs",
               "DocumentMoniker": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl3.cs",
               "RelativeDocumentMoniker": "UserControl3.cs",
               "ToolTip": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl3.cs",
               "RelativeToolTip": "UserControl3.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAADgvywAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAMACAAAAAAAAAAD4v9YCAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-07T19:51:27.433Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "UserControl2.cs [Design]",
               "DocumentMoniker": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl2.cs",
               "RelativeDocumentMoniker": "UserControl2.cs",
@@ -166,15 +153,27 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "UserControl1.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl1.cs",
-              "RelativeDocumentMoniker": "UserControl1.cs",
-              "ToolTip": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl1.cs [Design]",
-              "RelativeToolTip": "UserControl1.cs [Design]",
+              "DocumentIndex": 7,
+              "Title": "UserControl4.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl4.cs",
+              "RelativeDocumentMoniker": "UserControl4.cs",
+              "ToolTip": "C:\\Users\\drek_\\source\\repos\\Inventario\\UserControl4.cs [Design]",
+              "RelativeToolTip": "UserControl4.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T18:01:48.034Z",
+              "WhenOpened": "2025-03-12T20:00:30.231Z",
               "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "DatosCount.cs",
+              "DocumentMoniker": "C:\\Users\\drek_\\source\\repos\\Inventario\\DatosCount.cs",
+              "RelativeDocumentMoniker": "DatosCount.cs",
+              "ToolTip": "C:\\Users\\drek_\\source\\repos\\Inventario\\DatosCount.cs",
+              "RelativeToolTip": "DatosCount.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-12T19:37:21.932Z"
             },
             {
               "$type": "Document",
