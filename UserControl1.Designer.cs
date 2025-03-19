@@ -173,6 +173,7 @@
             this.panel_opciones.Name = "panel_opciones";
             this.panel_opciones.Size = new System.Drawing.Size(318, 585);
             this.panel_opciones.TabIndex = 5;
+            this.panel_opciones.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_opciones_Paint);
             // 
             // label3
             // 

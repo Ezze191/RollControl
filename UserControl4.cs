@@ -24,6 +24,26 @@ namespace Inventario
 
         private void UserControl4_Load(object sender, EventArgs e)
         {
+            Panel panelFondo = new Panel
+            {
+                Dock = DockStyle.Fill,
+
+            };
+
+            panelFondo.AutoScroll = true;
+
+            // Mover todos los controles existentes dentro del panel
+            while (Controls.Count > 0)
+            {
+                Control ctrl = Controls[0];
+                Controls.Remove(ctrl);
+                panelFondo.Controls.Add(ctrl);
+            }
+
+            // Agregar el panel al formulario
+            Controls.Add(panelFondo);
+
+
             //filtrar colores
             panel_entrada.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
             panel_salidas.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");

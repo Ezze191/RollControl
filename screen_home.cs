@@ -76,6 +76,12 @@ namespace Inventario
 
         private void screen_home_Load(object sender, EventArgs e)
         {
+            panel1.AutoScroll = true;
+            panelFondo.AutoScroll = true;
+
+            
+
+
             loadFecha();
             CargarDatosGrafica();
 

@@ -53,6 +53,28 @@ namespace Inventario
 
         private void UserControl2_Load(object sender, EventArgs e)
         {
+
+            Panel panelFondo = new Panel
+            {
+                Dock = DockStyle.Fill,
+
+            };
+
+            panelFondo.AutoScroll = true;
+
+            // Mover todos los controles existentes dentro del panel
+            while (Controls.Count > 0)
+            {
+                Control ctrl = Controls[0];
+                Controls.Remove(ctrl);
+                panelFondo.Controls.Add(ctrl);
+            }
+
+            // Agregar el panel al formulario
+            Controls.Add(panelFondo);
+
+
+
             CargarComboDeRollos();
 
                  llenartabla();

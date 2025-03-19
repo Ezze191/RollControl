@@ -46,6 +46,7 @@ namespace Inventario
             string[] tiposRollo = RollosMedidas.ObtenerMedidas();
             combo_medidas.Items.Clear();
             combo_medidas.Items.AddRange(tiposRollo);
+            materialComboBox1.Items.AddRange(tiposRollo);
         }
 
         private void AligRight()
@@ -59,7 +60,30 @@ namespace Inventario
         }
         private void UserControl1_Load(object sender, EventArgs e)
         {
-            
+
+            Panel panelFondo = new Panel
+            {
+                Dock = DockStyle.Fill,
+                
+            };
+
+            panelFondo.AutoScroll = true;
+
+            // Mover todos los controles existentes dentro del panel
+            while (Controls.Count > 0)
+            {
+                Control ctrl = Controls[0];
+                Controls.Remove(ctrl);
+                panelFondo.Controls.Add(ctrl);
+            }
+
+            // Agregar el panel al formulario
+            Controls.Add(panelFondo);
+
+            CargarComboDeRollos();
+
+
+
 
             llenartabla();
             user_info.checarstatus();
@@ -917,6 +941,11 @@ namespace Inventario
         {
             string kilo = materialComboBox2.SelectedItem.ToString();
             filtrarporkilo(kilo);
+        }
+
+        private void panel_opciones_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

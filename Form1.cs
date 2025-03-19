@@ -35,6 +35,27 @@ namespace Inventario
         }
         private void screen_login_Load(object sender, EventArgs e)
         {
+
+            Panel panelFondo = new Panel
+            {
+                Dock = DockStyle.Fill,
+
+            };
+
+            panelFondo.AutoScroll = true;
+
+            // Mover todos los controles existentes dentro del panel
+            while (Controls.Count > 0)
+            {
+                Control ctrl = Controls[0];
+                Controls.Remove(ctrl);
+                panelFondo.Controls.Add(ctrl);
+            }
+
+            // Agregar el panel al formulario
+            Controls.Add(panelFondo);
+
+
             //forzar colores
             pictureBox2.BackColor = System.Drawing.ColorTranslator.FromHtml("#666666");
             
