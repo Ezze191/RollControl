@@ -120,9 +120,38 @@ namespace Inventario
 
         private void abrirInventario()
         {
-            // Restablecer MinDate y MaxDate a sus valores predeterminados
-            dtpFECHA.MinDate = DateTimePicker.MinimumDateTime;
-            dtpFECHA.MaxDate = DateTimePicker.MaximumDateTime;
+            try
+            {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+
+                    string query = "SELECT mes, anio FROM configuracionDate LIMIT 1";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                int mes = reader.GetInt32(0);
+                                int anio = reader.GetInt32(1);
+
+                                dtpFECHA.MinDate = new DateTime(anio, mes, 1);
+                                dtpFECHA.MaxDate = new DateTime(anio, mes, DateTime.DaysInMonth(anio, mes));
+
+                            }
+                        }
+                    }
+                } // Aquí se cierra automáticamente la conexión con Dispose()
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("ERROR: " + err.Message);
+            }
+                        
         }
 
 

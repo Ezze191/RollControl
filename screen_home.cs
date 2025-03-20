@@ -13,6 +13,7 @@ using Microsoft.VisualBasic.ApplicationServices;
 using MySql.Data.MySqlClient;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System.Windows.Forms.DataVisualization.Charting;
+using Microsoft.VisualBasic;
 
 
 namespace Inventario
@@ -281,7 +282,32 @@ namespace Inventario
             }
             else
             {
-                abrirInventario();
+                // Pedir el mes
+                string mesInput = Interaction.InputBox("Ingrese el número de mes (1-12):", "Seleccionar Mes", DateTime.Now.Month.ToString());
+                if (!int.TryParse(mesInput, out int nuevoMes) || nuevoMes < 1 || nuevoMes > 12)
+                {
+                    MessageBox.Show("Mes inválido. Debe ingresar un número entre 1 y 12.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Pedir el año
+                string anioInput = Interaction.InputBox("Ingrese el año:", "Seleccionar Año", DateTime.Now.Year.ToString());
+                if (!int.TryParse(anioInput, out int nuevoAnio) || nuevoAnio < 2000 || nuevoAnio > 2100)
+                {
+                    MessageBox.Show("Año inválido. Debe ingresar un año válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Confirmar selección
+                DialogResult confirmacion = MessageBox.Show($"¿Desea cambiar al mes {nuevoMes} del año {nuevoAnio}?",
+                                                            "Confirmar cambio", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (confirmacion == DialogResult.Yes)
+                {
+                    CambiarMesEnBD(nuevoMes, nuevoAnio);
+                    abrirInventario();
+                }
+                
             }
         }
         private void abrirInventario()
@@ -303,6 +329,30 @@ namespace Inventario
                         }
                     }
                 } // Aquí se cierra automáticamente la conexión con Dispose()
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("ERROR: " + err.Message);
+            }
+        }
+
+        private void CambiarMesEnBD(int nuevoMes, int nuevoAnio)
+        {
+            try
+            {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+
+                    string query = "UPDATE configuracionDate SET mes = @mes, anio = @anio WHERE id = 1";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+                        cmd.Parameters.AddWithValue("@mes", nuevoMes);
+                        cmd.Parameters.AddWithValue("@anio", nuevoAnio);
+                        cmd.ExecuteNonQuery();
+                    }
+                } 
             }
             catch (Exception err)
             {
