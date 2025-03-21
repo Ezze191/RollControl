@@ -80,9 +80,6 @@ namespace Inventario
             panel1.AutoScroll = true;
             panelFondo.AutoScroll = true;
 
-            
-
-
             loadFecha();
             CargarDatosGrafica();
 

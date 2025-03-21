@@ -63,6 +63,13 @@ namespace Inventario
         private void UserControl1_Load(object sender, EventArgs e)
         {
 
+            if (user_info.tipo == 0)
+            {
+                bt_importar_excel.Visible = false;
+            }
+
+
+
             Panel panelFondo = new Panel
             {
                 Dock = DockStyle.Fill,
@@ -1000,7 +1007,7 @@ namespace Inventario
             if (user_info.status == "close")
             {
                 string fechaDeImportacion = dtpFECHA.Value.ToString("MM-yyyy");
-                DialogResult dialogResult = MessageBox.Show("LOS DATOS IMPORTADOS SE VAN A INGRESAR AL INVENTARIO DEL:  " + fechaDeImportacion, "IMPROTAR EXCEL", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = MessageBox.Show("LOS DATOS IMPORTADOS SE VAN A INGRESAR AL INVENTARIO FINAL DE :  " + fechaDeImportacion  , "IMPROTAR EXCEL", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
                     string fechaI = dtpFECHA.Value.ToString("yyyy-MM-dd");
@@ -1033,7 +1040,7 @@ namespace Inventario
                                         using (MySqlCommand checkCmd = new MySqlCommand(checkQuery, connect.ObtenerConexion(), transaction))
                                         {
                                             checkCmd.Parameters.AddWithValue("@NUMERO", numero);
-                                            checkCmd.Parameters.AddWithValue("@FECHA", fechaI);
+                                            checkCmd.Parameters.AddWithValue("@FECHA", fecha);
                                             int count = Convert.ToInt32(checkCmd.ExecuteScalar());
 
                                             if (count > 0)
@@ -1050,7 +1057,7 @@ namespace Inventario
                                         using (MySqlCommand cmd = new MySqlCommand(insertQuery, connect.ObtenerConexion(), transaction))
                                         {
                                             cmd.Parameters.AddWithValue("@USUARIO", user_info.Username);
-                                            cmd.Parameters.AddWithValue("@FECHA", fechaI);
+                                            cmd.Parameters.AddWithValue("@FECHA", fecha);
                                             cmd.Parameters.AddWithValue("@NUMERO", numero);
                                             cmd.Parameters.AddWithValue("@PESO", Convert.ToDouble(row["PESO"]));
                                             cmd.Parameters.AddWithValue("@TIPO", row["TIPO"].ToString());
@@ -1114,7 +1121,7 @@ namespace Inventario
                                         using (MySqlCommand checkCmd = new MySqlCommand(checkQuery, connect.ObtenerConexion(), transaction))
                                         {
                                             checkCmd.Parameters.AddWithValue("@NUMERO", numero);
-                                            checkCmd.Parameters.AddWithValue("@FECHA", fechaI);
+                                            checkCmd.Parameters.AddWithValue("@FECHA", fecha);
                                             int count = Convert.ToInt32(checkCmd.ExecuteScalar());
 
                                             if (count > 0)
@@ -1131,7 +1138,7 @@ namespace Inventario
                                         using (MySqlCommand cmd = new MySqlCommand(insertQuery, connect.ObtenerConexion(), transaction))
                                         {
                                             cmd.Parameters.AddWithValue("@USUARIO", user_info.Username);
-                                            cmd.Parameters.AddWithValue("@FECHA", fechaI);
+                                            cmd.Parameters.AddWithValue("@FECHA", fecha);
                                             cmd.Parameters.AddWithValue("@NUMERO", numero);
                                             cmd.Parameters.AddWithValue("@PESO", Convert.ToDouble(row["PESO"]));
                                             cmd.Parameters.AddWithValue("@TIPO", row["TIPO"].ToString());
@@ -1190,7 +1197,7 @@ namespace Inventario
                                 using (MySqlCommand checkCmd = new MySqlCommand(checkQuery, connect.ObtenerConexion(), transaction))
                                 {
                                     checkCmd.Parameters.AddWithValue("@NUMERO", numero);
-                                    checkCmd.Parameters.AddWithValue("@FECHA", fechaI);
+                                    checkCmd.Parameters.AddWithValue("@FECHA", fecha);
                                     int count = Convert.ToInt32(checkCmd.ExecuteScalar());
 
                                     if (count > 0)
@@ -1263,7 +1270,7 @@ namespace Inventario
                                 using (MySqlCommand checkCmd = new MySqlCommand(checkQuery, connect.ObtenerConexion(), transaction))
                                 {
                                     checkCmd.Parameters.AddWithValue("@NUMERO", numero);
-                                    checkCmd.Parameters.AddWithValue("@FECHA", fechaI);
+                                    checkCmd.Parameters.AddWithValue("@FECHA", fecha);
                                     int count = Convert.ToInt32(checkCmd.ExecuteScalar());
 
                                     if (count > 0)
@@ -1279,7 +1286,7 @@ namespace Inventario
 
                                 using (MySqlCommand cmd = new MySqlCommand(insertQuery, connect.ObtenerConexion(), transaction))
                                 {
-                                    cmd.Parameters.AddWithValue("@FECHA", fechaI);
+                                    cmd.Parameters.AddWithValue("@FECHA", fecha);
                                     cmd.Parameters.AddWithValue("@NUMERO", numero);
                                     cmd.Parameters.AddWithValue("@PESO", Convert.ToDouble(row["PESO"]));
                                     cmd.Parameters.AddWithValue("@TIPO", row["TIPO"].ToString());
