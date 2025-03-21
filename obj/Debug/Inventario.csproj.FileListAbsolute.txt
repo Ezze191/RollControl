@@ -52,3 +52,11 @@ C:\Users\drek_\source\repos\Inventario\obj\Debug\RollControl.exe.manifest
 C:\Users\drek_\source\repos\Inventario\obj\Debug\RollControl.application
 C:\Users\drek_\source\repos\Inventario\obj\Debug\RollControl.exe
 C:\Users\drek_\source\repos\Inventario\obj\Debug\RollControl.pdb
+C:\Users\drek_\source\repos\Inventario\bin\Debug\ExcelDataReader.DataSet.dll
+C:\Users\drek_\source\repos\Inventario\bin\Debug\ExcelDataReader.dll
+C:\Users\drek_\source\repos\Inventario\bin\Debug\System.Text.Encoding.CodePages.dll
+C:\Users\drek_\source\repos\Inventario\bin\Debug\ExcelDataReader.pdb
+C:\Users\drek_\source\repos\Inventario\bin\Debug\ExcelDataReader.xml
+C:\Users\drek_\source\repos\Inventario\bin\Debug\ExcelDataReader.DataSet.pdb
+C:\Users\drek_\source\repos\Inventario\bin\Debug\ExcelDataReader.DataSet.xml
+C:\Users\drek_\source\repos\Inventario\bin\Debug\System.Text.Encoding.CodePages.xml

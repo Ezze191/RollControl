@@ -14,6 +14,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClosedXML.Excel;
+using ExcelDataReader;
+using System.Text;
+
 
 namespace Inventario
 {
@@ -21,6 +24,7 @@ namespace Inventario
     {
         table_salidas salidas = new table_salidas();
         double restar = 0;
+        
 
         public UserControl2()
         {
@@ -32,6 +36,7 @@ namespace Inventario
             panel_pornumeros.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
             panel1.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
             panel2.BackColor = System.Drawing.ColorTranslator.FromHtml("#524F4F");
+            
         }
 
         private void CargarComboDeRollos()
@@ -53,6 +58,7 @@ namespace Inventario
 
         private void UserControl2_Load(object sender, EventArgs e)
         {
+            
 
             Panel panelFondo = new Panel
             {
@@ -965,5 +971,12 @@ namespace Inventario
             string costokilo = materialComboBox2.Text;
             filtrarporkilo(costokilo);
         }
+
+        private void bt_importar_excel_Click(object sender, EventArgs e)
+        {
+            
+        }
+        
+
     }
 }

@@ -70,6 +70,7 @@
             this.materialComboBox2 = new MaterialSkin.Controls.MaterialComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.bt_importar_excel = new MaterialSkin.Controls.MaterialButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel_opciones.SuspendLayout();
             this.panel_filtrar.SuspendLayout();
@@ -158,6 +159,7 @@
             // 
             // panel_opciones
             // 
+            this.panel_opciones.Controls.Add(this.bt_importar_excel);
             this.panel_opciones.Controls.Add(this.label3);
             this.panel_opciones.Controls.Add(this.dtpFECHA);
             this.panel_opciones.Controls.Add(this.label2);
@@ -634,6 +636,27 @@
             this.pictureBox4.TabStop = false;
             this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
             // 
+            // bt_importar_excel
+            // 
+            this.bt_importar_excel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.bt_importar_excel.BackColor = System.Drawing.Color.Lime;
+            this.bt_importar_excel.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.bt_importar_excel.Depth = 0;
+            this.bt_importar_excel.HighEmphasis = true;
+            this.bt_importar_excel.Icon = null;
+            this.bt_importar_excel.Location = new System.Drawing.Point(80, 530);
+            this.bt_importar_excel.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.bt_importar_excel.MouseState = MaterialSkin.MouseState.HOVER;
+            this.bt_importar_excel.Name = "bt_importar_excel";
+            this.bt_importar_excel.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.bt_importar_excel.Size = new System.Drawing.Size(157, 36);
+            this.bt_importar_excel.TabIndex = 13;
+            this.bt_importar_excel.Text = "IMPORTAR EXCEL";
+            this.bt_importar_excel.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.bt_importar_excel.UseAccentColor = false;
+            this.bt_importar_excel.UseVisualStyleBackColor = false;
+            this.bt_importar_excel.Click += new System.EventHandler(this.bt_importar_excel_Click);
+            // 
             // UserControl1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -721,5 +744,6 @@
         private MaterialSkin.Controls.MaterialComboBox materialComboBox2;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.PictureBox pictureBox4;
+        private MaterialSkin.Controls.MaterialButton bt_importar_excel;
     }
 }

@@ -16,6 +16,8 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using MaterialSkin.Controls;
 using System.Runtime.Remoting.Contexts;
 using ClosedXML.Excel;
+using ExcelDataReader;
+using Microsoft.VisualBasic.ApplicationServices;
 
 
 
@@ -975,6 +977,333 @@ namespace Inventario
         private void panel_opciones_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void bt_importar_excel_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Archivos Excel (*.xlsx;*.xls)|*.xlsx;*.xls",
+                Title = "Seleccionar archivo de Excel"
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog.FileName;
+                ImportarExcelAMySQL(filePath);
+            }
+
+            
+        }
+        private void ImportarExcelAMySQL(string filePath)
+        {
+            if (user_info.status == "close")
+            {
+                string fechaDeImportacion = dtpFECHA.Value.ToString("MM-yyyy");
+                DialogResult dialogResult = MessageBox.Show("LOS DATOS IMPORTADOS SE VAN A INGRESAR AL INVENTARIO DEL:  " + fechaDeImportacion, "IMPROTAR EXCEL", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    string fechaI = dtpFECHA.Value.ToString("yyyy-MM-dd");
+                    ImportarExcelAInventario_final(filePath);
+                    try
+                    {
+                        System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                        using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+                        using (var reader = ExcelReaderFactory.CreateReader(stream))
+                        {
+                            DataSet result = reader.AsDataSet(new ExcelDataSetConfiguration()
+                            {
+                                ConfigureDataTable = (_) => new ExcelDataTableConfiguration() { UseHeaderRow = true }
+                            });
+
+                            DataTable dt = result.Tables[0]; // Tomamos la primera hoja
+
+                            using (MysqlConnector connect = new MysqlConnector())
+                            {
+                                connect.EstablecerConexion();
+                                using (var transaction = connect.ObtenerConexion().BeginTransaction())
+                                {
+                                    foreach (DataRow row in dt.Rows)
+                                    {
+                                        string numero = row["NUMERO"].ToString();
+                                        DateTime fecha = Convert.ToDateTime(row["FECHA"]);
+
+                                        // Comprobar si ya existe el registro
+                                        string checkQuery = "SELECT COUNT(*) FROM t_entradas WHERE NUMERO = @NUMERO AND FECHA = @FECHA";
+                                        using (MySqlCommand checkCmd = new MySqlCommand(checkQuery, connect.ObtenerConexion(), transaction))
+                                        {
+                                            checkCmd.Parameters.AddWithValue("@NUMERO", numero);
+                                            checkCmd.Parameters.AddWithValue("@FECHA", fechaI);
+                                            int count = Convert.ToInt32(checkCmd.ExecuteScalar());
+
+                                            if (count > 0)
+                                            {
+                                                // Si ya existe, saltar esta fila
+                                                continue;
+                                            }
+                                        }
+
+                                        // Insertar solo si no existe
+                                        string insertQuery = "INSERT INTO t_entradas (USUARIO, FECHA, NUMERO, PESO, TIPO, COSTOKILO, TOTAL, STATUS) " +
+                                                             "VALUES (@USUARIO, @FECHA, @NUMERO, @PESO, @TIPO, @COSTOKILO, @TOTAL, @STATUS)";
+
+                                        using (MySqlCommand cmd = new MySqlCommand(insertQuery, connect.ObtenerConexion(), transaction))
+                                        {
+                                            cmd.Parameters.AddWithValue("@USUARIO", user_info.Username);
+                                            cmd.Parameters.AddWithValue("@FECHA", fechaI);
+                                            cmd.Parameters.AddWithValue("@NUMERO", numero);
+                                            cmd.Parameters.AddWithValue("@PESO", Convert.ToDouble(row["PESO"]));
+                                            cmd.Parameters.AddWithValue("@TIPO", row["TIPO"].ToString());
+                                            cmd.Parameters.AddWithValue("@COSTOKILO", Convert.ToDouble(row["COSTO*KILO"]));
+                                            cmd.Parameters.AddWithValue("@TOTAL", Convert.ToDouble(row["TOTAL"]));
+                                            cmd.Parameters.AddWithValue("@STATUS", "active");
+
+                                            cmd.ExecuteNonQuery();
+                                        }
+                                    }
+
+                                    // Aceptar la transacción
+                                    transaction.Commit();
+                                }
+                            }
+                        }
+                        llenartabla();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error al importar: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+
+               
+            }
+            else if (user_info.status == "open")
+            {
+                string fechaDeImportacion = dtpFECHA.Value.ToString("MM-yyyy");
+                DialogResult dialogResult = MessageBox.Show("LOS DATOS IMPORTADOS SE VAN A INGRESAR AL INVENTARIO DEL:  " + fechaDeImportacion, "IMPROTAR EXCEL", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    string fechaI = dtpFECHA.Value.ToString("yyyy-MM-dd");
+                    ImportarExcelAInventario_guardados(filePath);
+                    try
+                    {
+                        System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                        using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+                        using (var reader = ExcelReaderFactory.CreateReader(stream))
+                        {
+                            DataSet result = reader.AsDataSet(new ExcelDataSetConfiguration()
+                            {
+                                ConfigureDataTable = (_) => new ExcelDataTableConfiguration() { UseHeaderRow = true }
+                            });
+
+                            DataTable dt = result.Tables[0]; // Tomamos la primera hoja
+
+                            using (MysqlConnector connect = new MysqlConnector())
+                            {
+                                connect.EstablecerConexion();
+                                using (var transaction = connect.ObtenerConexion().BeginTransaction())
+                                {
+                                    foreach (DataRow row in dt.Rows)
+                                    {
+                                        string numero = row["NUMERO"].ToString();
+                                        DateTime fecha = Convert.ToDateTime(row["FECHA"]);
+
+                                        // Comprobar si ya existe el registro
+                                        string checkQuery = "SELECT COUNT(*) FROM t_entradas WHERE NUMERO = @NUMERO AND FECHA = @FECHA";
+                                        using (MySqlCommand checkCmd = new MySqlCommand(checkQuery, connect.ObtenerConexion(), transaction))
+                                        {
+                                            checkCmd.Parameters.AddWithValue("@NUMERO", numero);
+                                            checkCmd.Parameters.AddWithValue("@FECHA", fechaI);
+                                            int count = Convert.ToInt32(checkCmd.ExecuteScalar());
+
+                                            if (count > 0)
+                                            {
+                                                // Si ya existe, saltar esta fila
+                                                continue;
+                                            }
+                                        }
+
+                                        // Insertar solo si no existe
+                                        string insertQuery = "INSERT INTO t_entradas (USUARIO, FECHA, NUMERO, PESO, TIPO, COSTOKILO, TOTAL, STATUS) " +
+                                                             "VALUES (@USUARIO, @FECHA, @NUMERO, @PESO, @TIPO, @COSTOKILO, @TOTAL, @STATUS)";
+
+                                        using (MySqlCommand cmd = new MySqlCommand(insertQuery, connect.ObtenerConexion(), transaction))
+                                        {
+                                            cmd.Parameters.AddWithValue("@USUARIO", user_info.Username);
+                                            cmd.Parameters.AddWithValue("@FECHA", fechaI);
+                                            cmd.Parameters.AddWithValue("@NUMERO", numero);
+                                            cmd.Parameters.AddWithValue("@PESO", Convert.ToDouble(row["PESO"]));
+                                            cmd.Parameters.AddWithValue("@TIPO", row["TIPO"].ToString());
+                                            cmd.Parameters.AddWithValue("@COSTOKILO", Convert.ToDouble(row["COSTO*KILO"]));
+                                            cmd.Parameters.AddWithValue("@TOTAL", Convert.ToDouble(row["TOTAL"]));
+                                            cmd.Parameters.AddWithValue("@STATUS", "active");
+
+                                            cmd.ExecuteNonQuery();
+                                        }
+                                    }
+
+                                    // Aceptar la transacción
+                                    transaction.Commit();
+                                }
+                            }
+                        }
+                        llenartabla();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error al importar: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            
+        }
+        private void ImportarExcelAInventario_final(string filePath)
+        {
+            try
+            {
+                string fechaI = dtpFECHA.Value.ToString("yyyy-MM-dd");
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                {
+                    DataSet result = reader.AsDataSet(new ExcelDataSetConfiguration()
+                    {
+                        ConfigureDataTable = (_) => new ExcelDataTableConfiguration() { UseHeaderRow = true }
+                    });
+
+                    DataTable dt = result.Tables[0]; // Tomamos la primera hoja
+
+                    using (MysqlConnector connect = new MysqlConnector())
+                    {
+                        connect.EstablecerConexion();
+                        using (var transaction = connect.ObtenerConexion().BeginTransaction())
+                        {
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                string numero = row["NUMERO"].ToString();
+                                DateTime fecha = Convert.ToDateTime(row["FECHA"]);
+
+                                // Comprobar si ya existe el registro
+                                string checkQuery = "SELECT COUNT(*) FROM inventario_inicial WHERE NUMERO = @NUMERO AND FECHA = @FECHA";
+                                using (MySqlCommand checkCmd = new MySqlCommand(checkQuery, connect.ObtenerConexion(), transaction))
+                                {
+                                    checkCmd.Parameters.AddWithValue("@NUMERO", numero);
+                                    checkCmd.Parameters.AddWithValue("@FECHA", fechaI);
+                                    int count = Convert.ToInt32(checkCmd.ExecuteScalar());
+
+                                    if (count > 0)
+                                    {
+                                        // Si ya existe, saltar esta fila
+                                        continue;
+                                    }
+                                }
+
+                                // Insertar solo si no existe
+                                string insertQuery = "INSERT INTO inventario_inicial ( FECHA, NUMERO, PESO, TIPO, COSTOKILO, TOTAL) " +
+                                                     "VALUES ( @FECHA, @NUMERO, @PESO, @TIPO, @COSTOKILO, @TOTAL)";
+
+                                using (MySqlCommand cmd = new MySqlCommand(insertQuery, connect.ObtenerConexion(), transaction))
+                                {
+                                    cmd.Parameters.AddWithValue("@FECHA", fechaI);
+                                    cmd.Parameters.AddWithValue("@NUMERO", numero);
+                                    cmd.Parameters.AddWithValue("@PESO", Convert.ToDouble(row["PESO"]));
+                                    cmd.Parameters.AddWithValue("@TIPO", row["TIPO"].ToString());
+                                    cmd.Parameters.AddWithValue("@COSTOKILO", Convert.ToDouble(row["COSTO*KILO"]));
+                                    cmd.Parameters.AddWithValue("@TOTAL", Convert.ToDouble(row["TOTAL"]));
+
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+
+                            // Aceptar la transacción
+                            transaction.Commit();
+                        }
+                    }
+                }
+
+                MessageBox.Show("Datos importados con éxito", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al importar: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ImportarExcelAInventario_guardados(string filePath)
+        {
+            try
+            {
+                string fechaI = dtpFECHA.Value.ToString("yyyy-MM-dd");
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                {
+                    DataSet result = reader.AsDataSet(new ExcelDataSetConfiguration()
+                    {
+                        ConfigureDataTable = (_) => new ExcelDataTableConfiguration() { UseHeaderRow = true }
+                    });
+
+                    DataTable dt = result.Tables[0]; // Tomamos la primera hoja
+
+                    using (MysqlConnector connect = new MysqlConnector())
+                    {
+                        connect.EstablecerConexion();
+                        using (var transaction = connect.ObtenerConexion().BeginTransaction())
+                        {
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                string numero = row["NUMERO"].ToString();
+                                DateTime fecha = Convert.ToDateTime(row["FECHA"]);
+
+                                // Comprobar si ya existe el registro
+                                string checkQuery = "SELECT COUNT(*) FROM inventarios_guardados WHERE NUMERO = @NUMERO AND FECHA = @FECHA";
+                                using (MySqlCommand checkCmd = new MySqlCommand(checkQuery, connect.ObtenerConexion(), transaction))
+                                {
+                                    checkCmd.Parameters.AddWithValue("@NUMERO", numero);
+                                    checkCmd.Parameters.AddWithValue("@FECHA", fechaI);
+                                    int count = Convert.ToInt32(checkCmd.ExecuteScalar());
+
+                                    if (count > 0)
+                                    {
+                                        // Si ya existe, saltar esta fila
+                                        continue;
+                                    }
+                                }
+
+                                // Insertar solo si no existe
+                                string insertQuery = "INSERT INTO inventarios_guardados ( FECHA, NUMERO, PESO, TIPO, COSTOKILO, TOTAL, MES_GUARDADO) " +
+                                                     "VALUES ( @FECHA, @NUMERO, @PESO, @TIPO, @COSTOKILO, @TOTAL, @MES_GUARDADO)";
+
+                                using (MySqlCommand cmd = new MySqlCommand(insertQuery, connect.ObtenerConexion(), transaction))
+                                {
+                                    cmd.Parameters.AddWithValue("@FECHA", fechaI);
+                                    cmd.Parameters.AddWithValue("@NUMERO", numero);
+                                    cmd.Parameters.AddWithValue("@PESO", Convert.ToDouble(row["PESO"]));
+                                    cmd.Parameters.AddWithValue("@TIPO", row["TIPO"].ToString());
+                                    cmd.Parameters.AddWithValue("@COSTOKILO", Convert.ToDouble(row["COSTO*KILO"]));
+                                    cmd.Parameters.AddWithValue("@TOTAL", Convert.ToDouble(row["TOTAL"]));
+                                    cmd.Parameters.AddWithValue("@MES_GUARDADO", fechaI);
+
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+
+                            // Aceptar la transacción
+                            transaction.Commit();
+                        }
+                    }
+                }
+
+                MessageBox.Show("Datos importados con éxito", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al importar: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

@@ -146,7 +146,7 @@
             this.panel_opciones.Controls.Add(this.tb_peso);
             this.panel_opciones.Location = new System.Drawing.Point(859, 107);
             this.panel_opciones.Name = "panel_opciones";
-            this.panel_opciones.Size = new System.Drawing.Size(318, 365);
+            this.panel_opciones.Size = new System.Drawing.Size(318, 405);
             this.panel_opciones.TabIndex = 15;
             // 
             // label3
