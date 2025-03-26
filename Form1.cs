@@ -12,6 +12,9 @@ using System.Web;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
+using System.Deployment.Application;
+using System.Diagnostics;
+using System.IO;
 
 namespace Inventario
 {
@@ -33,8 +36,11 @@ namespace Inventario
                 TextShade.WHITE
                 );
         }
+
+       
         private void screen_login_Load(object sender, EventArgs e)
         {
+           
 
             Panel panelFondo = new Panel
             {
@@ -58,11 +64,11 @@ namespace Inventario
 
             //forzar colores
             pictureBox2.BackColor = System.Drawing.ColorTranslator.FromHtml("#666666");
-            
+
 
             try
             {
-                using(MysqlConnector connect = new MysqlConnector())
+                using (MysqlConnector connect = new MysqlConnector())
                 {
                     connect.EstablecerConexion();
                     if (connect.ObtenerConexion().State == ConnectionState.Open)
@@ -72,10 +78,10 @@ namespace Inventario
                     else
                     {
                         txt_oline.ForeColor = Color.Red;
-                    }   
+                    }
                 }
             }
-            catch(Exception err)
+            catch (Exception err)
             {
                 MessageBox.Show("Error al conectar a la base de datos :" + err);
             }
@@ -89,29 +95,29 @@ namespace Inventario
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-            
+
+
         }
 
         private void login(string user, string pass)
         {
-                try
+            try
+            {
+                using (MysqlConnector connect = new MysqlConnector())
                 {
-                    using (MysqlConnector connect = new MysqlConnector())
+                    connect.EstablecerConexion();
+
+                    string query = "SELECT username, tipo FROM users WHERE username = @user AND pass = @pass";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
                     {
-                        connect.EstablecerConexion();
+                        cmd.Parameters.AddWithValue("@user", user);
+                        cmd.Parameters.AddWithValue("@pass", pass);
 
-                        string query = "SELECT username, tipo FROM users WHERE username = @user AND pass = @pass";
-
-                        using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
-                            cmd.Parameters.AddWithValue("@user", user);
-                            cmd.Parameters.AddWithValue("@pass", pass);
-
-                            using (MySqlDataReader reader = cmd.ExecuteReader())
+                            if (reader.Read())
                             {
-                                if (reader.Read())
-                                {
                                 int numero = reader.GetInt32("tipo");
 
                                 user_info.Username = user;
@@ -123,20 +129,20 @@ namespace Inventario
                                 screen_home home = new screen_home();
                                 home.Show();
                                 this.Hide();
-                                }
-                                else
-                                {
-                                    MessageBox.Show("CREDENCIALES INCORRECTAS");
-                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("CREDENCIALES INCORRECTAS");
                             }
                         }
-                    } // Aquí se cierra automáticamente la conexión con Dispose()
-                }
-                catch (Exception err)
-                {
-                    MessageBox.Show("ERROR: " + err.Message);
-                }
-            
+                    }
+                } // Aquí se cierra automáticamente la conexión con Dispose()
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("ERROR: " + err.Message);
+            }
+
         }
 
         private void tb_password_TextChanged(object sender, EventArgs e)

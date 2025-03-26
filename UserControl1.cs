@@ -698,7 +698,7 @@ namespace Inventario
         {
             if(tb_buscarNumero.Text !=string.Empty)
             {
-                string numero = tb_buscarNumero.Text;
+                string numero = tb_buscarNumero.Text.Trim();
                 tablafiltrada_numero(numero);
             }
             else

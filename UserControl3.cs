@@ -798,20 +798,20 @@ namespace Inventario
             {
                 try
                 {
-                    string number = tb_buscarNumero.Text;
+                    string number = tb_buscarNumero.Text.Trim();
                     using (MysqlConnector connect = new MysqlConnector()) // Tu conexión a MySQL
                     {
                         connect.EstablecerConexion();
 
                         // Obtener datos de las tablas t_entradas y t_salidas
-                        string queryEntradas = $"SELECT * FROM t_entradas WHERE NUMERO = {number}";
+                        string queryEntradas = $"SELECT * FROM t_entradas WHERE NUMERO = '{number}'";
                         DataTable dtEntradas = ObtenerDatos(queryEntradas, connect);
 
-                        string querySalidas = $"SELECT * FROM t_salidas WHERE NUMERO = {number}";
+                        string querySalidas = $"SELECT * FROM t_salidas WHERE NUMERO = '{number}'";
                         DataTable dtSalidas = ObtenerDatos(querySalidas, connect);
 
                         // Obtener datos desde dataGridView1
-                        string queryInventario = $"SELECT * FROM inventario_inicial WHERE NUMERO = {number}";
+                        string queryInventario = $"SELECT * FROM inventario_inicial WHERE NUMERO = '{number}'";
                         DataTable dtInventario = ObtenerDatos(queryInventario, connect);
 
 
