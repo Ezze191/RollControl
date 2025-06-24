@@ -1014,7 +1014,7 @@ namespace Inventario
                 if (dialogResult == DialogResult.Yes)
                 {
                     string fechaI = dtpFECHA.Value.ToString("yyyy-MM-dd");
-                    ImportarExcelAInventario_final(filePath);
+                   
                     try
                     {
                         System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
@@ -1037,8 +1037,21 @@ namespace Inventario
                                     {
                                         string numero = row["NUMERO"].ToString();
                                         DateTime fecha = Convert.ToDateTime(row["FECHA"]);
+                                        string tipo = row["TIPO"].ToString();
 
-                                        
+                                        if (fecha.Month != DateTime.Now.Month)
+                                        {
+                                            MessageBox.Show("ERROR: HAY UNA FECHA EN EL ARCHIVO QUE NO COINCIDE CON EL MES ACUTAL: " + fecha.Month);
+                                            return;
+                                        }
+
+                                        string[] tiposRollo = RollosMedidas.ObtenerMedidas();
+
+                                        if (!tiposRollo.Contains(tipo))
+                                        {
+                                            MessageBox.Show("ERROR: HAY UN TIPO DE ROLLO QUE NO COINCIDE CON LA PLANTILLA : " + tipo);
+                                            return;
+                                        }
 
                                         // Comprobar si ya existe el registro
                                         string checkQuery = "SELECT COUNT(*) FROM t_entradas WHERE NUMERO = @NUMERO AND FECHA = @FECHA";
@@ -1076,9 +1089,11 @@ namespace Inventario
 
                                     // Aceptar la transacción
                                     transaction.Commit();
+                                   
                                 }
                             }
                         }
+                        ImportarExcelAInventario_final(filePath);
                         llenartabla();
 
                     }
@@ -1097,7 +1112,8 @@ namespace Inventario
                 if (dialogResult == DialogResult.Yes)
                 {
                     string fechaI = dtpFECHA.Value.ToString("yyyy-MM-dd");
-                    ImportarExcelAInventario_guardados(filePath);
+                    
+
                     try
                     {
                         System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
@@ -1120,6 +1136,15 @@ namespace Inventario
                                     {
                                         string numero = row["NUMERO"].ToString();
                                         DateTime fecha = Convert.ToDateTime(row["FECHA"]);
+                                        string tipo = row["TIPO"].ToString();
+
+                                        string[] tiposRollo = RollosMedidas.ObtenerMedidas();
+
+                                        if (!tiposRollo.Contains(tipo))
+                                        {
+                                            MessageBox.Show("ERROR: HAY UN TIPO DE ROLLO QUE NO COINCIDE CON LA PLANTILLA : " + tipo);
+                                            return;
+                                        }
 
                                         // Comprobar si ya existe el registro
                                         string checkQuery = "SELECT COUNT(*) FROM t_entradas WHERE NUMERO = @NUMERO AND FECHA = @FECHA";
@@ -1157,9 +1182,14 @@ namespace Inventario
 
                                     // Aceptar la transacción
                                     transaction.Commit();
+                                   
+                                   
+
                                 }
                             }
                         }
+                        ImportarExcelAInventario_guardados(filePath);
+                        ImportarExcelAInventario_final(filePath);
                         llenartabla();
 
                     }

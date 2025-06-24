@@ -95,6 +95,57 @@ namespace Inventario
             }
 
             lb_name.Text = user_info.Username;
+
+            user_info.checarstatus();
+
+            if (user_info.status == "open")
+            {
+                
+                MessageBox.Show("ADVERTENCIA : EL INVENTARIO ESTA ABIERTO A LA FECHA : " + checarFecha());
+            }
+            
+
+        }
+
+        private string checarFecha()
+        {
+            string fechaEnElInventario = "";
+            try
+            {
+                using (MysqlConnector connect = new MysqlConnector())
+                {
+                    connect.EstablecerConexion();
+
+                    string query = "SELECT mes, anio FROM configuracionDate LIMIT 1";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, connect.ObtenerConexion()))
+                    {
+
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                int mes = reader.GetInt32(0);
+                                int anio = reader.GetInt32(1);
+
+
+                                fechaEnElInventario = $"{mes}/{anio}"; // Formato de fecha: mes/año
+                                
+
+                            }
+                        }
+                    }
+                } // Aquí se cierra automáticamente la conexión con Dispose()
+               
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("ERROR: " + err.Message);
+            }
+
+            return fechaEnElInventario;
+
         }
 
         private void loadFecha()
