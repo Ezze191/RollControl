@@ -438,6 +438,9 @@ namespace Inventario
                             {
                                 //si no lo agrega a inventario_guardados
                                 GuardarEnInventarioGuardados();
+                                llenartablaIventarioInicial();
+
+
                             }
                         }
                     }
@@ -1035,6 +1038,8 @@ namespace Inventario
                                         string numero = row["NUMERO"].ToString();
                                         DateTime fecha = Convert.ToDateTime(row["FECHA"]);
 
+                                        
+
                                         // Comprobar si ya existe el registro
                                         string checkQuery = "SELECT COUNT(*) FROM t_entradas WHERE NUMERO = @NUMERO AND FECHA = @FECHA";
                                         using (MySqlCommand checkCmd = new MySqlCommand(checkQuery, connect.ObtenerConexion(), transaction))
@@ -1213,7 +1218,7 @@ namespace Inventario
 
                                 using (MySqlCommand cmd = new MySqlCommand(insertQuery, connect.ObtenerConexion(), transaction))
                                 {
-                                    cmd.Parameters.AddWithValue("@FECHA", fechaI);
+                                    cmd.Parameters.AddWithValue("@FECHA", fecha);
                                     cmd.Parameters.AddWithValue("@NUMERO", numero);
                                     cmd.Parameters.AddWithValue("@PESO", Convert.ToDouble(row["PESO"]));
                                     cmd.Parameters.AddWithValue("@TIPO", row["TIPO"].ToString());
