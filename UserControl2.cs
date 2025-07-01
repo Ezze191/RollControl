@@ -340,6 +340,7 @@ namespace Inventario
                                 if (salidas.PESO == pesoanterior)
                                 {
                                     EliminarDeGuardados(numero);
+                                    EliminarDelInvetarioInicial(numero);
                                 }
                                 else
                                 {

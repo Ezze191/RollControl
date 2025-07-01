@@ -42,6 +42,7 @@
             this.lb_name = new System.Windows.Forms.Label();
             this.pb_user = new System.Windows.Forms.PictureBox();
             this.panelContainer = new System.Windows.Forms.Panel();
+            this.panelFondo = new System.Windows.Forms.Panel();
             this.fechalabel = new System.Windows.Forms.Label();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -49,7 +50,7 @@
             this.materialButton2 = new MaterialSkin.Controls.MaterialButton();
             this.materialButton1 = new MaterialSkin.Controls.MaterialButton();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.panelFondo = new System.Windows.Forms.Panel();
+            this.label_verison = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_tool)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -58,11 +59,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_user)).BeginInit();
             this.panelContainer.SuspendLayout();
+            this.panelFondo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            this.panelFondo.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitter1
@@ -193,6 +194,19 @@
             this.panelContainer.TabIndex = 2;
             this.panelContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.panelContainer_Paint);
             // 
+            // panelFondo
+            // 
+            this.panelFondo.Controls.Add(this.label_verison);
+            this.panelFondo.Controls.Add(this.fechalabel);
+            this.panelFondo.Controls.Add(this.chart1);
+            this.panelFondo.Controls.Add(this.panel2);
+            this.panelFondo.Controls.Add(this.pictureBox5);
+            this.panelFondo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelFondo.Location = new System.Drawing.Point(0, 0);
+            this.panelFondo.Name = "panelFondo";
+            this.panelFondo.Size = new System.Drawing.Size(1779, 960);
+            this.panelFondo.TabIndex = 4;
+            // 
             // fechalabel
             // 
             this.fechalabel.AutoSize = true;
@@ -292,17 +306,16 @@
             this.pictureBox5.TabStop = false;
             this.pictureBox5.Click += new System.EventHandler(this.pictureBox5_Click);
             // 
-            // panelFondo
+            // label_verison
             // 
-            this.panelFondo.Controls.Add(this.fechalabel);
-            this.panelFondo.Controls.Add(this.chart1);
-            this.panelFondo.Controls.Add(this.panel2);
-            this.panelFondo.Controls.Add(this.pictureBox5);
-            this.panelFondo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelFondo.Location = new System.Drawing.Point(0, 0);
-            this.panelFondo.Name = "panelFondo";
-            this.panelFondo.Size = new System.Drawing.Size(1779, 960);
-            this.panelFondo.TabIndex = 4;
+            this.label_verison.AutoSize = true;
+            this.label_verison.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_verison.Location = new System.Drawing.Point(752, 4);
+            this.label_verison.Name = "label_verison";
+            this.label_verison.Size = new System.Drawing.Size(156, 46);
+            this.label_verison.TabIndex = 4;
+            this.label_verison.Text = "Version";
+            this.label_verison.Click += new System.EventHandler(this.label1_Click);
             // 
             // screen_home
             // 
@@ -328,13 +341,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_user)).EndInit();
             this.panelContainer.ResumeLayout(false);
+            this.panelFondo.ResumeLayout(false);
+            this.panelFondo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            this.panelFondo.ResumeLayout(false);
-            this.panelFondo.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -359,5 +372,6 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Label fechalabel;
         private System.Windows.Forms.Panel panelFondo;
+        private System.Windows.Forms.Label label_verison;
     }
 }

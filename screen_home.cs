@@ -77,6 +77,9 @@ namespace Inventario
 
         private void screen_home_Load(object sender, EventArgs e)
         {
+            string version = "1.0.0";
+            label_verison.Text = $"Version : {version}";
+
             panel1.AutoScroll = true;
             panelFondo.AutoScroll = true;
 
@@ -468,6 +471,11 @@ namespace Inventario
         }
 
         private void pictureBox5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
